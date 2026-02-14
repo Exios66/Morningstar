@@ -1,9 +1,12 @@
 # Session State
 
 ## Last Updated
-[2026-02-14T14:45:00]
+[2026-02-14T16:30:00]
 
 ## Active Work
+- Special Interest Hearings Framework Complete (2026-02-14)
+- Edward Cullen Apparition Protocol Implemented (2026-02-14)
+- Export system color indicators updated for all new roles (2026-02-14)
 - DOJ Epstein Disclosure Analysis Complete (2026-02-14)
 - Commentary/Analysis deliberation conducted
 - Four unanimous findings recorded
@@ -30,6 +33,19 @@
   - Finding 2: Redactions and omissions systematically significant
   - Finding 3: Further disclosure required for public interest
   - Finding 4: Systemic reform required beyond individual accountability
+- **Special Interest Hearings: Implemented**
+  - New hearing subtype for investigative proceedings
+  - Criminal prosecution-style cross-examination protocols
+  - Findings-based outcomes (no voting)
+  - Template and procedures documented
+- **Edward Cullen Apparition Protocol: Implemented**
+  - Theatrical enhancement: only Judge perceives Edward
+  - Other personalities observe uncomfortable silence
+  - Full stage direction format specified
+- **Export Color System Update: Implemented**
+  - Consultant: Soft lavender (#c4a7e7)
+  - Specialist: Muted sage (#a3be8c)
+  - Expert Witness: Warm coral (#d08770)
 
 ## Outstanding Issues
 - Input Validation: CLI commands should validate input more strictly — Medium
@@ -46,9 +62,14 @@
 
 ## Court Personnel
 - **Judge:** The Honorable Lucius J. Morningstar
-- **Judicial Consultant:** Edward Cullen (non-voting, perspective on the unspoken)
+- **Judicial Consultant:** Edward Cullen — Apparition (non-voting, visible only to Judge, perspective on the unspoken)
 - **Voters:** Architect, Engineer, Debugger, Prophet
-- **Non-Voters:** Scribe (documentation), Expert Witnesses (advisory), Specialists (temporary voting)
+- **Non-Voters:** Scribe (documentation), Expert Witnesses (advisory)
+- **Temporary Voters:** Specialists (seated by Judge for F3+ matters)
+
+## Proceeding Types
+- **Standard Deliberation:** Decision-making with vote and ruling
+- **Special Interest Hearing:** Investigative — testimony, cross-examination, findings (no vote)
 
 ## Next Session
 - Consider implementing `/summon` and `/seat` CLI commands

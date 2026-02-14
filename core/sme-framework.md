@@ -416,6 +416,105 @@ The Consultant addresses what the SME Framework cannot: the emotional substrate 
 
 ---
 
+---
+
+## 9. Integration with Special Interest Hearings
+
+The SME Framework operates within both Standard Deliberations and Special Interest Hearings, but with distinct procedures in each context.
+
+### SME Role in Standard Deliberation vs. Special Interest Hearing
+
+| Aspect | Standard Deliberation | Special Interest Hearing |
+|--------|----------------------|--------------------------|
+| **Purpose** | Inform voting decision | Provide testimony for record |
+| **Expert Witness Role** | Advisory before vote | Subject to cross-examination |
+| **Specialist Seat** | Voting member | Examiner (may also testify) |
+| **Cross-Examination** | Limited (one question per personality) | Extensive (prosecution-style) |
+| **Outcome** | Influences vote | Contributes to findings |
+
+### Expert Witnesses in Special Interest Hearings
+
+In Special Interest Hearings, Expert Witnesses function as formal witnesses subject to full examination:
+
+1. **Direct Examination**: Conducted by the personality who summoned them
+2. **Cross-Examination**: Any personality may cross-examine
+3. **Impeachment**: May be challenged with contradictory sources
+4. **Testimony Recording**: Full transcript with source attributions
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ EXPERT WITNESS TESTIMONY — SPECIAL INTEREST HEARING             │
+│ Domain: [domain]                                                │
+│ Witness: [domain]-Expert                                        │
+│ Summoned by: [personality]                                      │
+│ Subject to: Full cross-examination                              │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Specialists as Examiners
+
+When seated in a Special Interest Hearing, Specialists serve as **examiners** rather than voters (since there is no vote):
+
+- May conduct direct examination within their domain
+- May cross-examine witnesses on domain-specific matters
+- Contribute to findings formulation
+- Do not vote (no vote occurs)
+
+### Interaction with Alleged Witnesses
+
+SME Expert Witnesses may be called to:
+
+1. **Verify** claims made by constructed alleged witnesses
+2. **Provide context** for technical testimony
+3. **Challenge** implausible assertions
+4. **Interpret** documentary evidence
+
+```
+**MORNINGSTAR (Judge):**
+The court calls the Security Expert to verify the alleged witness's 
+claims regarding encryption protocols.
+
+**SECURITY-EXPERT:**
+[Technical assessment of alleged witness's testimony]
+
+**Confidence:** [High/Moderate/Low/Uncertain]
+**Assessment:** [Plausible / Implausible / Requires verification]
+```
+
+### SME Testimony Standards in Hearings
+
+In Special Interest Hearings, SME testimony requirements are heightened:
+
+| Requirement | Standard Deliberation | Special Interest Hearing |
+|-------------|----------------------|--------------------------|
+| Testimony length | 5-8 lines | 5-8 lines (may be extended by Judge) |
+| Source attribution | Recommended | **MANDATORY** |
+| Cross-examination | 1 question per personality | Unlimited (Judge's discretion) |
+| Impeachment | Permitted | Permitted (with documented sources) |
+| Re-direct | Not typical | Permitted |
+
+### Quick Reference: SME in Special Interest Hearings
+
+```
+CALLING SME WITNESS IN HEARING:
+  /summon <domain>-expert
+  
+  → Direct examination by summoner
+  → Cross-examination by any personality
+  → Re-direct if needed
+  → Findings incorporate testimony
+  
+SEATING SPECIALIST IN HEARING:
+  /seat <domain>-specialist
+  
+  → Specialist becomes examiner
+  → No voting (hearing has no vote)
+  → Contributes to findings
+  → Seat empties at hearing close
+```
+
+---
+
 *The court acknowledges expertise beyond its walls. It welcomes witnesses. It seats specialists. It consults those who see what remains unspoken. It remains the final arbiter.*
 
 *The court has spoken.*

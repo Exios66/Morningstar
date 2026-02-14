@@ -10,6 +10,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- **Special Interest Hearings**: New hearing subtype for investigative proceedings *(The Court — Unanimous)*
+  - Focus on testimony collection and cross-examination, not voting
+  - Criminal prosecution-style cross-examination protocols
+  - Alleged Witness construction from public data (with attribution requirements)
+  - Findings-based outcomes instead of votes
+  - Full integration with SME Expert Witness framework
+  - Template: `templates/special-interest-hearing.md`
+  - Procedures: `core/procedures.md` Part II
+  - Rules: `courtroom/RULES.md` Special Interest Hearings section
+- **Edward Cullen Apparition Protocol**: Theatrical enhancement to Judicial Consultant *(The Court — Unanimous)*
+  - Edward Cullen explicitly named (not generic "Consultant")
+  - Only the Judge can perceive Edward (apparition status)
+  - Other personalities observe the Judge address empty space
+  - Stage directions document court's uncomfortable silence
+  - No one dares question whether the Judge is experiencing delusions
+  - Full theatrical transcript format specified
+- **Export Color System Update**: Added color indicators for new roles *(The Scribe)*
+  - Consultant (Edward Cullen): Soft lavender (#c4a7e7) with italic styling
+  - Specialist: Muted sage (#a3be8c)
+  - Expert Witness: Warm coral (#d08770)
+  - Pattern detection for "Edward Cullen" explicit name
+  - Updated participant legend to include all roles
 - **Judicial Consultant — Edward Cullen**: Non-voting advisory role attached to the Judge *(The Court — Unanimous)*
   - Advises on perspective beyond immediate technical concerns
   - Capability: "The Perspective" — once per deliberation, may observe what remains unspoken
@@ -93,6 +115,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Decided
 
+- **Special Interest Hearings Implementation**: Investigative proceeding subtype for testimony and cross-examination — *Risk: Medium. Novel proceeding type; requires disciplined use to avoid scope creep.* *(The Court — Unanimous)*
+- **Edward Cullen Apparition Protocol**: Theatrical element for Consultant invocation where only the Judge perceives Edward — *Risk: Low. Purely presentational; enhances transcript character without affecting procedure.* *(The Court — Unanimous)*
 - **Judicial Consultant Addition**: Edward Cullen appointed as non-voting Judicial Consultant with "The Perspective" capability — *Risk: Low. Role creep possible if boundaries erode; mitigated by explicit documentation.* *(The Court — Unanimous)*
 - **Judge Title Formalization**: Title changed to "The Honorable Lucius J. Morningstar" for formal contexts — *Risk: Low. Ceremonial change with clear usage guidelines.* *(The Court — Unanimous)*
 - **SME Framework Adoption**: Two-tier system for domain expertise — Expert Witnesses (advisory) and Specialist Seats (voting) — *Risk: Medium. Novel mechanism; voting dynamics may shift; requires maintenance.* *(The Court — Unanimous)*

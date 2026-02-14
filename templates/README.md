@@ -15,6 +15,7 @@ This directory contains **reusable templates** for common deliberation types. In
 | `incident-review.md` | Analyzing post-incident |
 | `prophet-vindication.md` | Documenting when Prophet was right |
 | `sme-testimony.md` | Recording Expert Witness or Specialist involvement |
+| `special-interest-hearing.md` | Investigative proceedings — testimony and cross-examination |
 
 **Note:** Templates now include optional sections for the Consultant's Perspective, invoked by The Honorable Lucius J. Morningstar when insight on unspoken dynamics is needed.
 
@@ -110,6 +111,32 @@ This directory contains **reusable templates** for common deliberation types. In
 - Security Expert testifies on authentication approach
 - Database Specialist seated for schema migration vote
 - Compliance Expert consulted on GDPR requirements
+
+### `special-interest-hearing.md`
+
+**Use for:** Investigative proceedings that focus on testimony collection and cross-examination rather than voting outcomes.
+
+**Includes:**
+- Hearing header with purpose declaration
+- Witness call formats (SME, Alleged Witness, Documentary Evidence)
+- Direct examination format
+- Criminal prosecution-style cross-examination protocols
+- Impeachment and evasion handling
+- Objection procedures
+- Edward Cullen apparition protocol (full theatrical format)
+- Findings documentation (not votes)
+- Hearing closure format
+
+**Key Distinction:** Special Interest Hearings do **not** culminate in a vote. The purpose is revelation, not resolution. The court documents findings based on testimony.
+
+**Example scenarios:**
+- Investigation of disclosed documents (e.g., DOJ files)
+- Reconstruction of events from public records
+- Examination of alleged witness accounts from transcripts
+- Technical incident investigation requiring witness testimony
+- Public interest matters requiring transparent examination
+
+**Note on Edward Cullen:** During Special Interest Hearings, the Judge may invoke Edward Cullen to identify what witnesses are deliberately avoiding, patterns across testimonies, or truths the hearing is circling. The full theatrical apparition protocol applies — the other personalities observe the Judge address empty space and do not comment.
 
 ---
 
@@ -271,6 +298,7 @@ When modifying templates:
 | Understand why production went down | `incident-review.md` |
 | Record that Prophet was right | `prophet-vindication.md` |
 | Document SME involvement | `sme-testimony.md` |
+| Investigate/examine witness testimony | `special-interest-hearing.md` |
 
 ---
 

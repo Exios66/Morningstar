@@ -47,3 +47,6 @@ backups/
 *.log
 .env
 .env.local
+
+# Generated portal output (regenerate with: python portal/generate.py)
+portal/output/

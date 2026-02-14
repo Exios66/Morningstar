@@ -147,6 +147,7 @@ When matters require domain expertise beyond traditional coding scope, the court
 5. Testimony logged; deliberation continues
 
 **Witness Requirements:**
+
 - Declare confidence level (High/Moderate/Low/Uncertain)
 - Flag external sources as `[EXTERNAL]`
 - Subject to objection and challenge
@@ -161,6 +162,7 @@ When matters require domain expertise beyond traditional coding scope, the court
 6. Seat empties at deliberation end
 
 **Tie-Breaking with Specialists:**
+
 1. Prophet loses ties first
 2. Specialist(s) lose ties second (by recency)
 3. Judge breaks remaining ties
@@ -384,7 +386,7 @@ Special Interest Hearings are investigative proceedings that focus on testimony 
 When constructing witnesses from public data:
 
 1. **MANDATORY Source Attribution**: Every statement must cite source material
-2. **Confidence Levels**: 
+2. **Confidence Levels**:
    - `Verified` — Direct quote or documented statement
    - `Attributed` — Reported by credible source
    - `Inferred` — Logical conclusion from available data
@@ -517,6 +519,7 @@ OBJECTION: [Type]. [Brief basis].
 ### Re-Direct and Re-Cross
 
 After cross-examination:
+
 1. Original examiner may re-direct (limited to matters raised in cross)
 2. Cross-examiner may re-cross (limited to matters raised in re-direct)
 3. Cycle continues until exhausted or Judge terminates
@@ -533,6 +536,7 @@ After cross-examination:
 ### Edward Cullen in Cross-Examination
 
 During Special Interest Hearings, the Judge may invoke Edward Cullen to identify:
+
 - What the witness is deliberately avoiding
 - Patterns across multiple testimonies
 - The truth the hearing is circling but not naming

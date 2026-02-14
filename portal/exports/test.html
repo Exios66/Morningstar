@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Court Transcript: The Feasibility Scale Framework - MORNINGSTAR</title>
+    <style>
+:root {
+    /* Dracula base colors */
+    --bg: #282a36;
+    --bg-light: #44475a;
+    --bg-lighter: #343746;
+    --fg: #f8f8f2;
+    --comment: #6272a4;
+    --selection: #44475a;
+    
+    /* Dracula accent colors */
+    --cyan: #8be9fd;
+    --green: #50fa7b;
+    --orange: #ffb86c;
+    --pink: #ff79c6;
+    --purple: #bd93f9;
+    --red: #ff5555;
+    --yellow: #f1fa8c;
+    
+    /* Personality colors */
+    --color-morningstar: var(--purple);
+    --color-architect: var(--cyan);
+    --color-engineer: var(--green);
+    --color-debugger: var(--orange);
+    --color-prophet: var(--pink);
+    --color-scribe: var(--comment);
+    
+    /* UI elements */
+    --border: #44475a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+    background: var(--bg);
+    color: var(--fg);
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.7;
+}
+
+h1, h2, h3, h4 {
+    color: var(--purple);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+h1 { font-size: 2rem; border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; color: var(--cyan); margin-top: 2rem; }
+h3 { font-size: 1.25rem; color: var(--green); }
+h4 { font-size: 1.1rem; color: var(--orange); }
+
+a { color: var(--cyan); text-decoration: none; }
+a:hover { color: var(--pink); text-decoration: underline; }
+
+strong, b { color: var(--yellow); font-weight: 600; }
+em, i { color: var(--comment); font-style: italic; }
+
+code {
+    background: var(--bg-light);
+    color: var(--pink);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+pre {
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--purple);
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+pre code { background: none; color: var(--fg); padding: 0; }
+
+blockquote {
+    border-left: 4px solid var(--purple);
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background: var(--bg-lighter);
+    color: var(--comment);
+    font-style: italic;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.95em;
+}
+
+th, td {
+    border: 1px solid var(--border);
+    padding: 0.75rem;
+    text-align: left;
+}
+
+th {
+    background: var(--bg-light);
+    color: var(--purple);
+    font-weight: 600;
+}
+
+tr:hover { background: var(--selection); }
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+}
+
+ul, ol { margin: 1rem 0; padding-left: 2rem; }
+li { margin: 0.5rem 0; }
+li::marker { color: var(--purple); }
+
+/* Personality styling */
+.p-morningstar { color: var(--color-morningstar); font-weight: bold; }
+.p-architect { color: var(--color-architect); font-weight: bold; }
+.p-engineer { color: var(--color-engineer); font-weight: bold; }
+.p-debugger { color: var(--color-debugger); font-weight: bold; }
+.p-prophet { color: var(--color-prophet); font-weight: bold; }
+.p-scribe { color: var(--color-scribe); font-weight: bold; }
+
+/* Vote styling */
+.vote-yes { color: var(--green); font-weight: bold; }
+.vote-no { color: var(--red); font-weight: bold; }
+.vote-abstain { color: var(--yellow); font-weight: bold; }
+
+/* Court box styling */
+.court-box {
+    background: var(--bg-lighter);
+    border: 2px solid var(--purple);
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-family: inherit;
+}
+
+/* Ruling section */
+.ruling {
+    background: var(--bg-lighter);
+    border: 2px solid var(--purple);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+}
+
+/* Transcript header */
+.transcript-header {
+    background: var(--bg-light);
+    border: 1px solid var(--purple);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Participant legend */
+.participant-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-light);
+    border-radius: 6px;
+    margin: 1rem 0;
+    font-size: 0.9em;
+}
+
+.participant-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.participant-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.participant-color.morningstar { background: var(--color-morningstar); }
+.participant-color.architect { background: var(--color-architect); }
+.participant-color.engineer { background: var(--color-engineer); }
+.participant-color.debugger { background: var(--color-debugger); }
+.participant-color.prophet { background: var(--color-prophet); }
+.participant-color.scribe { background: var(--color-scribe); }
+
+.export-meta {
+    color: var(--comment);
+    font-size: 0.85em;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    margin-top: 3rem;
+    text-align: center;
+}
+
+/* Fullscreen toggle */
+.fullscreen-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--purple);
+    color: var(--bg);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    z-index: 10000;
+}
+
+.fullscreen-toggle:hover { background: var(--pink); }
+
+/* Print styles */
+@media print {
+    body { background: white; color: black; font-size: 12pt; }
+    h1, h2, h3, h4 { color: black; }
+    pre, .court-box, .ruling { background: #f5f5f5; border-color: #ccc; }
+    .fullscreen-toggle { display: none; }
+    a { color: black; text-decoration: underline; }
+}
+</style>
+</head>
+<body>
+    
+    <div class="participant-legend">
+        <div class="participant-item">
+            <span class="participant-color morningstar"></span>
+            <span>MORNINGSTAR (Judge)</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color architect"></span>
+            <span>ARCHITECT</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color engineer"></span>
+            <span>ENGINEER</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color debugger"></span>
+            <span>DEBUGGER</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color prophet"></span>
+            <span>PROPHET</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color scribe"></span>
+            <span>SCRIBE</span>
+        </div>
+    </div>
+    
+    
+    <h1>Court Transcript: The Feasibility Scale Framework</h1>
+
+<p><strong>Date:</strong> 2026-02-14  </p>
+<p><strong>Time:</strong> 03:00:00  </p>
+<p><strong>Session ID:</strong> 20260214_030000  </p>
+<p><strong>Matter:</strong> Establishment of a Feasibility Rating Scale  </p>
+<p><strong>Presiding:</strong> <span class="p-morningstar">MORNINGSTAR</span>  </p>
+<p><strong><span class="p-scribe">Scribe</span>:</strong> Active</p>
+
+<hr>
+
+<h2>TRANSCRIPT BEGIN</h2>
+
+<hr>
+
+<h3>PREAMBLE</h3>
+
+<p><em>sighs</em></p>
+
+<p>The court has been asked to establish a standardized framework for rating the feasibility of proposed features and changes. This is the sort of request that sounds reasonable until you realize it requires us to quantify human optimism—a notoriously unreliable substance.</p>
+
+<p>Let us proceed.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ THE COURT IS NOW IN SESSION                                     │
+│ Matter: Establishment of a Feasibility Rating Scale             │
+│ Date: [REDACTED — time is a construct we do not respect]        │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<hr>
+
+<h3>OPENING STATEMENT</h3>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+
+<p>The matter before the court is deceptively simple. We require a framework—a scale—by which proposed features, architectural changes, and technical decisions may be evaluated for feasibility.</p>
+
+<p>The naive approach would be a 1-10 scale. The naive approach is always a 1-10 scale. We are not naive.</p>
+
+<p><em>adjusts robes that do not exist</em></p>
+
+<p>The court will hear arguments on:</p>
+<li>What dimensions should feasibility encompass?</li>
+<li>What scale or rating system should be employed?</li>
+<li>How should the framework be applied in practice?</li>
+
+<p>Each personality shall present their initial position. We will then proceed to cross-examination, rebuttals, and—inevitably—the <span class="p-prophet">Prophet</span>'s contribution.</p>
+
+<p><em>sighs in anticipation</em></p>
+
+<p>Let us begin.</p>
+
+<hr>
+
+<h3>ROUND ONE: INITIAL ARGUMENTS</h3>
+
+<hr>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+
+<p><em>stands with the posture of someone who has reviewed too many pull requests</em></p>
+
+<p>The court's attention, please.</p>
+
+<p>Feasibility is not a single axis. It is at minimum a three-dimensional space:</p>
+
+<li><strong>Technical Complexity</strong> — Can it be built correctly?</li>
+<li><strong>Maintainability</strong> — Will future developers curse our names?</li>
+<li><strong>Architectural Fit</strong> — Does it belong in this system, or are we duct-taping a jet engine to a bicycle?</li>
+
+<p>I propose a categorical scale rather than numeric:</p>
+
+<table>
+<tr><th>Rating</th><th>Label</th><th>Definition</th></tr>
+<tr><td><strong>F1</strong></td><td>Trivial</td><td>Isolated change, well-understood, low risk</td></tr>
+<tr><td><strong>F2</strong></td><td>Moderate</td><td>Cross-cutting but bounded, requires design review</td></tr>
+<tr><td><strong>F3</strong></td><td>Significant</td><td>Architectural implications, requires deliberation</td></tr>
+<tr><td><strong>F4</strong></td><td>Severe</td><td>System-wide impact, high risk, demands full court</td></tr>
+<tr><td><strong>F5</strong></td><td>Catastrophic</td><td>&quot;We should probably not do this&quot;</td></tr>
+</table>
+
+<p>This will age well. Unlike most things.</p>
+
+<p><em>sits</em></p>
+
+<hr>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+
+<p><em>leans forward with the energy of someone who has shipped code at 2 AM</em></p>
+
+<p>I appreciate the <span class="p-architect">Architect</span>'s rigor. I do. But we're missing the dimension that actually matters in practice: <strong>effort versus value</strong>.</p>
+
+<p>A change can be architecturally pristine and still not worth doing. Conversely, a hack that makes us uncomfortable might ship critical value tomorrow.</p>
+
+<p>I propose we add two practical axes:</p>
+
+<li><strong>Effort</strong> — Person-days, roughly estimated</li>
+<li><strong>Urgency</strong> — Is this blocking something? Is there a deadline that isn't imaginary?</li>
+
+<p>The framework should output not just &quot;can we do this&quot; but &quot;should we do this <em>now</em>.&quot;</p>
+
+<p>My concern with pure categorical ratings is that they become liturgy. People check boxes. They stop thinking.</p>
+
+<p><em>glances at <span class="p-architect">Architect</span></em></p>
+
+<p>No offense.</p>
+
+<p><em><span class="p-architect">Architect</span>'s expression suggests offense was taken</em></p>
+
+<p>I vote for a hybrid: categorical feasibility rating PLUS a lightweight effort/value assessment. Two numbers. Simple enough to use, complex enough to be honest.</p>
+
+<hr>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+
+<p><em>has been silently reviewing edge cases since the session began</em></p>
+
+<p>Both proposals have gaps.</p>
+
+<p><em>the room temperature drops slightly</em></p>
+
+<p>The <span class="p-architect">Architect</span>'s F1-F5 scale fails to account for <strong>uncertainty</strong>. A change might appear F2 until you discover the legacy system it touches was written by a contractor in 2014 who has since achieved enlightenment and cannot be reached.</p>
+
+<p>The <span class="p-engineer">Engineer</span>'s effort estimation is optimistic by construction. We always underestimate. Always. The data is clear.</p>
+
+<p>I propose an additional mandatory field: <strong>Risk Vectors</strong>. A checklist of specific concerns:</p>
+
+<ul>
+<li>[ ] Touches authentication/authorization</li>
+<li>[ ] Involves third-party dependencies</li>
+<li>[ ] Requires database migration</li>
+<li>[ ] Affects public API surface</li>
+<li>[ ] Has unclear requirements</li>
+<li>[ ] Depends on external team/service</li>
+<li>[ ] Has been attempted before and failed</li>
+</ul>
+
+<p>Each checked box increases the true feasibility rating by 0.5 levels, rounded up.</p>
+
+<p>An &quot;F2&quot; with three risk vectors checked is actually an F4. The framework must encode this reality, or it will lie to us.</p>
+
+<p><em>stares at nothing in particular</em></p>
+
+<p>I have seen what happens when frameworks lie.</p>
+
+<hr>
+
+<h3>INTERLUDE: THE <span class="p-prophet">PROPHET</span> SPEAKS</h3>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ ⚠️ <span class="p-prophet">PROPHET</span> INTERRUPTION — FIRST OCCURRENCE                      │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p><em>stands abruptly</em></p>
+
+<p>Objection. We are thinking too small.</p>
+
+<p><em>paces</em></p>
+
+<p>You want a feasibility scale? Fine. But you're measuring the wrong thing. You're measuring &quot;can we build this with what we have.&quot; The real question is: &quot;What would we need to build this <em>trivially</em>?&quot;</p>
+
+<p>Every F5—every &quot;catastrophic&quot; impossibility—is only impossible because we're missing something. A tool. An abstraction. A paradigm.</p>
+
+<p>I propose we add a sixth category:</p>
+
+<table>
+<tr><th>Rating</th><th>Label</th><th>Definition</th></tr>
+<tr><td><strong>F0</strong></td><td><strong>Infrastructural</strong></td><td>Currently impossible, but identifies a missing capability that would make it trivial</td></tr>
+</table>
+
+<p>When something rates F0, we don't reject it. We ask: <em>what would have to be true for this to be F1?</em></p>
+
+<p><em>turns to face the court</em></p>
+
+<p>This is how we get leverage. This is how we stop playing defense. Every F0 is a map to the infrastructure we should have built yesterday.</p>
+
+<p>The <span class="p-architect">Architect</span> will say this is impractical. The <span class="p-engineer">Engineer</span> will say we don't have time. The <span class="p-debugger">Debugger</span> will say it introduces risk.</p>
+
+<p>They're all correct.</p>
+
+<p>But ten percent of the time, the F0 reveals the thing that changes everything.</p>
+
+<p><em>sits down, resumes drawing fractals</em></p>
+
+<p>I have said my piece.</p>
+
+<hr>
+
+<h3>ROUND TWO: CROSS-EXAMINATION</h3>
+
+<hr>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+
+<p><em>sighs</em></p>
+
+<p>The court will now permit cross-examination. Keep it civil. Or at least keep it brief.</p>
+
+<hr>
+
+<p><strong><span class="p-engineer">ENGINEER</span> → <span class="p-architect">ARCHITECT</span>:</strong></p>
+
+<p>Your F1-F5 categories—who assigns them? In practice, I mean. Does every feature require a full court session?</p>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+
+<p>Obviously not. F1 and F2 can be assigned by any senior engineer. F3 requires peer review. F4 and F5 require full deliberation.</p>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+
+<p>And who decides if something is F2 versus F3? That boundary is where all the arguments will happen.</p>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+
+<p><em>pause</em></p>
+
+<p>...The framework provides guidance. Judgment remains necessary.</p>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+
+<p>So we're building a system that still requires good judgment to function. Comforting.</p>
+
+<hr>
+
+<p><strong><span class="p-debugger">DEBUGGER</span> → <span class="p-engineer">ENGINEER</span>:</strong></p>
+
+<p>You mentioned effort estimation. How do we prevent the known failure mode where estimates become commitments and commitments become blame?</p>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+
+<p>We don't publish effort estimates externally. They're internal to the feasibility assessment. The framework produces a recommendation, not a promise.</p>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+
+<p>That distinction will not survive contact with management.</p>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+
+<p><em>wearily</em></p>
+
+<p>I know.</p>
+
+<hr>
+
+<p><strong><span class="p-architect">ARCHITECT</span> → <span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p>Your F0 category. How do we prevent it from becoming a graveyard of good ideas that never get infrastructure investment?</p>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p><em>looks up from fractals</em></p>
+
+<p>We don't prevent that. We expect it. Most F0s die. But we keep a registry. And when we finally build the missing capability—for whatever reason—we resurrect the F0s that depended on it.</p>
+
+<p>The graveyard has value. It tells us what we're leaving on the table.</p>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+
+<p>This is... actually reasonable.</p>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p><em>smiles</em></p>
+
+<p>Don't sound so surprised.</p>
+
+<hr>
+
+<p><strong><span class="p-debugger">DEBUGGER</span> → <span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p>What stops every dreamer from labeling their pet project F0 to avoid rejection?</p>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p>The F0 designation requires you to specify <em>exactly</em> what infrastructure would make it trivial. If you can't articulate that clearly, it's not F0. It's F5 with wishful thinking.</p>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+
+<p>...Acceptable.</p>
+
+<hr>
+
+<h3>ROUND THREE: REBUTTALS</h3>
+
+<hr>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+
+<p>I concede the <span class="p-debugger">Debugger</span>'s risk vectors have merit. I propose they be incorporated as a modifier to my categorical scale. The base rating is architectural; the modifier is operational.</p>
+
+<p>Notation: <code>F2+2</code> means base feasibility F2, with two risk vectors active, effective rating F3.</p>
+
+<hr>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+
+<p>I withdraw my objection to pure categorical ratings, provided we add a lightweight &quot;effort band&quot; annotation:</p>
+
+<ul>
+<li><strong>S</strong> — Hours</li>
+<li><strong>M</strong> — Days</li>
+<li><strong>L</strong> — Weeks</li>
+<li><strong>XL</strong> — Months (requires court approval to even consider)</li>
+</ul>
+
+<p>This is not an estimate. It is a magnitude. It sets expectations without creating contracts.</p>
+
+<hr>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+
+<p>I accept the proposed synthesis. However, I insist that any rating F3 or above must include a written &quot;failure scenario&quot;—a description of what goes wrong if the implementation fails. This forces honesty.</p>
+
+<hr>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p>I have nothing to add. My proposal stands alone. It will be voted down, and that is fine. It will be remembered when we need it.</p>
+
+<p><em>sighs</em></p>
+
+<p>As is tradition.</p>
+
+<hr>
+
+<h3>SYNTHESIS: THE PROPOSED FRAMEWORK</h3>
+
+<hr>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+
+<p>The <span class="p-scribe">Scribe</span> will now summarize the synthesized proposal.</p>
+
+<hr>
+
+<p><strong><span class="p-scribe">SCRIBE</span>:</strong></p>
+
+<p><em>emerges from the shadows, quill in hand</em></p>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ PROPOSED: <span class="p-morningstar">MORNINGSTAR</span> FEASIBILITY ASSESSMENT FRAMEWORK (MFAF)   │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<h4>Core Rating Scale</h4>
+
+<table>
+<tr><th>Base</th><th>Label</th><th>Definition</th><th>Authority</th></tr>
+<tr><td>F0</td><td>Infrastructural</td><td>Identifies missing capability</td><td><span class="p-prophet">Prophet</span> review</td></tr>
+<tr><td>F1</td><td>Trivial</td><td>Isolated, well-understood, low risk</td><td>Self-assign</td></tr>
+<tr><td>F2</td><td>Moderate</td><td>Cross-cutting but bounded</td><td>Senior engineer</td></tr>
+<tr><td>F3</td><td>Significant</td><td>Architectural implications</td><td>Peer review</td></tr>
+<tr><td>F4</td><td>Severe</td><td>System-wide impact, high risk</td><td>Full court</td></tr>
+<tr><td>F5</td><td>Catastrophic</td><td>Strong presumption against</td><td>Full court</td></tr>
+</table>
+
+<h4>Risk Vector Modifiers</h4>
+
+<p>Each checked vector adds +0.5 to effective rating (rounded up):</p>
+
+<ul>
+<li>[ ] Touches auth/authz (+0.5)</li>
+<li>[ ] External dependencies (+0.5)</li>
+<li>[ ] Database migration (+0.5)</li>
+<li>[ ] Public API changes (+0.5)</li>
+<li>[ ] Unclear requirements (+0.5)</li>
+<li>[ ] External team dependency (+0.5)</li>
+<li>[ ] Previously attempted and failed (+1.0)</li>
+</ul>
+
+<p><strong>Notation:</strong> <code>F2+1.5</code> = Base F2, effective F4 (rounded up)</p>
+
+<h4>Effort Band</h4>
+
+<table>
+<tr><th>Band</th><th>Magnitude</th><th>Note</th></tr>
+<tr><td>S</td><td>Hours</td><td>Proceed freely</td></tr>
+<tr><td>M</td><td>Days</td><td>Normal workflow</td></tr>
+<tr><td>L</td><td>Weeks</td><td>Requires prioritization</td></tr>
+<tr><td>XL</td><td>Months</td><td>Court approval required</td></tr>
+</table>
+
+<h4>Required Documentation by Rating</h4>
+
+<table>
+<tr><th>Effective Rating</th><th>Required</th></tr>
+<tr><td>F1-F2</td><td>Brief description</td></tr>
+<tr><td>F3</td><td>Design document, risk vectors listed</td></tr>
+<tr><td>F4</td><td>Full design, failure scenarios, court deliberation</td></tr>
+<tr><td>F5</td><td>All of F4 + explicit justification if proceeding</td></tr>
+<tr><td>F0</td><td>Infrastructure gap specification</td></tr>
+</table>
+
+<h4>F0 Registry</h4>
+
+<p>All F0-rated proposals are archived with:</p>
+<ul>
+<li>Original proposal</li>
+<li>Specified infrastructure gap</li>
+<li>Date logged</li>
+<li>Resurrection triggers (what would change the rating)</li>
+</ul>
+
+<p><em>The <span class="p-scribe">Scribe</span> returns to the shadows</em></p>
+
+<hr>
+
+<h3>VOTING</h3>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ THE COURT WILL NOW VOTE                                         │
+│ Question: Shall the <span class="p-morningstar">MORNINGSTAR</span> Feasibility Assessment          │
+│           Framework (MFAF) be adopted as proposed?              │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<hr>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+
+<p>The framework preserves categorical rigor while incorporating practical modifications. It will serve the codebase well.</p>
+
+<p><strong>VOTE: <span class="vote-yes">YES</span></strong></p>
+
+<hr>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+
+<p>It's usable. It won't require a PhD to apply. The effort bands prevent over-engineering the assessment process itself.</p>
+
+<p><strong>VOTE: <span class="vote-yes">YES</span></strong></p>
+
+<hr>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+
+<p>The risk vectors are mandatory. The failure scenarios are required. My concerns have been addressed.</p>
+
+<p><em>narrows eyes</em></p>
+
+<p>For now.</p>
+
+<p><strong>VOTE: <span class="vote-yes">YES</span></strong></p>
+
+<hr>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p>You included F0. You gave the impossible a place to live.</p>
+
+<p><em>stands</em></p>
+
+<p>This is more than I expected.</p>
+
+<p><strong>VOTE: <span class="vote-yes">YES</span></strong></p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ VOTE TALLY                                                      │
+├─────────────────────────────────────────────────────────────────┤
+│ <span class="p-architect">ARCHITECT</span>:  <span class="vote-yes">YES</span>                                                 │
+│ <span class="p-engineer">ENGINEER</span>:   <span class="vote-yes">YES</span>                                                 │
+│ <span class="p-debugger">DEBUGGER</span>:   <span class="vote-yes">YES</span>                                                 │
+│ <span class="p-prophet">PROPHET</span>:    <span class="vote-yes">YES</span>                                                 │
+├─────────────────────────────────────────────────────────────────┤
+│ RESULT: UNANIMOUS APPROVAL                                      │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<hr>
+
+<h3>RULING</h3>
+
+<hr>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+
+<p><em>stands</em></p>
+
+<p>The court has spoken. Unanimously, which is suspicious, but we will accept it.</p>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ RULING                                                          │
+└─────────────────────────────────────────────────────────────────┘
+
+DECISION:
+  The <span class="p-morningstar">MORNINGSTAR</span> Feasibility Assessment Framework (MFAF) is 
+  hereby adopted. All future proposals of significance F3 or 
+  above shall be evaluated using this framework.
+
+RATIONALE:
+  The framework balances rigor with practicality. It acknowledges
+  uncertainty through risk vectors, preserves human judgment 
+  through categorical ratings, and—unusually—makes space for
+  the impossible through the F0 designation.
+
+  The <span class="p-architect">Architect</span>'s structure provides backbone.
+  The <span class="p-engineer">Engineer</span>'s pragmatism provides usability.
+  The <span class="p-debugger">Debugger</span>'s paranoia provides honesty.
+  The <span class="p-prophet">Prophet</span>'s vision provides aspiration.
+
+  It is, against all odds, a coherent synthesis.
+
+RISK ACKNOWLEDGED:
+  - The F2/F3 boundary will generate arguments (Probability: HIGH)
+  - Effort bands will be misinterpreted as estimates (Probability: CERTAIN)
+  - The F0 registry will be ignored until it isn't (Probability: HIGH)
+  - Someone will try to game the risk vectors (Probability: INEVITABLE)
+
+  The court accepts these risks as the cost of having a framework
+  at all. The alternative—no framework—is worse.
+
+EFFECTIVE IMMEDIATELY.
+</pre>
+
+<p><em>sighs</em></p>
+
+<p>The court has ruled. Regrettably sensible.</p>
+
+<hr>
+
+<h3>POSTSCRIPT</h3>
+
+<hr>
+
+<p><em>The courtroom empties. The <span class="p-scribe">Scribe</span> files the ruling. The <span class="p-prophet">Prophet</span>'s fractals are left on the table—they almost look like a system architecture diagram, if you squint.</em></p>
+
+<p><em>The <span class="p-morningstar">Judge</span> remains, reviewing the framework one more time.</em></p>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span>:</strong></p>
+
+<p><em>to no one in particular</em></p>
+
+<p>We have built a machine for saying &quot;no&quot; thoughtfully.</p>
+
+<p><em>pause</em></p>
+
+<p>That may be the best we can hope for.</p>
+
+<p><em>exits</em></p>
+
+<hr>
+
+<h2>TRANSCRIPT END</h2>
+
+<hr>
+
+<p><strong>Recorded by:</strong> The <span class="p-scribe">Scribe</span>  </p>
+<p><strong>Transcript saved:</strong> <code>courtroom/transcripts/20260214_030000_feasibility_framework.md</code>  </p>
+<p><strong>Changelog updated:</strong> Yes  </p>
+<p><strong>State updated:</strong> Yes  </p>
+<p><strong>Framework adopted:</strong> MFAF v1.0</p>
+
+<hr>
+
+<p><em>Document preserved for institutional reference.</em></p>
+<p><em>May future courts find it useful, or at least amusing.</em></p>
+
+    
+    <div class="export-meta">
+        <p>Exported from MORNINGSTAR on 2026-02-14 08:54:26</p>
+        <p><em>"The court's rulings are its legacy."</em></p>
+    </div>
+    
+    <button class="fullscreen-toggle" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+    
+    <script>
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+    </script>
+</body>
+</html>

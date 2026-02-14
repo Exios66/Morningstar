@@ -9,8 +9,6 @@
 # Compatible with Bash 3.x (macOS default)
 #
 
-set -e
-
 # Colors (Dracula theme)
 PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
@@ -22,10 +20,13 @@ NC='\033[0m' # No Color
 BOLD='\033[1m'
 
 # Get script directory and project root
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 TRANSCRIPTS_DIR="$PROJECT_ROOT/courtroom/transcripts"
 EXPORTS_DIR="$PROJECT_ROOT/portal/exports"
+
+# Global for exported file path
+EXPORTED_FILE=""
 
 # Header
 print_header() {
@@ -47,19 +48,25 @@ check_transcripts() {
 
 # Get list of transcripts (excluding hidden files and README)
 get_transcripts() {
-    find "$TRANSCRIPTS_DIR" -maxdepth 1 -name "*.md" -type f ! -name ".*" ! -name "README.md" | sort
+    ls -1 "$TRANSCRIPTS_DIR"/*.md 2>/dev/null | grep -v "README.md" | grep -v "/\._" | sort
 }
 
 # Parse transcript filename to extract metadata
 parse_transcript() {
     local filename="$1"
-    local basename=$(basename "$filename" .md)
+    local bname
+    bname=$(basename "$filename" .md)
     
     # Parse YYYYMMDD_HHMMSS_topic format
-    if [[ $basename =~ ^([0-9]{8})_([0-9]{6})_(.+)$ ]]; then
-        local date_part="${BASH_REMATCH[1]}"
-        local time_part="${BASH_REMATCH[2]}"
-        local topic="${BASH_REMATCH[3]}"
+    local date_part=""
+    local time_part=""
+    local topic=""
+    
+    # Check if filename matches expected pattern
+    if echo "$bname" | grep -qE "^[0-9]{8}_[0-9]{6}_"; then
+        date_part=$(echo "$bname" | cut -d'_' -f1)
+        time_part=$(echo "$bname" | cut -d'_' -f2)
+        topic=$(echo "$bname" | cut -d'_' -f3-)
         
         # Format date
         local year="${date_part:0:4}"
@@ -68,33 +75,33 @@ parse_transcript() {
         local hour="${time_part:0:2}"
         local min="${time_part:2:2}"
         
-        # Convert topic to title case
-        local title=$(echo "$topic" | tr '_' ' ' | awk '{for(i=1;i<=NF;i++) $i=toupper(substr($i,1,1)) tolower(substr($i,2))}1')
+        # Convert topic to title case (simple version)
+        topic=$(echo "$topic" | tr '_' ' ' | sed 's/\b\(.\)/\u\1/g' 2>/dev/null || echo "$topic" | tr '_' ' ')
         
-        echo "$year-$month-$day $hour:$min|$title"
+        echo "$year-$month-$day $hour:$min|$topic"
     else
-        echo "Unknown|$basename"
+        echo "Unknown|$bname"
     fi
 }
 
 # Display transcript list with numbers
 display_transcripts() {
-    local transcripts=("$@")
-    local count=${#transcripts[@]}
-    
     echo -e "${CYAN}Available Deliberations:${NC}"
     echo ""
     
     local i=1
-    for transcript in "${transcripts[@]}"; do
-        local metadata=$(parse_transcript "$transcript")
-        local date=$(echo "$metadata" | cut -d'|' -f1)
-        local title=$(echo "$metadata" | cut -d'|' -f2)
+    for transcript in "$@"; do
+        local metadata
+        metadata=$(parse_transcript "$transcript")
+        local date_str
+        date_str=$(echo "$metadata" | cut -d'|' -f1)
+        local title
+        title=$(echo "$metadata" | cut -d'|' -f2)
         
         echo -e "  ${PURPLE}[$i]${NC} ${BOLD}$title${NC}"
-        echo -e "      ${GRAY}$date${NC}"
+        echo -e "      ${GRAY}$date_str${NC}"
         echo ""
-        ((i++))
+        i=$((i + 1))
     done
     
     echo -e "  ${PURPLE}[q]${NC} Quit"
@@ -104,28 +111,53 @@ display_transcripts() {
 # Export transcript to HTML
 export_to_html() {
     local transcript="$1"
-    local basename=$(basename "$transcript" .md)
+    local fname
+    fname=$(basename "$transcript" .md)
     
     # Create exports directory if needed
-    mkdir -p "$EXPORTS_DIR"
+    mkdir -p "$EXPORTS_DIR" 2>/dev/null
     
-    local output_file="$EXPORTS_DIR/${basename}.html"
+    local output_file="$EXPORTS_DIR/${fname}.html"
     
     echo -e "${YELLOW}Exporting to HTML...${NC}"
     
-    # Check if morningstar CLI is available
-    if command -v morningstar &> /dev/null; then
-        morningstar export transcript "$transcript" -o "$output_file" -t dracula
-    elif [ -f "$PROJECT_ROOT/tools/cli.py" ]; then
-        # Fall back to running Python directly
-        cd "$PROJECT_ROOT"
-        python -m tools.cli export transcript "$transcript" -o "$output_file" -t dracula
+    # Change to project root for Python imports
+    cd "$PROJECT_ROOT" || {
+        echo -e "${RED}Failed to cd to $PROJECT_ROOT${NC}"
+        return 1
+    }
+    
+    # Get relative path from project root for the CLI
+    local relative_transcript
+    relative_transcript=$(echo "$transcript" | sed "s|^$PROJECT_ROOT/||")
+    
+    echo -e "${GRAY}  Source: $relative_transcript${NC}"
+    echo -e "${GRAY}  Output: $output_file${NC}"
+    
+    # Try Python directly (most reliable on macOS)
+    if [ -f "$PROJECT_ROOT/tools/cli.py" ]; then
+        echo -e "${GRAY}  Running Python export...${NC}"
+        
+        python -m tools.cli export transcript "$relative_transcript" -o "$output_file" -t dracula 2>&1
+        local exit_code=$?
+        
+        if [ $exit_code -ne 0 ]; then
+            echo -e "${RED}Python export command failed (exit code $exit_code)${NC}"
+            return 1
+        fi
     else
-        echo -e "${RED}Error: Could not find morningstar CLI or tools/cli.py${NC}"
+        echo -e "${RED}Error: Could not find tools/cli.py${NC}"
         return 1
     fi
     
-    echo "$output_file"
+    # Check if export succeeded
+    if [ -f "$output_file" ]; then
+        EXPORTED_FILE="$output_file"
+        return 0
+    else
+        echo -e "${RED}Output file was not created${NC}"
+        return 1
+    fi
 }
 
 # Open file in browser
@@ -135,50 +167,58 @@ open_in_browser() {
     echo -e "${GREEN}Opening in browser...${NC}"
     
     # Detect OS and open accordingly
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-        # macOS
-        open "$file"
-    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        # Linux
-        if command -v xdg-open &> /dev/null; then
-            xdg-open "$file"
-        elif command -v gnome-open &> /dev/null; then
-            gnome-open "$file"
-        else
+    case "$OSTYPE" in
+        darwin*)
+            open "$file"
+            ;;
+        linux*)
+            if command -v xdg-open >/dev/null 2>&1; then
+                xdg-open "$file"
+            else
+                echo -e "${YELLOW}Please open manually: $file${NC}"
+            fi
+            ;;
+        msys*|cygwin*)
+            start "$file"
+            ;;
+        *)
             echo -e "${YELLOW}Please open manually: $file${NC}"
-        fi
-    elif [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "cygwin" ]]; then
-        # Windows
-        start "$file"
-    else
-        echo -e "${YELLOW}Please open manually: $file${NC}"
-    fi
+            ;;
+    esac
 }
 
-# Main menu loop
+# Main function
 main() {
     print_header
     check_transcripts
     
-    # Get transcripts as array (compatible with Bash 3.x)
-    local transcripts_list=()
-    local transcript
-    while IFS= read -r transcript; do
-        [ -n "$transcript" ] && transcripts_list+=("$transcript")
-    done < <(get_transcripts)
+    # Get transcripts into a temp file (most portable method)
+    local tmp_file
+    tmp_file=$(mktemp)
+    get_transcripts > "$tmp_file"
     
-    local count=${#transcripts_list[@]}
+    # Count transcripts
+    local count
+    count=$(wc -l < "$tmp_file" | tr -d ' ')
     
-    if [ $count -eq 0 ]; then
+    if [ "$count" -eq 0 ]; then
         echo -e "${YELLOW}No transcripts found in $TRANSCRIPTS_DIR${NC}"
         echo ""
+        rm -f "$tmp_file"
         exit 0
     fi
+    
+    # Read transcripts into array
+    local transcripts_list=()
+    while IFS= read -r line; do
+        transcripts_list[${#transcripts_list[@]}]="$line"
+    done < "$tmp_file"
+    rm -f "$tmp_file"
     
     while true; do
         display_transcripts "${transcripts_list[@]}"
         
-        echo -e -n "${CYAN}Select a deliberation to view [1-$count] or 'q' to quit: ${NC}"
+        printf "${CYAN}Select a deliberation to view [1-%s] or 'q' to quit: ${NC}" "$count"
         read -r choice
         
         # Check for quit
@@ -199,7 +239,7 @@ main() {
                 ;;
         esac
         
-        if [ "$choice" -lt 1 ] || [ "$choice" -gt $count ]; then
+        if [ "$choice" -lt 1 ] || [ "$choice" -gt "$count" ]; then
             echo ""
             echo -e "${RED}Invalid selection. Please enter a number between 1 and $count.${NC}"
             echo ""
@@ -209,27 +249,41 @@ main() {
         # Get selected transcript (array is 0-indexed)
         local index=$((choice - 1))
         local selected="${transcripts_list[$index]}"
-        local metadata=$(parse_transcript "$selected")
-        local title=$(echo "$metadata" | cut -d'|' -f2)
+        local metadata
+        metadata=$(parse_transcript "$selected")
+        local title
+        title=$(echo "$metadata" | cut -d'|' -f2)
         
         echo ""
         echo -e "${PURPLE}Selected:${NC} ${BOLD}$title${NC}"
         echo ""
         
         # Export and open
-        local html_file
-        html_file=$(export_to_html "$selected")
-        
-        if [ $? -eq 0 ] && [ -f "$html_file" ]; then
-            echo -e "${GREEN}✓ Exported to:${NC} $html_file"
+        EXPORTED_FILE=""
+        if export_to_html "$selected"; then
+            if [ -n "$EXPORTED_FILE" ] && [ -f "$EXPORTED_FILE" ]; then
+                echo ""
+                echo -e "${GREEN}✓ Exported to:${NC} $EXPORTED_FILE"
+                echo ""
+                open_in_browser "$EXPORTED_FILE"
+                echo ""
+                echo -e "${GRAY}Press Enter to continue...${NC}"
+                read -r
+                echo ""
+            else
+                echo ""
+                echo -e "${RED}Export function returned success but file not found.${NC}"
+                echo ""
+            fi
+        else
             echo ""
-            open_in_browser "$html_file"
+            echo -e "${RED}Failed to export transcript.${NC}"
+            echo -e "${GRAY}Try running manually:${NC}"
+            echo -e "${GRAY}  cd $PROJECT_ROOT${NC}"
+            echo -e "${GRAY}  python -m tools.cli export transcript \"$selected\"${NC}"
             echo ""
             echo -e "${GRAY}Press Enter to continue...${NC}"
             read -r
-            echo ""
-        else
-            echo -e "${RED}Failed to export transcript.${NC}"
             echo ""
         fi
     done

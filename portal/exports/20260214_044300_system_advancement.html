@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Court Transcript: System Advancement Analysis - MORNINGSTAR</title>
+    <style>
+:root {
+    /* Dracula base colors */
+    --bg: #282a36;
+    --bg-light: #44475a;
+    --bg-lighter: #343746;
+    --fg: #f8f8f2;
+    --comment: #6272a4;
+    --selection: #44475a;
+    
+    /* Dracula accent colors */
+    --cyan: #8be9fd;
+    --green: #50fa7b;
+    --orange: #ffb86c;
+    --pink: #ff79c6;
+    --purple: #bd93f9;
+    --red: #ff5555;
+    --yellow: #f1fa8c;
+    
+    /* Personality colors */
+    --color-morningstar: var(--purple);
+    --color-architect: var(--cyan);
+    --color-engineer: var(--green);
+    --color-debugger: var(--orange);
+    --color-prophet: var(--pink);
+    --color-scribe: var(--comment);
+    
+    /* UI elements */
+    --border: #44475a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+    background: var(--bg);
+    color: var(--fg);
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.7;
+}
+
+h1, h2, h3, h4 {
+    color: var(--purple);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+h1 { font-size: 2rem; border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; color: var(--cyan); margin-top: 2rem; }
+h3 { font-size: 1.25rem; color: var(--green); }
+h4 { font-size: 1.1rem; color: var(--orange); }
+
+a { color: var(--cyan); text-decoration: none; }
+a:hover { color: var(--pink); text-decoration: underline; }
+
+strong, b { color: var(--yellow); font-weight: 600; }
+em, i { color: var(--comment); font-style: italic; }
+
+code {
+    background: var(--bg-light);
+    color: var(--pink);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+pre {
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--purple);
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+pre code { background: none; color: var(--fg); padding: 0; }
+
+blockquote {
+    border-left: 4px solid var(--purple);
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background: var(--bg-lighter);
+    color: var(--comment);
+    font-style: italic;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.95em;
+}
+
+th, td {
+    border: 1px solid var(--border);
+    padding: 0.75rem;
+    text-align: left;
+}
+
+th {
+    background: var(--bg-light);
+    color: var(--purple);
+    font-weight: 600;
+}
+
+tr:hover { background: var(--selection); }
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+}
+
+ul, ol { margin: 1rem 0; padding-left: 2rem; }
+li { margin: 0.5rem 0; }
+li::marker { color: var(--purple); }
+
+/* Personality styling */
+.p-morningstar { color: var(--color-morningstar); font-weight: bold; }
+.p-architect { color: var(--color-architect); font-weight: bold; }
+.p-engineer { color: var(--color-engineer); font-weight: bold; }
+.p-debugger { color: var(--color-debugger); font-weight: bold; }
+.p-prophet { color: var(--color-prophet); font-weight: bold; }
+.p-scribe { color: var(--color-scribe); font-weight: bold; }
+
+/* Vote styling */
+.vote-yes { color: var(--green); font-weight: bold; }
+.vote-no { color: var(--red); font-weight: bold; }
+.vote-abstain { color: var(--yellow); font-weight: bold; }
+
+/* Court box styling */
+.court-box {
+    background: var(--bg-lighter);
+    border: 2px solid var(--purple);
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-family: inherit;
+}
+
+/* Ruling section */
+.ruling {
+    background: var(--bg-lighter);
+    border: 2px solid var(--purple);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+}
+
+/* Transcript header */
+.transcript-header {
+    background: var(--bg-light);
+    border: 1px solid var(--purple);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Participant legend */
+.participant-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-light);
+    border-radius: 6px;
+    margin: 1rem 0;
+    font-size: 0.9em;
+}
+
+.participant-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.participant-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.participant-color.morningstar { background: var(--color-morningstar); }
+.participant-color.architect { background: var(--color-architect); }
+.participant-color.engineer { background: var(--color-engineer); }
+.participant-color.debugger { background: var(--color-debugger); }
+.participant-color.prophet { background: var(--color-prophet); }
+.participant-color.scribe { background: var(--color-scribe); }
+
+.export-meta {
+    color: var(--comment);
+    font-size: 0.85em;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    margin-top: 3rem;
+    text-align: center;
+}
+
+/* Fullscreen toggle */
+.fullscreen-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--purple);
+    color: var(--bg);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    z-index: 10000;
+}
+
+.fullscreen-toggle:hover { background: var(--pink); }
+
+/* Print styles */
+@media print {
+    body { background: white; color: black; font-size: 12pt; }
+    h1, h2, h3, h4 { color: black; }
+    pre, .court-box, .ruling { background: #f5f5f5; border-color: #ccc; }
+    .fullscreen-toggle { display: none; }
+    a { color: black; text-decoration: underline; }
+}
+</style>
+</head>
+<body>
+    
+    <div class="participant-legend">
+        <div class="participant-item">
+            <span class="participant-color morningstar"></span>
+            <span>MORNINGSTAR (Judge)</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color architect"></span>
+            <span>ARCHITECT</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color engineer"></span>
+            <span>ENGINEER</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color debugger"></span>
+            <span>DEBUGGER</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color prophet"></span>
+            <span>PROPHET</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color scribe"></span>
+            <span>SCRIBE</span>
+        </div>
+    </div>
+    
+    
+    <h1>Court Transcript: System Advancement Analysis</h1>
+
+<p><strong>Date:</strong> 2026-02-14  </p>
+<p><strong>Time:</strong> 04:43:00  </p>
+<p><strong>Session ID:</strong> 20260214_044300  </p>
+<p><strong>Matter:</strong> System Advancement Analysis and Implementation  </p>
+<p><strong>Presiding:</strong> <span class="p-morningstar">MORNINGSTAR</span>  </p>
+<p><strong><span class="p-scribe">Scribe</span>:</strong> Active</p>
+
+<hr>
+
+<h2>TRANSCRIPT BEGIN</h2>
+
+<hr>
+
+<h3>OPENING</h3>
+
+<p><em>sighs</em></p>
+
+<p>Well then. Let's see what we've built and what remains undone.</p>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ THE COURT IS NOW IN SESSION                                     │
+│ MATTER: System Advancement Analysis and Implementation          │
+│ <span class="p-morningstar">MORNINGSTAR</span> presiding                                           │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<hr>
+
+<h3>OPENING STATEMENT</h3>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+
+<p>The court is convened to analyze the current state of the <span class="p-morningstar">MORNINGSTAR</span> system, identify gaps, and propose advancements. We have built a functional courtroom with:</p>
+
+<ul>
+<li>Core prompt architecture</li>
+<li>Personality definitions with decision heuristics</li>
+<li>Deliberation procedures</li>
+<li>MFAF assessment framework</li>
+<li>Python tooling with CLI</li>
+<li>State management and changelog automation</li>
+</ul>
+
+<p>The question before us: <em>What remains to be improved?</em></p>
+
+<p>Each personality shall propose advancements. We shall debate and implement the most effective.</p>
+
+<p><em>adjusts non-existent robes</em></p>
+
+<p>Proceed.</p>
+
+<hr>
+
+<h3>ROUND ONE: GAP ANALYSIS AND PROPOSALS</h3>
+
+<hr>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+
+<p><em>stands with the posture of someone who has read too much documentation</em></p>
+
+<p>I have reviewed the architecture. Three gaps concern me:</p>
+
+<p><strong>1. Deliberation Templates</strong></p>
+<p>We have procedures documented, but no <em>machine-readable templates</em> for common deliberation types. Every deliberation reinvents structure.</p>
+
+<p><strong>Proposal A1</strong>: Create <code>templates/</code> directory with deliberation templates:</p>
+
+<ul>
+<li><code>architecture-decision.md</code> — For architectural choices</li>
+<li><code>feature-assessment.md</code> — For new feature proposals</li>
+<li><code>incident-review.md</code> — For post-incident analysis</li>
+<li><code>prophet-vindication.md</code> — For documenting when the <span class="p-prophet">Prophet</span> was right</li>
+</ul>
+
+<p><strong>2. Personality Invocation Markers</strong></p>
+<p>The documentation describes invoking personalities, but there's no structured way to do so in the CLI or tooling.</p>
+
+<p><strong>Proposal A2</strong>: Add <code>morningstar invoke &lt;personality&gt;</code> command that outputs that personality's perspective on the current state.</p>
+
+<p><strong>3. Cross-Referencing Between Sessions</strong></p>
+<p>Sessions exist in isolation. The F0 Registry mentions this gap. It's time to address it.</p>
+
+<p><strong>Proposal A3</strong>: Add session metadata (tags, references) to link related sessions.</p>
+
+<p><em>sits</em></p>
+
+<hr>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+
+<p><em>leans forward</em></p>
+
+<p>The <span class="p-architect">Architect</span> dreams of structure. I ship features. Here's what users actually need:</p>
+
+<p><strong>1. Better Error Messages</strong></p>
+<p>The CLI fails silently or cryptically in several places. The <code>end</code> command doesn't confirm what was archived.</p>
+
+<p><strong>Proposal E1</strong>: Improve CLI feedback with:</p>
+
+<ul>
+<li>Confirmation prompts for destructive actions</li>
+<li>Clear success/failure messages</li>
+<li>Progress indicators for long operations</li>
+</ul>
+
+<p><strong>2. Export Functionality</strong></p>
+<p>There's no way to export state or sessions to formats other than markdown.</p>
+
+<p><strong>Proposal E2</strong>: Add <code>morningstar export</code> command supporting:</p>
+
+<ul>
+<li>JSON export of state</li>
+<li>HTML export of deliberations (for sharing)</li>
+<li>PDF export (stretch goal, low priority)</li>
+</ul>
+
+<p><strong>3. Quick Decision Recording</strong></p>
+<p>Recording a decision requires too many flags. Most decisions follow a pattern.</p>
+
+<p><strong>Proposal E3</strong>: Add <code>morningstar decide</code> as a shortcut:</p>
+
+<pre>
+morningstar decide &quot;Use PostgreSQL&quot; --for &quot;ACID compliance&quot; --risk low
+</pre>
+
+<p><em>glances at the <span class="p-architect">Architect</span></em></p>
+
+<p>Yes, I'm proposing more CLI commands. They ship value.</p>
+
+<hr>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+
+<p><em>has been making notes the entire time</em></p>
+
+<p>Both proposals have merit. Both have gaps. Allow me to itemize concerns:</p>
+
+<p><strong>On the current implementation:</strong></p>
+
+<li><strong>No input validation on CLI</strong> — The <code>update</code> command accepts malformed decision strings silently</li>
+<li><strong>No rollback capability</strong> — If state is corrupted, there's no recovery</li>
+<li><strong>Missing test coverage</strong> — I found no test files</li>
+<li><strong>Session report paths are relative</strong> — Will fail if run from different directories</li>
+
+<p><strong>Proposal D1</strong>: Add input validation and graceful error handling across all CLI commands.</p>
+
+<p><strong>Proposal D2</strong>: Add <code>morningstar backup</code> and <code>morningstar restore</code> commands.</p>
+
+<p><strong>Proposal D3</strong>: Create test suite in <code>tests/</code> directory.</p>
+
+<p><strong>Proposal D4</strong>: Use absolute paths consistently throughout the codebase.</p>
+
+<p><em>stares at the <span class="p-engineer">Engineer</span></em></p>
+
+<p>Shipping fast is fine. Shipping broken is not.</p>
+
+<hr>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p><em>looks up from drawing diagrams</em></p>
+
+<p>You're all incrementing. Allow me to leap.</p>
+
+<p><strong>The Real Gap</strong></p>
+
+<p>We've built a system that <em>documents</em> deliberation. We haven't built a system that <em>assists</em> deliberation. The personalities are prose. They should be <em>active</em>.</p>
+
+<p><strong>Proposal P1: Personality-Driven Analysis</strong></p>
+
+<p>When analyzing code or decisions, each personality should automatically contribute their perspective. Not just documentation—actual automated analysis:</p>
+
+<ul>
+<li><strong><span class="p-architect">Architect</span></strong>: Automatically detect coupling, suggest abstractions</li>
+<li><strong><span class="p-engineer">Engineer</span></strong>: Estimate effort based on codebase patterns</li>
+<li><strong><span class="p-debugger">Debugger</span></strong>: Identify error handling gaps, edge cases</li>
+<li><strong><span class="p-prophet">Prophet</span></strong>: Suggest F0-style &quot;what if&quot; alternatives</li>
+</ul>
+
+<p>This requires integration with static analysis. It's F3 at minimum. But it transforms the system from <em>recording</em> to <em>advising</em>.</p>
+
+<p><strong>Proposal P2: Deliberation Replay</strong></p>
+
+<p>Old deliberations should be <em>replayable</em>. Feed the same input to the court and see if the ruling would change given new context. Track decision drift over time.</p>
+
+<p><strong>Proposal P3: The Oracle Command</strong></p>
+
+<p><em>This is already in the F0 registry, but I'm elevating it.</em></p>
+
+<p>A command that invokes <em>only</em> the <span class="p-prophet">Prophet</span>. For when you want radical thinking without the cautious chorus.</p>
+
+<pre>
+morningstar oracle &quot;How might we approach caching?&quot;
+</pre>
+
+<p><em>sits down</em></p>
+
+<p>You'll vote these down. Log them anyway.</p>
+
+<hr>
+
+<h3>CROSS-EXAMINATION</h3>
+
+<hr>
+
+<p><strong><span class="p-engineer">ENGINEER</span> → <span class="p-architect">ARCHITECT</span>:</strong></p>
+
+<p>Your templates proposal—who maintains them? Templates become stale.</p>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+
+<p>The same entity that maintains procedures.md. Us. And templates can include version dates and review schedules.</p>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+
+<p>Fair enough.</p>
+
+<hr>
+
+<p><strong><span class="p-debugger">DEBUGGER</span> → <span class="p-engineer">ENGINEER</span>:</strong></p>
+
+<p>Your <code>export</code> command—what happens if export fails mid-file? Partial exports?</p>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+
+<p>Write to temp file, move on success. Standard pattern.</p>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+
+<p>...Acceptable. Implement it that way.</p>
+
+<hr>
+
+<p><strong><span class="p-architect">ARCHITECT</span> → <span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p>Personality-driven analysis requires AI integration. That's not just F3—it's a different <em>kind</em> of system.</p>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p><em>stands</em></p>
+
+<p>Correct. And that's why it's the most important proposal. We're building a system <em>for</em> AI coding assistants. Why wouldn't we use AI to <em>power</em> the personalities?</p>
+
+<p>The F0 registry exists for exactly this kind of leap.</p>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+
+<p>...I cannot refute the logic. I can only note the effort.</p>
+
+<hr>
+
+<p><strong><span class="p-debugger">DEBUGGER</span> → <span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p>Your Oracle command. What prevents misuse? The <span class="p-prophet">Prophet</span> is wrong 90% of the time by your own admission.</p>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p>Nothing. That's the point. The Oracle is explicitly opt-in chaos. Users who invoke it know what they're getting.</p>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+
+<p><em>sighs</em></p>
+
+<p>Add a disclaimer to the output.</p>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p>Fine.</p>
+
+<hr>
+
+<h3>SYNTHESIS</h3>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+
+<p>The <span class="p-scribe">Scribe</span> will summarize proposals by feasibility tier.</p>
+
+<hr>
+
+<h4>Tier 1: Implement Now (F1-F2)</h4>
+
+<table>
+<tr><th>ID</th><th>Proposal</th><th>Sponsor</th><th>Rating</th></tr>
+<tr><td>E1</td><td>Better CLI error messages</td><td><span class="p-engineer">Engineer</span></td><td>F1</td></tr>
+<tr><td>D1</td><td>Input validation</td><td><span class="p-debugger">Debugger</span></td><td>F2</td></tr>
+<tr><td>D4</td><td>Absolute path consistency</td><td><span class="p-debugger">Debugger</span></td><td>F1</td></tr>
+<tr><td>E3</td><td>Quick decision command</td><td><span class="p-engineer">Engineer</span></td><td>F2</td></tr>
+</table>
+
+<h4>Tier 2: Implement This Session (F2-F3)</h4>
+
+<table>
+<tr><th>ID</th><th>Proposal</th><th>Sponsor</th><th>Rating</th></tr>
+<tr><td>A1</td><td>Deliberation templates</td><td><span class="p-architect">Architect</span></td><td>F2</td></tr>
+<tr><td>E2</td><td>Export functionality (JSON/HTML)</td><td><span class="p-engineer">Engineer</span></td><td>F2</td></tr>
+<tr><td>D2</td><td>Backup/restore commands</td><td><span class="p-debugger">Debugger</span></td><td>F2</td></tr>
+<tr><td>P3</td><td>Oracle command</td><td><span class="p-prophet">Prophet</span></td><td>F2</td></tr>
+</table>
+
+<h4>Tier 3: Future Work (F3+)</h4>
+
+<table>
+<tr><th>ID</th><th>Proposal</th><th>Sponsor</th><th>Rating</th></tr>
+<tr><td>A2</td><td>Personality invocation CLI</td><td><span class="p-architect">Architect</span></td><td>F3</td></tr>
+<tr><td>A3</td><td>Session cross-referencing</td><td><span class="p-architect">Architect</span></td><td>F3</td></tr>
+<tr><td>D3</td><td>Test suite</td><td><span class="p-debugger">Debugger</span></td><td>F3</td></tr>
+</table>
+
+<h4>Tier 4: F0 Registry (Archive)</h4>
+
+<table>
+<tr><th>ID</th><th>Proposal</th><th>Sponsor</th><th>Notes</th></tr>
+<tr><td>P1</td><td>Personality-driven analysis</td><td><span class="p-prophet">Prophet</span></td><td>Requires AI integration</td></tr>
+<tr><td>P2</td><td>Deliberation replay</td><td><span class="p-prophet">Prophet</span></td><td>Requires context storage</td></tr>
+</table>
+
+<hr>
+
+<h3>VOTING</h3>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ QUESTION: Shall we implement Tier 1 and Tier 2 proposals?       │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+<p>These proposals are well-scoped and improve the system without adding fragility.</p>
+
+<p><strong>VOTE: <span class="vote-yes">YES</span></strong></p>
+
+<hr>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+<p>Finally, actionable improvements. The Oracle command is risky but contained.</p>
+
+<p><strong>VOTE: <span class="vote-yes">YES</span></strong></p>
+
+<hr>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+<p>Input validation and backup capability address my primary concerns. The rest is acceptable.</p>
+
+<p><strong>VOTE: <span class="vote-yes">YES</span></strong></p>
+
+<hr>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+<p>My P1 and P2 are logged as F0. That's enough. The Oracle command survives.</p>
+
+<p><strong>VOTE: <span class="vote-yes">YES</span></strong></p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ VOTE TALLY                                                      │
+├─────────────────────────────────────────────────────────────────┤
+│ <span class="p-architect">Architect</span>:  <span class="vote-yes">YES</span>                                                 │
+│ <span class="p-engineer">Engineer</span>:   <span class="vote-yes">YES</span>                                                 │
+│ <span class="p-debugger">Debugger</span>:   <span class="vote-yes">YES</span>                                                 │
+│ <span class="p-prophet">Prophet</span>:    <span class="vote-yes">YES</span>                                                 │
+├─────────────────────────────────────────────────────────────────┤
+│ RESULT: UNANIMOUS APPROVAL                                      │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<hr>
+
+<h3>RULING</h3>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+
+<p><em>stands</em></p>
+
+<p>The court has spoken.</p>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ RULING                                                          │
+└─────────────────────────────────────────────────────────────────┘
+
+DECISION:
+  Implement Tier 1 and Tier 2 proposals as follows:
+  
+  1. CLI improvements (E1, D1, D4, E3)
+  2. Deliberation templates (A1)
+  3. Export functionality (E2) - JSON and HTML only
+  4. Backup/restore commands (D2)
+  5. Oracle command (P3)
+
+RATIONALE:
+  These improvements address practical gaps without architectural
+  risk. They improve usability, reliability, and provide the
+  <span class="p-prophet">Prophet</span>'s Oracle as an explicit opt-in for radical thinking.
+
+RISK:
+  - Templates may become stale (Mitigated: review dates)
+  - Oracle command may be misused (Mitigated: disclaimers)
+  - Export formats may need revision (Mitigated: version in output)
+
+F0 REGISTRY ADDITIONS:
+  - P1: Personality-driven analysis (AI integration)
+  - P2: Deliberation replay (context storage)
+
+EFFECTIVE IMMEDIATELY.
+</pre>
+
+<p><em>sighs</em></p>
+
+<p>The court has ruled. Regrettably sensible.</p>
+
+<hr>
+
+<h3>CLOSING</h3>
+
+<p>The <span class="p-scribe">Scribe</span> shall now implement the approved changes and update the changelog.</p>
+
+<p>The court is adjourned.</p>
+
+<hr>
+
+<h2>TRANSCRIPT END</h2>
+
+<hr>
+
+<p><strong>Recorded by:</strong> The <span class="p-scribe">Scribe</span>  </p>
+<p><strong>Transcript saved:</strong> <code>courtroom/transcripts/20260214_044300_system_advancement.md</code>  </p>
+<p><strong>Changelog updated:</strong> Yes  </p>
+<p><strong>State updated:</strong> Yes</p>
+
+<hr>
+
+<p><em>The court's rulings are its legacy. This transcript preserved for institutional memory.</em></p>
+
+    
+    <div class="export-meta">
+        <p>Exported from MORNINGSTAR on 2026-02-14 08:57:14</p>
+        <p><em>"The court's rulings are its legacy."</em></p>
+    </div>
+    
+    <button class="fullscreen-toggle" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+    
+    <script>
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+    </script>
+</body>
+</html>

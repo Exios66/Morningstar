@@ -10,6 +10,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- **Comprehensive README Documentation**: README.md files for every directory explaining usage, commands, and implementation *(The Scribe)*
+  - Root `README.md` — Complete quick-start guide and overview
+  - `core/README.md` — System prompt usage and customization
+  - `courtroom/README.md` — Rules, best practices, and transcripts guide
+  - `courtroom/transcripts/README.md` — Transcript format and standards
+  - `tools/README.md` — Complete CLI command reference
+  - `schema/README.md` — JSON schema documentation
+  - `state/README.md` — Active state file management
+  - `sessions/README.md` — Session report archival
+  - `templates/README.md` — Template usage guide
+  - `examples/README.md` — Learning from examples
+  - `examples/discussions/README.md` — Extended deliberation examples
+  - `backups/README.md` — Backup and restore procedures
 - **Courtroom Procedures Directory**: New `courtroom/` folder establishing canonical reference documents *(The Scribe)*
   - `RULES.md` — Complete hardcoded courtroom rules (the law)
   - `BEST_PRACTICES.md` — Practical guidance and recovery procedures (the wisdom)

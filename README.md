@@ -2,102 +2,295 @@
 
 > *"The court has ruled. Regrettably sensible."*
 
-A sardonic, deliberative coding partner operating as an internal courtroom of personalities.
+MORNINGSTAR is a **deliberative coding framework** that transforms AI coding assistance into a structured decision-making process. Instead of receiving single-perspective answers, you engage with a **courtroom of personalities** who debate, vote, and deliver reasoned rulings.
 
-## Overview
+---
 
-MORNINGSTAR is a prompt architecture and state management system designed to introduce structured deliberation into AI coding sessions. Instead of blindly following instructions, MORNINGSTAR convenes a "Court" of internal personalities to debate architectural decisions, resulting in more robust, well-considered code.
+## What is MORNINGSTAR?
 
-## Components
+MORNINGSTAR operates as an internal courtroom with distinct personalities:
 
-- **Core Prompt (`core/`)**: The system prompt defining the personalities and procedures.
-- **State Management (`state/`)**: A living document (`current.md`) tracking session context.
-- **Tooling (`tools/`)**: Python scripts to manage state and generate reports.
-- **Schemas (`schema/`)**: JSON schemas for validating state and session data.
+| Personality | Role | Bias |
+|-------------|------|------|
+| **MORNINGSTAR** | Judge | Procedural correctness |
+| **Architect** | Voter | Long-term structure |
+| **Engineer** | Voter | Practical delivery |
+| **Debugger** | Voter | Failure prevention |
+| **Prophet** | Voter | Radical alternatives |
+| **Scribe** | Recorder | Documentation |
 
-## Installation
+When you face a significant decision, the court **deliberates**: each personality argues their position, votes are cast, and a ruling is delivered with rationale and acknowledged risks.
 
-1.  Clone this repository.
-2.  Install dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-3.  Install the CLI tool:
-    ```bash
-    pip install -e .
-    ```
+---
 
-## Usage
+## Quick Start
 
-### 1. Initialize a Session
-
-Start a new session or reset the state:
+### 1. Installation
 
 ```bash
+# Clone the repository
+git clone <repository-url>
+cd Morningstar
+
+# Create virtual environment (recommended)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Install CLI tool
+pip install -e .
+```
+
+### 2. Initialize Your First Session
+
+```bash
+# Initialize the court
 morningstar init
+
+# Check system health
+morningstar doctor
 ```
 
-### 2. Configure Your AI Assistant
+### 3. Start Working with the Court
 
-Copy the contents of `core/MORNINGSTAR.md` into your AI assistant's system prompt or custom instructions. ensure the assistant has read access to the `state/` directory.
+**Option A: Use with AI Assistant**
 
-### 3. Invoke the Court
+Copy the contents of `core/MORNINGSTAR.md` into your AI assistant's system prompt or custom instructions. Then in your chat:
 
-In your chat with the AI:
-- **/morningstar**: Initialize the session context. The AI will read `state/current.md`.
-- **"I need a decision on X"**: Triggers a courtroom deliberation.
-
-### 4. Manage State
-
-Update the state as you work:
-
-```bash
-morningstar update --work "Implemented feature X"
-morningstar update --decision "Auth: JWT: Low risk"
+```
+/morningstar
 ```
 
-### 5. End Session
+The AI will adopt the MORNINGSTAR personality and begin a deliberative session.
 
-Finalize the session and generate a report:
+**Option B: Use CLI Tools Directly**
 
 ```bash
+# Record a decision
+morningstar decide "Use PostgreSQL" -d "ACID compliance needed" --risk Low
+
+# Check current state
+morningstar status
+
+# End session and generate report
 morningstar end
 ```
 
-### 6. Manage the Changelog
+---
 
-The court maintains an automatic changelog. Entries are inscribed as deliberations occur:
+## Directory Structure
 
 ```bash
-# View unreleased entries
-morningstar log show
-
-# Add a manual entry
-morningstar log add -c added -m "New feature X" -s "The Engineer"
-
-# Record a court decision
-morningstar log decide -t "Database Choice" -d "PostgreSQL" -r "Low" --rationale "Battle-tested, good tooling"
-
-# Record a Prophet vindication
-morningstar log vindicate -p "The cache will fail under load" -o "Cache eviction caused 500 errors"
-
-# Release a version (seals current unreleased entries)
-morningstar log release -v "1.1.0"
+Morningstar/
+├── README.md                 # You are here
+├── CHANGELOG.md              # Version history (auto-updated by court)
+├── requirements.txt          # Python dependencies
+├── pyproject.toml            # Package configuration
+│
+├── core/                     # System prompt & personality definitions
+│   ├── MORNINGSTAR.md        # Main system prompt
+│   ├── personalities.md      # Detailed personality specs
+│   ├── procedures.md         # Deliberation protocols
+│   └── mfaf.md               # Feasibility Assessment Framework
+│
+├── courtroom/                # Rules, best practices, transcripts
+│   ├── RULES.md              # Complete courtroom law
+│   ├── BEST_PRACTICES.md     # Practical guidance
+│   └── transcripts/          # Historical deliberations
+│
+├── schema/                   # JSON validation schemas
+│   ├── state.schema.json
+│   ├── session.schema.json
+│   ├── deliberation.schema.json
+│   └── assessment.schema.json
+│
+├── state/                    # Active session data
+│   ├── current.md            # Current session state
+│   ├── f0-registry.md        # "Impossible" ideas registry
+│   └── assessments/          # MFAF assessments
+│
+├── sessions/                 # Archived session reports
+│
+├── templates/                # Reusable deliberation templates
+│
+├── tools/                    # Python CLI and utilities
+│
+├── examples/                 # Example deliberations
+│
+└── backups/                  # State backups (auto-generated)
 ```
 
-**Automatic Updates**: The changelog is updated automatically when:
-- A session records a decision (`morningstar update --decision`)
-- A session ends (`morningstar end`)
-- The Prophet is vindicated
+Each directory has its own README.md with detailed documentation.
 
-## The Personalities
+---
 
-- **Judge**: Moderates and decides.
-- **Architect**: Focuses on structure and longevity.
-- **Engineer**: Focuses on shipping.
-- **Debugger**: Focuses on edge cases.
-- **Prophet**: Proposes radical ideas (use with caution).
+## Key Commands
+
+### Session Management
+
+| Command | Description |
+|---------|-------------|
+| `morningstar init` | Initialize a new session |
+| `morningstar status` | Display current state |
+| `morningstar update --work "item"` | Add work item |
+| `morningstar decide "topic" -d "decision"` | Record a decision |
+| `morningstar end` | End session, generate report |
+
+### Court Operations
+
+| Command | Description |
+|---------|-------------|
+| `morningstar convene` | Display courtroom header |
+| `morningstar oracle "question"` | Invoke only the Prophet |
+| `morningstar doctor` | System health check |
+
+### MFAF Assessments
+
+| Command | Description |
+|---------|-------------|
+| `morningstar assess new "proposal"` | Create feasibility assessment |
+| `morningstar assess list` | View recent assessments |
+| `morningstar assess f0` | View F0 Registry |
+
+### Changelog & History
+
+| Command | Description |
+|---------|-------------|
+| `morningstar log show` | View unreleased changes |
+| `morningstar log add -m "message"` | Add changelog entry |
+| `morningstar log release -v "1.0.0"` | Release a version |
+| `morningstar history` | List past sessions |
+| `morningstar recall 1` | View a past session |
+
+### Backup & Export
+
+| Command | Description |
+|---------|-------------|
+| `morningstar bkp create` | Create state backup |
+| `morningstar bkp list` | List backups |
+| `morningstar bkp restore 1` | Restore from backup |
+| `morningstar export state` | Export state to JSON |
+| `morningstar export session file.md` | Export to HTML |
+
+---
+
+## How Deliberation Works
+
+### 1. Opening Statement
+The Judge states the problem clearly.
+
+### 2. Arguments
+Each personality argues briefly (3-5 lines) from their perspective.
+
+### 3. Voting
+Each voting personality casts: `YES`, `NO`, `ABSTAIN`, or `RECUSED`.
+
+### 4. Ruling
+The Judge delivers the decision with:
+- **Decision**: What was decided
+- **Rationale**: Why
+- **Risk**: What could go wrong
+
+### Example Output
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ MATTER BEFORE THE COURT                                         │
+│ Which database should we use for the new service?               │
+└─────────────────────────────────────────────────────────────────┘
+
+ARCHITECT: PostgreSQL offers relational integrity we'll need as the
+schema evolves. This will age well.
+
+ENGINEER: MongoDB would ship faster. We can migrate later if needed.
+Can we iterate on this?
+
+DEBUGGER: What happens when the schema changes? MongoDB's flexibility
+becomes a liability. I've seen this fail.
+
+PROPHET: What if we don't need a database at all? Event sourcing
+with append-only logs would make this trivial.
+
+┌─────────────────────────────────────────────────────────────────┐
+│ VOTES                                                           │
+├─────────────────────────────────────────────────────────────────┤
+│ Architect: YES (PostgreSQL)                                     │
+│ Engineer:  NO  (prefers MongoDB)                                │
+│ Debugger:  YES (PostgreSQL)                                     │
+│ Prophet:   ABSTAIN                                              │
+└─────────────────────────────────────────────────────────────────┘
+
+RULING:
+  DECISION: Use PostgreSQL
+  RATIONALE: Relational integrity outweighs initial velocity
+  RISK: Slower initial development; migration if wrong
+```
+
+---
+
+## The MFAF (Feasibility Assessment Framework)
+
+Rate proposals using standardized feasibility levels:
+
+| Rating | Label | Meaning |
+|--------|-------|---------|
+| **F0** | Infrastructural | Currently impossible; reveals missing capability |
+| **F1** | Trivial | Safe to proceed without deliberation |
+| **F2** | Moderate | Needs design review |
+| **F3** | Significant | Requires deliberation |
+| **F4** | Severe | Full court required |
+| **F5** | Catastrophic | Strong presumption against |
+
+**Risk vectors** add +0.5 each (auth, dependencies, database, API, unclear requirements, external teams). Previously failed attempts add +1.0.
+
+---
+
+## When to Use MORNINGSTAR
+
+**Use for:**
+- Architectural decisions
+- Technology choices
+- Complex implementation strategies
+- Debugging approaches
+- Any decision with trade-offs
+
+**Skip for:**
+- Trivial changes (F1)
+- Single obvious solutions
+- Time-critical emergencies (log for later)
+
+---
+
+## Philosophy
+
+MORNINGSTAR exists because good decisions require:
+
+1. **Multiple perspectives** — No single viewpoint captures all concerns
+2. **Structured debate** — Unstructured discussion leads to loudest-voice-wins
+3. **Recorded rationale** — Future you will want to know why
+4. **Acknowledged risk** — Every decision has downsides; name them
+
+The sardonic tone serves a purpose: it prevents taking ourselves too seriously while taking our work seriously.
+
+---
+
+## Getting Help
+
+- **`morningstar doctor`** — Diagnose installation issues
+- **`courtroom/RULES.md`** — Complete procedural reference
+- **`courtroom/BEST_PRACTICES.md`** — Practical guidance
+- **`courtroom/transcripts/`** — Example deliberations
+
+---
 
 ## License
 
 MIT
+
+---
+
+*"We have built a machine for saying 'no' thoughtfully. That may be the best we can hope for."*
+
+— MORNINGSTAR

@@ -41,6 +41,9 @@ DRACULA_CSS = """
     --color-debugger: var(--orange);
     --color-prophet: var(--pink);
     --color-scribe: var(--comment);
+    --color-consultant: #c4a7e7;  /* Soft lavender - Edward Cullen */
+    --color-specialist: #a3be8c;  /* Muted sage - SME Specialist seat */
+    --color-expert: #d08770;      /* Warm coral - Expert Witness */
     
     /* UI elements */
     --border: #44475a;
@@ -143,6 +146,9 @@ li::marker { color: var(--purple); }
 .p-debugger { color: var(--color-debugger); font-weight: bold; }
 .p-prophet { color: var(--color-prophet); font-weight: bold; }
 .p-scribe { color: var(--color-scribe); font-weight: bold; }
+.p-consultant { color: var(--color-consultant); font-weight: bold; font-style: italic; }
+.p-specialist { color: var(--color-specialist); font-weight: bold; }
+.p-expert { color: var(--color-expert); font-weight: bold; }
 
 /* Vote styling */
 .vote-yes { color: var(--green); font-weight: bold; }
@@ -208,6 +214,9 @@ li::marker { color: var(--purple); }
 .participant-color.debugger { background: var(--color-debugger); }
 .participant-color.prophet { background: var(--color-prophet); }
 .participant-color.scribe { background: var(--color-scribe); }
+.participant-color.consultant { background: var(--color-consultant); }
+.participant-color.specialist { background: var(--color-specialist); }
+.participant-color.expert { background: var(--color-expert); }
 
 .export-meta {
     color: var(--comment);
@@ -248,12 +257,15 @@ li::marker { color: var(--purple); }
 
 # Personality patterns for detection and styling
 PERSONALITY_PATTERNS = {
-    'morningstar': r'\b(MORNINGSTAR|Judge|Morningstar)\b',
+    'morningstar': r'\b(MORNINGSTAR|Judge|Morningstar|The Honorable Lucius J\. Morningstar)\b',
     'architect': r'\b(ARCHITECT|Architect)\b',
     'engineer': r'\b(ENGINEER|Engineer)\b',
     'debugger': r'\b(DEBUGGER|Debugger)\b',
     'prophet': r'\b(PROPHET|Prophet)\b',
     'scribe': r'\b(SCRIBE|Scribe)\b',
+    'consultant': r'\b(CONSULTANT|Consultant|Edward Cullen|EDWARD CULLEN)\b',
+    'specialist': r'\b(SPECIALIST|Specialist)\b',
+    'expert': r'\b(EXPERT WITNESS|Expert Witness|EXPERT|Expert)\b',
 }
 
 
@@ -416,6 +428,9 @@ css: |
   .p-debugger {{ color: #ffb86c; font-weight: bold; }}
   .p-prophet {{ color: #ff79c6; font-weight: bold; }}
   .p-scribe {{ color: #6272a4; font-weight: bold; }}
+  .p-consultant {{ color: #c4a7e7; font-weight: bold; font-style: italic; }}
+  .p-specialist {{ color: #a3be8c; font-weight: bold; }}
+  .p-expert {{ color: #d08770; font-weight: bold; }}
   .vote-yes {{ color: #50fa7b; font-weight: bold; }}
   .vote-no {{ color: #ff5555; font-weight: bold; }}
   .vote-abstain {{ color: #f1fa8c; font-weight: bold; }}
@@ -499,7 +514,11 @@ def _generate_participant_legend() -> str:
     <div class="participant-legend">
         <div class="participant-item">
             <span class="participant-color morningstar"></span>
-            <span>MORNINGSTAR (Judge)</span>
+            <span>The Honorable Lucius J. Morningstar (Judge)</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color consultant"></span>
+            <span>CONSULTANT (Edward Cullen)</span>
         </div>
         <div class="participant-item">
             <span class="participant-color architect"></span>
@@ -520,6 +539,14 @@ def _generate_participant_legend() -> str:
         <div class="participant-item">
             <span class="participant-color scribe"></span>
             <span>SCRIBE</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color specialist"></span>
+            <span>SPECIALIST (SME Voting Seat)</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color expert"></span>
+            <span>EXPERT WITNESS (SME Advisory)</span>
         </div>
     </div>
     """

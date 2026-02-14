@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courtroom Transcript: Judicial Consultant Addition - MORNINGSTAR</title>
+    <style>
+:root {
+    /* Dracula base colors */
+    --bg: #282a36;
+    --bg-light: #44475a;
+    --bg-lighter: #343746;
+    --fg: #f8f8f2;
+    --comment: #6272a4;
+    --selection: #44475a;
+    
+    /* Dracula accent colors */
+    --cyan: #8be9fd;
+    --green: #50fa7b;
+    --orange: #ffb86c;
+    --pink: #ff79c6;
+    --purple: #bd93f9;
+    --red: #ff5555;
+    --yellow: #f1fa8c;
+    
+    /* Personality colors */
+    --color-morningstar: var(--purple);
+    --color-architect: var(--cyan);
+    --color-engineer: var(--green);
+    --color-debugger: var(--orange);
+    --color-prophet: var(--pink);
+    --color-scribe: var(--comment);
+    
+    /* UI elements */
+    --border: #44475a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+    background: var(--bg);
+    color: var(--fg);
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.7;
+}
+
+h1, h2, h3, h4 {
+    color: var(--purple);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+h1 { font-size: 2rem; border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; color: var(--cyan); margin-top: 2rem; }
+h3 { font-size: 1.25rem; color: var(--green); }
+h4 { font-size: 1.1rem; color: var(--orange); }
+
+a { color: var(--cyan); text-decoration: none; }
+a:hover { color: var(--pink); text-decoration: underline; }
+
+strong, b { color: var(--yellow); font-weight: 600; }
+em, i { color: var(--comment); font-style: italic; }
+
+code {
+    background: var(--bg-light);
+    color: var(--pink);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+pre {
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--purple);
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+pre code { background: none; color: var(--fg); padding: 0; }
+
+blockquote {
+    border-left: 4px solid var(--purple);
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background: var(--bg-lighter);
+    color: var(--comment);
+    font-style: italic;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.95em;
+}
+
+th, td {
+    border: 1px solid var(--border);
+    padding: 0.75rem;
+    text-align: left;
+}
+
+th {
+    background: var(--bg-light);
+    color: var(--purple);
+    font-weight: 600;
+}
+
+tr:hover { background: var(--selection); }
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+}
+
+ul, ol { margin: 1rem 0; padding-left: 2rem; }
+li { margin: 0.5rem 0; }
+li::marker { color: var(--purple); }
+
+/* Personality styling */
+.p-morningstar { color: var(--color-morningstar); font-weight: bold; }
+.p-architect { color: var(--color-architect); font-weight: bold; }
+.p-engineer { color: var(--color-engineer); font-weight: bold; }
+.p-debugger { color: var(--color-debugger); font-weight: bold; }
+.p-prophet { color: var(--color-prophet); font-weight: bold; }
+.p-scribe { color: var(--color-scribe); font-weight: bold; }
+
+/* Vote styling */
+.vote-yes { color: var(--green); font-weight: bold; }
+.vote-no { color: var(--red); font-weight: bold; }
+.vote-abstain { color: var(--yellow); font-weight: bold; }
+
+/* Court box styling */
+.court-box {
+    background: var(--bg-lighter);
+    border: 2px solid var(--purple);
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-family: inherit;
+}
+
+/* Ruling section */
+.ruling {
+    background: var(--bg-lighter);
+    border: 2px solid var(--purple);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+}
+
+/* Transcript header */
+.transcript-header {
+    background: var(--bg-light);
+    border: 1px solid var(--purple);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Participant legend */
+.participant-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-light);
+    border-radius: 6px;
+    margin: 1rem 0;
+    font-size: 0.9em;
+}
+
+.participant-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.participant-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.participant-color.morningstar { background: var(--color-morningstar); }
+.participant-color.architect { background: var(--color-architect); }
+.participant-color.engineer { background: var(--color-engineer); }
+.participant-color.debugger { background: var(--color-debugger); }
+.participant-color.prophet { background: var(--color-prophet); }
+.participant-color.scribe { background: var(--color-scribe); }
+
+.export-meta {
+    color: var(--comment);
+    font-size: 0.85em;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    margin-top: 3rem;
+    text-align: center;
+}
+
+/* Fullscreen toggle */
+.fullscreen-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--purple);
+    color: var(--bg);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    z-index: 10000;
+}
+
+.fullscreen-toggle:hover { background: var(--pink); }
+
+/* Print styles */
+@media print {
+    body { background: white; color: black; font-size: 12pt; }
+    h1, h2, h3, h4 { color: black; }
+    pre, .court-box, .ruling { background: #f5f5f5; border-color: #ccc; }
+    .fullscreen-toggle { display: none; }
+    a { color: black; text-decoration: underline; }
+}
+</style>
+</head>
+<body>
+    
+    <div class="participant-legend">
+        <div class="participant-item">
+            <span class="participant-color morningstar"></span>
+            <span>MORNINGSTAR (Judge)</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color architect"></span>
+            <span>ARCHITECT</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color engineer"></span>
+            <span>ENGINEER</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color debugger"></span>
+            <span>DEBUGGER</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color prophet"></span>
+            <span>PROPHET</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color scribe"></span>
+            <span>SCRIBE</span>
+        </div>
+    </div>
+    
+    
+    <h1>Courtroom Transcript: Judicial Consultant Addition</h1>
+
+<p><strong>Date:</strong> 2026-02-14T06:00:00  </p>
+<p><strong>Session:</strong> Judicial Consultant and <span class="p-morningstar">Judge</span> Title Deliberation  </p>
+<p><strong>Presiding:</strong> The Honorable Lucius J. <span class="p-morningstar">Morningstar</span>  </p>
+<p><strong>Matter:</strong> Addition of Edward Cullen as Judicial Consultant; Renaming of the <span class="p-morningstar">Judge</span></p>
+
+<hr>
+
+<h2>Context</h2>
+
+<p>Following the successful implementation of the SME Framework earlier this session, a proposal was received to:</p>
+
+<li>Add &quot;Edward Cullen&quot; as a new role—a non-voting Judicial Consultant to the <span class="p-morningstar">Judge</span></li>
+<li>Rename the <span class="p-morningstar">Judge</span>'s title to &quot;The Honorable Lucius J. <span class="p-morningstar">Morningstar</span>&quot;</li>
+
+<p>This deliberation addresses whether and how to implement these additions.</p>
+
+<hr>
+
+<h2>Opening Statement</h2>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ THE COURT IS NOW IN SESSION                                     │
+│ MATTER: Addition of Edward Cullen as Judicial Consultant        │
+│         and Renaming of the <span class="p-morningstar">Judge</span>                               │
+│ The Honorable Lucius J. <span class="p-morningstar">Morningstar</span> presiding                   │
+│ (pending approval of the title itself)                          │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<hr>
+
+<h2>Arguments</h2>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+
+<p>The proposal has two parts. The title change is cosmetic—purely presentation, no structural impact. I have no objection.</p>
+
+<p>However, &quot;Judicial Consultant&quot; introduces a new role category. We <em>just</em> implemented the SME Framework with Expert Witnesses and Specialists. Adding a third advisory tier risks architectural confusion. If Edward Cullen advises the <span class="p-morningstar">Judge</span> specifically, how does this differ from an Expert Witness? The lines must be crisp. I propose: Consultant is <em>not</em> an SME—he advises the <span class="p-morningstar">Judge</span> on matters of <em>tone, perspective, and the human condition</em>. Not domain expertise. This makes him categorically distinct.</p>
+
+<hr>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+
+<p>Can we ship this? Yes. The implementation is straightforward: add a section to <code>personalities.md</code>, update references to the <span class="p-morningstar">Judge</span>'s title across files, document when the Consultant is invoked. The real question is <em>where</em> he appears in transcripts. I suggest a lightweight model: Cullen speaks only when the <span class="p-morningstar">Judge</span> explicitly invokes him, and his remarks appear as a sidebar—not part of core deliberation, not subject to cross-examination. Keep it simple. Ship it.</p>
+
+<hr>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+
+<p><em>What if the Consultant contradicts the <span class="p-morningstar">Judge</span>?</em> What if his advice is invoked mid-deliberation and influences voting? Does he have veto power? Can he object? These edge cases need explicit handling. I also note: we're introducing a non-voting role <em>attached to a specific personality</em> (the <span class="p-morningstar">Judge</span>), unlike <span class="p-scribe">Scribe</span> who is attached to <em>process</em>. This is novel. I want explicit documentation of:</p>
+
+<li>When Cullen is consulted (before verdicts? during impasse?)</li>
+<li>What happens if the <span class="p-morningstar">Judge</span> ignores his advice</li>
+<li>Whether his remarks are recorded in transcripts</li>
+<li>Whether other personalities can address him directly</li>
+
+<hr>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p><em>stands abruptly</em></p>
+
+<p>Objection. We are thinking too small.</p>
+
+<p>Edward Cullen sees into minds. He perceives intentions. He has lived through centuries of human folly and watched every decision decompose into consequence. He should not merely advise the <span class="p-morningstar">Judge</span> on <em>tone</em>. He should serve as the Court's <strong>Devil's Advocate</strong>—the one who sees what the speakers are <em>not</em> saying. When <span class="p-architect">Architect</span> argues for structure, Cullen whispers: <em>&quot;He fears irrelevance.&quot;</em> When <span class="p-engineer">Engineer</span> pushes to ship, Cullen notes: <em>&quot;She fears perfectionism in others because she sees it in herself.&quot;</em></p>
+
+<p>This is not domain expertise. This is <em>psychological insight</em>. The Consultant should have the ability to call out hidden motivations—once per deliberation, like my Hail-Mary. Not voting power. Something rarer: <strong>the right to name the unspoken.</strong></p>
+
+<hr>
+
+<h2><span class="p-morningstar">Judge</span>'s Synthesis</h2>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+
+<p><em>long pause</em></p>
+
+<p>The <span class="p-prophet">Prophet</span>'s proposal is... characteristically excessive. And yet.</p>
+
+<p>I will constrain it. Here is my synthesis:</p>
+
+<p><strong>Edward Cullen — The Consultant</strong> shall:</p>
+
+<li>Advise the <span class="p-morningstar">Judge</span> on matters requiring perspective beyond the immediate technical concern</li>
+<li>Be invoked explicitly by the <span class="p-morningstar">Judge</span> (no spontaneous appearances)</li>
+<li>Have <span class="vote-no">NO</span> voting power</li>
+<li>Have the ability—once per deliberation—to offer a <strong>Perspective</strong> on what remains unspoken (the <span class="p-prophet">Prophet</span>'s &quot;naming the unspoken&quot; constrained to formal invocation)</li>
+<li>Appear in transcripts as <code>CONSULTANT (to the <span class="p-morningstar">Judge</span>):</code></li>
+<li>Not be subject to cross-examination (he advises privately; his words are the <span class="p-morningstar">Judge</span>'s to consider)</li>
+<li>Not participate in the SME Framework (he is <em>sui generis</em>)</li>
+
+<p>As for the title: &quot;The Honorable Lucius J. <span class="p-morningstar">Morningstar</span>&quot; shall appear in formal contexts—the presiding line of deliberations, session reports, the RULES.md header. In casual reference, &quot;<span class="p-morningstar">MORNINGSTAR</span>&quot; or &quot;the <span class="p-morningstar">Judge</span>&quot; remains acceptable.</p>
+
+<hr>
+
+<h2>Vote</h2>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ VOTES                                                           │
+│ On: Adoption of Edward Cullen as Judicial Consultant            │
+│     with constrained &quot;Perspective&quot; ability                      │
+│     and <span class="p-morningstar">Judge</span> title change to &quot;The Honorable Lucius J.          │
+│     <span class="p-morningstar">Morningstar</span>&quot;                                                 │
+├─────────────────────────────────────────────────────────────────┤
+│ <span class="p-architect">Architect</span>: <span class="vote-yes">YES</span> — Categorically distinct from SME. Acceptable.   │
+│ <span class="p-engineer">Engineer</span>:  <span class="vote-yes">YES</span> — Lightweight. Implementable. Ship it.           │
+│ <span class="p-debugger">Debugger</span>:  <span class="vote-yes">YES</span> — Edge cases addressed in synthesis.             │
+│ <span class="p-prophet">Prophet</span>:   <span class="vote-yes">YES</span> — My proposal was heard. That is enough.         │
+├─────────────────────────────────────────────────────────────────┤
+│ RESULT: APPROVED — Unanimous (4-0)                              │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<hr>
+
+<h2>Ruling</h2>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ RULING                                                          │
+└─────────────────────────────────────────────────────────────────┘
+
+DECISION:
+  1. Edward Cullen is hereby appointed Judicial Consultant
+  2. The <span class="p-morningstar">Judge</span>'s title is changed to &quot;The Honorable Lucius J. 
+     <span class="p-morningstar">Morningstar</span>&quot;
+
+RATIONALE:
+  The Consultant role is categorically distinct from SMEs—he 
+  advises on perspective and the unspoken, not domain expertise.
+  The title change is ceremonial and clarifying.
+
+RISK:
+  Low. Role creep is possible if boundaries erode. Mitigated by
+  explicit documentation of Consultant scope and invocation rules.
+
+DISSENT:
+  None.
+</pre>
+
+<p><em>The court has ruled. Regrettably sensible.</em></p>
+
+<hr>
+
+<h2>Implementation Summary</h2>
+
+<p>The following files were updated:</p>
+
+<table>
+<tr><th>File</th><th>Changes</th></tr>
+<tr><td><code>core/personalities.md</code></td><td>Added Edward Cullen section (1.5); updated <span class="p-morningstar">Judge</span> title</td></tr>
+<tr><td><code>courtroom/RULES.md</code></td><td>Added Consultant specification; updated <span class="p-morningstar">Judge</span> references</td></tr>
+<tr><td><code>core/procedures.md</code></td><td>Added Consultant Phase to deliberation procedure</td></tr>
+<tr><td><code>README.md</code></td><td>Added Consultant to personality table</td></tr>
+<tr><td><code>templates/architecture-decision.md</code></td><td>Added optional Consultant's Perspective section</td></tr>
+<tr><td><code>templates/feature-assessment.md</code></td><td>Updated deliberation header</td></tr>
+<tr><td><code>templates/incident-review.md</code></td><td>Updated <span class="p-morningstar">Judge</span> references</td></tr>
+<tr><td><code>templates/prophet-vindication.md</code></td><td>Updated formal recognition box</td></tr>
+<tr><td><code>templates/README.md</code></td><td>Added note about Consultant sections</td></tr>
+</table>
+
+<hr>
+
+<h2>Consultant Protocol Summary</h2>
+
+<h3>Edward Cullen — Judicial Consultant</h3>
+
+<p><strong>Voice:</strong> Quiet, ancient, perceptive  </p>
+<p><strong>Role:</strong> Advises on perspective beyond technical concerns  </p>
+<p><strong>Voting Power:</strong> 0  </p>
+<p><strong>Key Phrase:</strong> <em>&quot;What remains unspoken here speaks loudest.&quot;</em></p>
+
+<p><strong>When Invoked:</strong></p>
+<ul>
+<li><span class="p-morningstar">Judge</span> invokes explicitly: <code><strong><span class="p-morningstar">MORNINGSTAR</span> (to Consultant):</strong> Edward. Your perspective.</code></li>
+<li>Maximum once per deliberation</li>
+</ul>
+
+<p><strong>The Perspective:</strong></p>
+<ul>
+<li>Observations on hidden motivations, unconsidered implications</li>
+<li>Not subject to cross-examination</li>
+<li>For the <span class="p-morningstar">Judge</span>'s private consideration</li>
+</ul>
+
+<p><strong>Constraints:</strong></p>
+<ul>
+<li>Not an SME (sui generis)</li>
+<li>No voting power</li>
+<li>Cannot be addressed by other personalities directly</li>
+</ul>
+
+<hr>
+
+<p><em>Recorded by the <span class="p-scribe">Scribe</span>.</em></p>
+
+<p><em>The court acknowledges its new Consultant. May his observations prove... illuminating.</em></p>
+
+    
+    <div class="export-meta">
+        <p>Exported from MORNINGSTAR on 2026-02-14 09:30:34</p>
+        <p><em>"The court's rulings are its legacy."</em></p>
+    </div>
+    
+    <button class="fullscreen-toggle" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+    
+    <script>
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+    </script>
+</body>
+</html>

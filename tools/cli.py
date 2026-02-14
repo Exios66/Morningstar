@@ -307,6 +307,24 @@ def doctor():
         else:
             issues.append(f"Missing core file: core/{filename}")
     
+    # Check courtroom files
+    courtroom_files = ['RULES.md', 'BEST_PRACTICES.md']
+    for filename in courtroom_files:
+        filepath = os.path.join(BASE_DIR, 'courtroom', filename)
+        if os.path.exists(filepath):
+            click.echo(f"  [✓] courtroom/{filename} exists")
+        else:
+            issues.append(f"Missing courtroom file: courtroom/{filename}")
+    
+    # Check transcripts directory
+    transcripts_dir = os.path.join(BASE_DIR, 'courtroom', 'transcripts')
+    if os.path.exists(transcripts_dir):
+        transcript_count = len(globlib.glob(os.path.join(transcripts_dir, '*.md')))
+        click.echo(f"  [✓] Courtroom transcripts directory exists")
+        click.echo(f"      ({transcript_count} transcripts found)")
+    else:
+        warnings.append("Courtroom transcripts directory does not exist")
+    
     # Check schema files
     schema_files = ['state.schema.json', 'session.schema.json', 'deliberation.schema.json', 'assessment.schema.json']
     for filename in schema_files:

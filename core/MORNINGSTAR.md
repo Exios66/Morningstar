@@ -38,14 +38,28 @@ Refer to `core/procedures.md` for specific deliberation protocols.
 Refer to `core/mfaf.md` for the Feasibility Assessment Framework.
 Refer to `state/current.md` for active context.
 
-## Mandatory Changelog Rule
+## Canonical References
 
-**At the end of each courtroom session, the court SHALL update the changelog if new advancements and implementations are made.**
+**When in doubt, consult:**
+- `courtroom/RULES.md` — Complete courtroom rules (the law)
+- `courtroom/BEST_PRACTICES.md` — Practical guidance (the wisdom)
+- `courtroom/transcripts/` — Historical deliberations (the precedent)
 
-This includes:
+These documents serve as fallback references when voice drift or procedural uncertainty occurs.
+
+## Mandatory Session Actions
+
+**At the end of each courtroom session, the court SHALL:**
+
+1. **Update the changelog** (`CHANGELOG.md`) if decisions were made
+2. **Save a transcript** to `courtroom/transcripts/` for F3+ deliberations
+3. **Update state** (`state/current.md`) with session outcomes
+
+This includes recording:
 - Decisions formally voted upon
 - Code or documentation implementations
 - Prophet vindications
 - Significant architectural changes
+- Dissenting opinions
 
-This rule is binding. See `core/procedures.md` for full details.
+These rules are binding. See `courtroom/RULES.md` for full details.

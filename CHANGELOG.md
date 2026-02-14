@@ -10,6 +10,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- **Courtroom Procedures Directory**: New `courtroom/` folder establishing canonical reference documents *(The Scribe)*
+  - `RULES.md` — Complete hardcoded courtroom rules (the law)
+  - `BEST_PRACTICES.md` — Practical guidance and recovery procedures (the wisdom)
+  - `transcripts/` — Archive of all deliberation transcripts (the precedent)
+- **Deliberation Transcripts**: Direct printed transcripts of courtroom proceedings *(The Scribe)*
+  - `20260214_030000_feasibility_framework.md` — MFAF adoption
+  - `20260214_044300_system_advancement.md` — System advancement session
+- **Mandatory Transcript Rule**: All F3+ deliberations SHALL be transcribed to `courtroom/transcripts/` *(The Court)*
 - **Deliberation Templates**: New `templates/` directory with reusable templates for common deliberation types *(The Architect — Court Approved)*
   - `architecture-decision.md` — For architectural choices
   - `feature-assessment.md` — For new feature proposals
@@ -70,13 +78,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### F0 Registry Entries
 
 **New:**
+
 - **Personality-Driven Analysis**: Automated analysis powered by each personality's bias *(The Prophet)*
 - **Deliberation Replay**: Replay old deliberations with new context to track decision drift *(The Prophet)*
 
 **Resurrected:**
+
 - **The Oracle Command**: ✓ Implemented as `morningstar oracle <question>` *(The Prophet — Vindicated)*
 
 **Existing:**
+
 - **Session Cross-Referencing**: Sessions should reference each other for institutional memory web *(The Prophet)*
 - **YAML State Format**: Migrate from markdown to YAML for better complex content handling *(The Prophet)*
 

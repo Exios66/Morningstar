@@ -20,7 +20,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [0.1.0] - 2026-02-14
 
-### Added
+<!-- Removed duplicate "### Added" heading as per MD024/no-duplicate-heading rule -->
 
 - Core system prompt architecture (`core/`) *(Initial Implementation)*
 - JSON Schemas for state validation (`schema/`) *(Initial Implementation)*

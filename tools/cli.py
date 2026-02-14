@@ -673,5 +673,284 @@ def export_list():
         click.echo("")
 
 
+@export.command('transcript')
+@click.argument('transcript_file')
+@click.option('--output', '-o', help='Output file path')
+@click.option('--format', '-f', 'fmt', type=click.Choice(['html', 'qmd']), default='html',
+              help='Export format (html or qmd)')
+@click.option('--theme', '-t', type=click.Choice(['dracula', 'legacy']), default='dracula',
+              help='Theme for HTML export')
+def export_transcript(transcript_file, output, fmt, theme):
+    """Export a courtroom transcript to HTML or QMD.
+    
+    TRANSCRIPT_FILE can be a filename in courtroom/transcripts/ or a full path.
+    
+    Examples:
+    
+        morningstar export transcript 20260214_044300_system_advancement.md
+        
+        morningstar export transcript 20260214_044300_system_advancement.md -f qmd
+        
+        morningstar export transcript 20260214_044300_system_advancement.md -o output.html
+    """
+    # Resolve transcript file path
+    if not os.path.isabs(transcript_file):
+        transcript_path = os.path.join(BASE_DIR, 'courtroom', 'transcripts', transcript_file)
+        if not os.path.exists(transcript_path):
+            transcript_path = os.path.join(BASE_DIR, transcript_file)
+    else:
+        transcript_path = transcript_file
+    
+    if not os.path.exists(transcript_path):
+        click.echo(f"Transcript file not found: {transcript_file}")
+        raise SystemExit(1)
+    
+    if fmt == 'html':
+        if not output:
+            output = transcript_path.replace('.md', '.html')
+        
+        export_module.export_transcript_html(transcript_path, output, theme)
+        click.echo(f"Transcript exported to: {output}")
+        click.echo(f"  Theme: {theme}")
+    
+    elif fmt == 'qmd':
+        if not output:
+            output = transcript_path.replace('.md', '.qmd')
+        
+        export_module.export_transcript_qmd(transcript_path, output)
+        click.echo(f"Transcript exported to: {output}")
+        click.echo("  Format: Quarto markdown (.qmd)")
+
+
+@export.command('transcripts')
+def export_transcripts_list():
+    """List all courtroom transcripts available for export."""
+    transcripts = export_module.list_transcripts()
+    
+    if not transcripts:
+        click.echo("No transcripts found.")
+        return
+    
+    click.echo("\n┌─────────────────────────────────────────────────────────────────┐")
+    click.echo("│ COURTROOM TRANSCRIPTS                                           │")
+    click.echo("└─────────────────────────────────────────────────────────────────┘\n")
+    
+    for t in transcripts:
+        click.echo(f"  • {t['filename']}")
+        click.echo(f"    Topic: {t['topic']}")
+        if t['date']:
+            click.echo(f"    Date:  {t['date']}")
+        click.echo("")
+    
+    click.echo(f"\nUse 'morningstar export transcript <filename>' to export.")
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Portal Commands - Courtroom Viewer
+# ─────────────────────────────────────────────────────────────────────────────
+
+@cli.group()
+def portal():
+    """Courtroom portal for viewing and exporting transcripts."""
+    pass
+
+
+@portal.command('generate')
+@click.option('--theme', '-t', default='dracula', help='Theme for code highlighting')
+@click.option('--output', '-o', default='portal/output', help='Output directory')
+@click.option('--minify', is_flag=True, help='Minify generated HTML files')
+@click.option('--gzip', 'do_gzip', is_flag=True, help='Compress generated HTML files')
+def portal_generate(theme, output, minify, do_gzip):
+    """Generate static portal using gitmal.
+    
+    This command runs gitmal to generate a static site from the repository,
+    with the Dracula theme applied for code highlighting.
+    
+    Example:
+    
+        morningstar portal generate --theme dracula
+        
+        morningstar portal generate --minify --gzip
+    """
+    import subprocess
+    import shutil
+    
+    click.echo("\n┌─────────────────────────────────────────────────────────────────┐")
+    click.echo("│ GENERATING COURTROOM PORTAL                                     │")
+    click.echo("└─────────────────────────────────────────────────────────────────┘\n")
+    
+    # Check if gitmal is installed
+    gitmal_path = shutil.which('gitmal')
+    if not gitmal_path:
+        click.echo("Error: gitmal is not installed.")
+        click.echo("\nInstall with:")
+        click.echo("  go install github.com/antonmedv/gitmal@latest")
+        raise SystemExit(1)
+    
+    click.echo(f"  [✓] gitmal found at {gitmal_path}")
+    
+    # Build gitmal command
+    output_path = os.path.join(BASE_DIR, output)
+    cmd = ['gitmal', '.', '--theme', theme, '--output', output_path]
+    
+    if minify:
+        cmd.append('--minify')
+    if do_gzip:
+        cmd.append('--gzip')
+    
+    click.echo(f"  [→] Running: {' '.join(cmd)}")
+    click.echo("")
+    
+    try:
+        result = subprocess.run(
+            cmd,
+            cwd=BASE_DIR,
+            capture_output=False,
+            text=True
+        )
+        
+        if result.returncode == 0:
+            click.echo("")
+            click.echo(f"  [✓] Portal generated successfully!")
+            click.echo(f"      Output: {output_path}")
+            click.echo("")
+            click.echo("  To view the portal:")
+            click.echo(f"    1. Open {output_path}/index.html in a browser")
+            click.echo("    2. Or run: morningstar portal serve")
+        else:
+            click.echo("")
+            click.echo(f"  [!] gitmal exited with code {result.returncode}")
+            raise SystemExit(1)
+            
+    except FileNotFoundError:
+        click.echo("Error: Could not run gitmal.")
+        raise SystemExit(1)
+
+
+@portal.command('serve')
+@click.option('--port', '-p', default=8080, help='Port to serve on')
+@click.option('--directory', '-d', default='portal', help='Directory to serve')
+def portal_serve(port, directory):
+    """Start a local HTTP server to view the portal.
+    
+    This starts a simple HTTP server to serve the portal files locally.
+    
+    Example:
+    
+        morningstar portal serve
+        
+        morningstar portal serve --port 3000
+    """
+    import subprocess
+    import webbrowser
+    
+    serve_path = os.path.join(BASE_DIR, directory)
+    
+    if not os.path.exists(serve_path):
+        click.echo(f"Error: Directory not found: {serve_path}")
+        click.echo("\nCreate the portal first with:")
+        click.echo("  morningstar portal generate")
+        raise SystemExit(1)
+    
+    click.echo("\n┌─────────────────────────────────────────────────────────────────┐")
+    click.echo("│ MORNINGSTAR PORTAL SERVER                                       │")
+    click.echo("└─────────────────────────────────────────────────────────────────┘\n")
+    
+    url = f"http://localhost:{port}"
+    click.echo(f"  Serving: {serve_path}")
+    click.echo(f"  URL:     {url}")
+    click.echo("")
+    click.echo("  Press Ctrl+C to stop the server.")
+    click.echo("")
+    
+    # Open browser
+    webbrowser.open(url)
+    
+    # Start Python's built-in HTTP server
+    try:
+        subprocess.run(
+            ['python', '-m', 'http.server', str(port)],
+            cwd=serve_path
+        )
+    except KeyboardInterrupt:
+        click.echo("\n\n  Server stopped.")
+
+
+@portal.command('open')
+def portal_open():
+    """Open the portal viewer in the default browser.
+    
+    Opens the standalone viewer.html file directly in your browser.
+    Note: Some features may require running via 'morningstar portal serve'.
+    """
+    import webbrowser
+    
+    viewer_path = os.path.join(BASE_DIR, 'portal', 'viewer.html')
+    
+    if not os.path.exists(viewer_path):
+        click.echo(f"Error: Viewer not found: {viewer_path}")
+        click.echo("\nThe portal viewer should be at portal/viewer.html")
+        raise SystemExit(1)
+    
+    click.echo(f"Opening: {viewer_path}")
+    webbrowser.open(f'file://{viewer_path}')
+
+
+@portal.command('export-all')
+@click.option('--output', '-o', default='portal/exports', help='Output directory')
+@click.option('--format', '-f', 'fmt', type=click.Choice(['html', 'qmd', 'both']), default='html',
+              help='Export format')
+@click.option('--theme', '-t', type=click.Choice(['dracula', 'legacy']), default='dracula',
+              help='Theme for HTML export')
+def portal_export_all(output, fmt, theme):
+    """Export all transcripts to HTML or QMD format.
+    
+    This batch exports all courtroom transcripts to the specified format.
+    
+    Example:
+    
+        morningstar portal export-all
+        
+        morningstar portal export-all -f both -o exports/
+    """
+    transcripts = export_module.list_transcripts()
+    
+    if not transcripts:
+        click.echo("No transcripts found to export.")
+        return
+    
+    output_dir = os.path.join(BASE_DIR, output)
+    os.makedirs(output_dir, exist_ok=True)
+    
+    click.echo("\n┌─────────────────────────────────────────────────────────────────┐")
+    click.echo("│ BATCH EXPORT TRANSCRIPTS                                        │")
+    click.echo("└─────────────────────────────────────────────────────────────────┘\n")
+    
+    click.echo(f"  Output directory: {output_dir}")
+    click.echo(f"  Format: {fmt}")
+    if fmt in ['html', 'both']:
+        click.echo(f"  Theme: {theme}")
+    click.echo("")
+    
+    exported = 0
+    for t in transcripts:
+        basename = os.path.splitext(t['filename'])[0]
+        
+        if fmt in ['html', 'both']:
+            html_path = os.path.join(output_dir, f"{basename}.html")
+            export_module.export_transcript_html(t['path'], html_path, theme)
+            click.echo(f"  [✓] {basename}.html")
+            exported += 1
+        
+        if fmt in ['qmd', 'both']:
+            qmd_path = os.path.join(output_dir, f"{basename}.qmd")
+            export_module.export_transcript_qmd(t['path'], qmd_path)
+            click.echo(f"  [✓] {basename}.qmd")
+            exported += 1
+    
+    click.echo("")
+    click.echo(f"  Exported {exported} file(s) to {output_dir}")
+
+
 if __name__ == '__main__':
     cli()

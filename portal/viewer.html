@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MORNINGSTAR Courtroom Portal</title>
+    <link rel="stylesheet" href="dracula.css">
+    <style>
+        /* Portal-specific styles */
+        .portal-header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 2px solid var(--purple);
+            margin-bottom: 2rem;
+        }
+        
+        .portal-title {
+            font-size: 2.5rem;
+            color: var(--purple);
+            margin: 0;
+            letter-spacing: 0.1em;
+        }
+        
+        .portal-subtitle {
+            color: var(--comment);
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+        
+        .portal-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .transcript-list {
+            background: var(--bg-light);
+            border-radius: 8px;
+            padding: 1rem;
+            height: fit-content;
+            position: sticky;
+            top: 1rem;
+        }
+        
+        .transcript-list h2 {
+            font-size: 1.2rem;
+            margin-top: 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .transcript-item {
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 3px solid transparent;
+        }
+        
+        .transcript-item:hover {
+            background: var(--selection);
+        }
+        
+        .transcript-item.active {
+            background: var(--selection);
+            border-left-color: var(--purple);
+        }
+        
+        .transcript-item-title {
+            color: var(--fg);
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .transcript-item-meta {
+            font-size: 0.8rem;
+            color: var(--comment);
+        }
+        
+        .viewer-container {
+            background: var(--bg-lighter);
+            border-radius: 8px;
+            padding: 2rem;
+            min-height: 400px;
+        }
+        
+        .viewer-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 400px;
+            color: var(--comment);
+            text-align: center;
+        }
+        
+        .viewer-placeholder-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .viewer-content {
+            display: none;
+        }
+        
+        .viewer-content.active {
+            display: block;
+        }
+        
+        /* Toolbar */
+        .toolbar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 6px;
+        }
+        
+        .toolbar-btn {
+            background: var(--bg);
+            color: var(--fg);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .toolbar-btn:hover {
+            background: var(--purple);
+            border-color: var(--purple);
+            color: var(--bg);
+        }
+        
+        .toolbar-btn.active {
+            background: var(--purple);
+            border-color: var(--purple);
+            color: var(--bg);
+        }
+        
+        /* Export dropdown */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: var(--bg-light);
+            min-width: 160px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            z-index: 1000;
+            top: 100%;
+            left: 0;
+            margin-top: 0.25rem;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .dropdown-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            color: var(--fg);
+            transition: background 0.2s;
+        }
+        
+        .dropdown-item:hover {
+            background: var(--selection);
+        }
+        
+        /* Fullscreen mode */
+        .fullscreen-mode .portal-layout {
+            grid-template-columns: 1fr;
+        }
+        
+        .fullscreen-mode .transcript-list {
+            display: none;
+        }
+        
+        .fullscreen-mode .toolbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: 0;
+            border-radius: 0;
+            z-index: 1000;
+        }
+        
+        .fullscreen-mode .viewer-container {
+            margin-top: 4rem;
+            border-radius: 0;
+            min-height: calc(100vh - 4rem);
+        }
+        
+        /* Search */
+        .search-box {
+            width: 100%;
+            padding: 0.5rem;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--fg);
+            font-family: inherit;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .search-box:focus {
+            outline: none;
+            border-color: var(--purple);
+        }
+        
+        .search-box::placeholder {
+            color: var(--comment);
+        }
+        
+        /* Loading state */
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--purple);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive */
+        @media (max-width: 900px) {
+            .portal-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .transcript-list {
+                position: relative;
+                top: 0;
+            }
+        }
+        
+        /* Print styles */
+        @media print {
+            .toolbar, .transcript-list, .portal-header {
+                display: none;
+            }
+            
+            .portal-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .viewer-container {
+                background: white;
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="portal-header">
+            <h1 class="portal-title">MORNINGSTAR</h1>
+            <p class="portal-subtitle">"The court has ruled. Regrettably sensible."</p>
+        </header>
+        
+        <div class="portal-layout">
+            <aside class="transcript-list">
+                <h2>Transcripts</h2>
+                <input type="text" class="search-box" placeholder="Search transcripts..." id="searchBox">
+                <div id="transcriptList">
+                    <div class="loading-spinner"></div>
+                </div>
+            </aside>
+            
+            <main>
+                <div class="toolbar">
+                    <button class="toolbar-btn" id="fullscreenBtn" title="Toggle fullscreen">
+                        ⛶ Fullscreen
+                    </button>
+                    <div class="dropdown">
+                        <button class="toolbar-btn">↓ Export</button>
+                        <div class="dropdown-content">
+                            <div class="dropdown-item" onclick="exportAs('html')">Export as HTML</div>
+                            <div class="dropdown-item" onclick="exportAs('qmd')">Export as QMD</div>
+                            <div class="dropdown-item" onclick="window.print()">Print / PDF</div>
+                        </div>
+                    </div>
+                    <button class="toolbar-btn" id="refreshBtn" title="Refresh transcript list">
+                        ↻ Refresh
+                    </button>
+                </div>
+                
+                <div class="viewer-container">
+                    <div id="placeholder" class="viewer-placeholder">
+                        <div class="viewer-placeholder-icon">⚖️</div>
+                        <h3>Select a Transcript</h3>
+                        <p>Choose a deliberation from the list to view its contents.</p>
+                    </div>
+                    <div id="viewerContent" class="viewer-content">
+                        <!-- Content loaded here -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <script>
+    // Configuration
+    const TRANSCRIPTS_DIR = '../courtroom/transcripts/';
+    const SESSIONS_DIR = '../sessions/';
+    
+    // State
+    let transcripts = [];
+    let currentTranscript = null;
+    let isFullscreen = false;
+    
+    // Known transcripts (fallback if directory listing not available)
+    const KNOWN_TRANSCRIPTS = [
+        '20260214_030000_feasibility_framework.md',
+        '20260214_044300_system_advancement.md'
+    ];
+    
+    // Initialize
+    document.addEventListener('DOMContentLoaded', () => {
+        loadTranscripts();
+        setupEventListeners();
+    });
+    
+    function setupEventListeners() {
+        // Search
+        document.getElementById('searchBox').addEventListener('input', (e) => {
+            filterTranscripts(e.target.value);
+        });
+        
+        // Fullscreen
+        document.getElementById('fullscreenBtn').addEventListener('click', toggleFullscreen);
+        
+        // Refresh
+        document.getElementById('refreshBtn').addEventListener('click', loadTranscripts);
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && isFullscreen) {
+                toggleFullscreen();
+            }
+            if (e.key === 'f' && e.ctrlKey) {
+                e.preventDefault();
+                document.getElementById('searchBox').focus();
+            }
+        });
+    }
+    
+    async function loadTranscripts() {
+        const listEl = document.getElementById('transcriptList');
+        listEl.innerHTML = '<div class="loading-spinner"></div>';
+        
+        try {
+            // Try to load from known files
+            transcripts = [];
+            
+            for (const filename of KNOWN_TRANSCRIPTS) {
+                try {
+                    const response = await fetch(TRANSCRIPTS_DIR + filename);
+                    if (response.ok) {
+                        const content = await response.text();
+                        transcripts.push({
+                            filename: filename,
+                            path: TRANSCRIPTS_DIR + filename,
+                            title: extractTitle(filename, content),
+                            date: extractDate(filename),
+                            content: content
+                        });
+                    }
+                } catch (e) {
+                    console.warn(`Could not load ${filename}:`, e);
+                }
+            }
+            
+            // Also check for any local session files
+            // (In a real server environment, this would be an API call)
+            
+            renderTranscriptList();
+        } catch (error) {
+            console.error('Failed to load transcripts:', error);
+            listEl.innerHTML = `
+                <p style="color: var(--orange); text-align: center;">
+                    Unable to load transcripts.<br>
+                    <small>Open this file via a local server for full functionality.</small>
+                </p>
+            `;
+        }
+    }
+    
+    function extractTitle(filename, content) {
+        // Try to get from first H1
+        const h1Match = content.match(/^#\s+(.+)$/m);
+        if (h1Match) {
+            return h1Match[1].trim();
+        }
+        
+        // Fall back to filename parsing
+        const name = filename.replace('.md', '');
+        const parts = name.split('_');
+        if (parts.length >= 3) {
+            return parts.slice(2).map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(' ');
+        }
+        return name.replace(/_/g, ' ');
+    }
+    
+    function extractDate(filename) {
+        const parts = filename.split('_');
+        if (parts.length >= 2 && parts[0].length === 8) {
+            const dateStr = parts[0];
+            const timeStr = parts[1];
+            try {
+                const year = dateStr.slice(0, 4);
+                const month = dateStr.slice(4, 6);
+                const day = dateStr.slice(6, 8);
+                const hour = timeStr.slice(0, 2);
+                const min = timeStr.slice(2, 4);
+                return `${year}-${month}-${day} ${hour}:${min}`;
+            } catch (e) {
+                return null;
+            }
+        }
+        return null;
+    }
+    
+    function renderTranscriptList() {
+        const listEl = document.getElementById('transcriptList');
+        
+        if (transcripts.length === 0) {
+            listEl.innerHTML = `
+                <p style="color: var(--comment); text-align: center; padding: 1rem;">
+                    No transcripts found.
+                </p>
+            `;
+            return;
+        }
+        
+        // Sort by date (newest first)
+        const sorted = [...transcripts].sort((a, b) => {
+            if (a.date && b.date) return b.date.localeCompare(a.date);
+            return 0;
+        });
+        
+        listEl.innerHTML = sorted.map((t, i) => `
+            <div class="transcript-item ${currentTranscript === t.path ? 'active' : ''}" 
+                 onclick="selectTranscript('${t.path}')">
+                <div class="transcript-item-title">${escapeHtml(t.title)}</div>
+                <div class="transcript-item-meta">
+                    ${t.date ? t.date : 'Unknown date'}
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    function filterTranscripts(query) {
+        const items = document.querySelectorAll('.transcript-item');
+        const lowerQuery = query.toLowerCase();
+        
+        items.forEach(item => {
+            const title = item.querySelector('.transcript-item-title').textContent.toLowerCase();
+            const visible = title.includes(lowerQuery);
+            item.style.display = visible ? 'block' : 'none';
+        });
+    }
+    
+    async function selectTranscript(path) {
+        currentTranscript = path;
+        renderTranscriptList();
+        
+        const viewerContent = document.getElementById('viewerContent');
+        const placeholder = document.getElementById('placeholder');
+        
+        // Find the transcript
+        const transcript = transcripts.find(t => t.path === path);
+        
+        if (!transcript) {
+            viewerContent.innerHTML = '<p style="color: var(--red);">Transcript not found.</p>';
+            viewerContent.classList.add('active');
+            placeholder.style.display = 'none';
+            return;
+        }
+        
+        // Render markdown content
+        const html = markdownToHtml(transcript.content);
+        const styledHtml = applyPersonalityStyling(html);
+        
+        viewerContent.innerHTML = `
+            <div class="participant-legend">
+                <div class="participant-item">
+                    <span class="participant-color morningstar"></span>
+                    <span>MORNINGSTAR (Judge)</span>
+                </div>
+                <div class="participant-item">
+                    <span class="participant-color architect"></span>
+                    <span>ARCHITECT</span>
+                </div>
+                <div class="participant-item">
+                    <span class="participant-color engineer"></span>
+                    <span>ENGINEER</span>
+                </div>
+                <div class="participant-item">
+                    <span class="participant-color debugger"></span>
+                    <span>DEBUGGER</span>
+                </div>
+                <div class="participant-item">
+                    <span class="participant-color prophet"></span>
+                    <span>PROPHET</span>
+                </div>
+                <div class="participant-item">
+                    <span class="participant-color scribe"></span>
+                    <span>SCRIBE</span>
+                </div>
+            </div>
+            ${styledHtml}
+        `;
+        
+        viewerContent.classList.add('active');
+        placeholder.style.display = 'none';
+    }
+    
+    function markdownToHtml(md) {
+        let html = md;
+        
+        // Escape HTML
+        html = html
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+        
+        // Code blocks
+        html = html.replace(/```(\w*)\n([\s\S]*?)```/g, (match, lang, code) => {
+            return `<pre><code>${code.trim()}</code></pre>`;
+        });
+        
+        // Headers
+        html = html.replace(/^#### (.+)$/gm, '<h4>$1</h4>');
+        html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+        html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+        html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+        
+        // Bold and italic
+        html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+        html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+        
+        // Inline code
+        html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+        
+        // Links
+        html = html.replace(/\[(.+?)\]\((.+?)\)/g, '<a href="$2">$1</a>');
+        
+        // Horizontal rules
+        html = html.replace(/^---$/gm, '<hr>');
+        
+        // Blockquotes
+        html = html.replace(/^&gt; (.+)$/gm, '<blockquote>$1</blockquote>');
+        
+        // Tables
+        html = html.replace(/\|(.+)\|/g, (match) => {
+            const cells = match.split('|').filter(c => c.trim());
+            if (cells.every(c => /^[-:\s]+$/.test(c))) {
+                return ''; // Skip separator rows
+            }
+            const tag = 'td';
+            return '<tr>' + cells.map(c => `<${tag}>${c.trim()}</${tag}>`).join('') + '</tr>';
+        });
+        
+        // Wrap consecutive table rows
+        html = html.replace(/(<tr>[\s\S]*?<\/tr>\n?)+/g, '<table>$&</table>');
+        
+        // List items
+        html = html.replace(/^- (.+)$/gm, '<li>$1</li>');
+        html = html.replace(/(<li>[\s\S]*?<\/li>\n?)+/g, '<ul>$&</ul>');
+        
+        // Paragraphs (lines that aren't already wrapped)
+        const lines = html.split('\n');
+        html = lines.map(line => {
+            if (line.trim() && 
+                !line.startsWith('<') && 
+                !line.match(/^\s*$/)) {
+                return `<p>${line}</p>`;
+            }
+            return line;
+        }).join('\n');
+        
+        return html;
+    }
+    
+    function applyPersonalityStyling(html) {
+        // Personality patterns
+        const patterns = {
+            'morningstar': /\b(MORNINGSTAR|Morningstar)\b/g,
+            'architect': /\b(ARCHITECT|Architect)\b/g,
+            'engineer': /\b(ENGINEER|Engineer)\b/g,
+            'debugger': /\b(DEBUGGER|Debugger)\b/g,
+            'prophet': /\b(PROPHET|Prophet)\b/g,
+            'scribe': /\b(SCRIBE|Scribe)\b/g
+        };
+        
+        for (const [personality, pattern] of Object.entries(patterns)) {
+            html = html.replace(pattern, `<span class="p-${personality}">$1</span>`);
+        }
+        
+        // Vote styling
+        html = html.replace(/\bYES\b/g, '<span class="vote-yes">YES</span>');
+        html = html.replace(/\bNO\b/g, '<span class="vote-no">NO</span>');
+        html = html.replace(/\bABSTAIN\b/g, '<span class="vote-abstain">ABSTAIN</span>');
+        html = html.replace(/\bRECUSED\b/g, '<span class="vote-abstain">RECUSED</span>');
+        
+        return html;
+    }
+    
+    function toggleFullscreen() {
+        isFullscreen = !isFullscreen;
+        document.body.classList.toggle('fullscreen-mode', isFullscreen);
+        
+        const btn = document.getElementById('fullscreenBtn');
+        btn.textContent = isFullscreen ? '⛶ Exit Fullscreen' : '⛶ Fullscreen';
+        btn.classList.toggle('active', isFullscreen);
+        
+        // Also try native fullscreen
+        if (isFullscreen) {
+            document.documentElement.requestFullscreen?.();
+        } else {
+            document.exitFullscreen?.();
+        }
+    }
+    
+    function exportAs(format) {
+        if (!currentTranscript) {
+            alert('Please select a transcript first.');
+            return;
+        }
+        
+        const transcript = transcripts.find(t => t.path === currentTranscript);
+        if (!transcript) return;
+        
+        let content, filename, mimeType;
+        
+        if (format === 'html') {
+            content = generateExportHtml(transcript);
+            filename = transcript.filename.replace('.md', '.html');
+            mimeType = 'text/html';
+        } else if (format === 'qmd') {
+            content = generateExportQmd(transcript);
+            filename = transcript.filename.replace('.md', '.qmd');
+            mimeType = 'text/markdown';
+        }
+        
+        // Download
+        const blob = new Blob([content], { type: mimeType });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+    
+    function generateExportHtml(transcript) {
+        const html = markdownToHtml(transcript.content);
+        const styledHtml = applyPersonalityStyling(html);
+        
+        return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${escapeHtml(transcript.title)} - MORNINGSTAR</title>
+    <style>
+:root {
+    --bg: #282a36;
+    --bg-light: #44475a;
+    --bg-lighter: #343746;
+    --fg: #f8f8f2;
+    --comment: #6272a4;
+    --cyan: #8be9fd;
+    --green: #50fa7b;
+    --orange: #ffb86c;
+    --pink: #ff79c6;
+    --purple: #bd93f9;
+    --red: #ff5555;
+    --yellow: #f1fa8c;
+    --border: #44475a;
+}
+body {
+    font-family: 'Fira Code', monospace;
+    background: var(--bg);
+    color: var(--fg);
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.7;
+}
+h1, h2, h3, h4 { color: var(--purple); }
+h2 { color: var(--cyan); }
+h3 { color: var(--green); }
+pre { background: var(--bg-light); border: 1px solid var(--border); border-left: 3px solid var(--purple); padding: 1rem; border-radius: 6px; overflow-x: auto; }
+code { background: var(--bg-light); color: var(--pink); padding: 0.2em 0.4em; border-radius: 4px; }
+pre code { background: none; color: var(--fg); padding: 0; }
+table { width: 100%; border-collapse: collapse; }
+th, td { border: 1px solid var(--border); padding: 0.75rem; }
+th { background: var(--bg-light); color: var(--purple); }
+hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+blockquote { border-left: 4px solid var(--purple); padding-left: 1rem; color: var(--comment); }
+strong { color: var(--yellow); }
+em { color: var(--comment); }
+.p-morningstar { color: var(--purple); font-weight: bold; }
+.p-architect { color: var(--cyan); font-weight: bold; }
+.p-engineer { color: var(--green); font-weight: bold; }
+.p-debugger { color: var(--orange); font-weight: bold; }
+.p-prophet { color: var(--pink); font-weight: bold; }
+.p-scribe { color: var(--comment); font-weight: bold; }
+.vote-yes { color: var(--green); font-weight: bold; }
+.vote-no { color: var(--red); font-weight: bold; }
+.vote-abstain { color: var(--yellow); font-weight: bold; }
+.export-meta { color: var(--comment); font-size: 0.85em; border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 3rem; text-align: center; }
+    </style>
+</head>
+<body>
+${styledHtml}
+<div class="export-meta">
+    <p>Exported from MORNINGSTAR on ${new Date().toLocaleString()}</p>
+    <p><em>"The court's rulings are its legacy."</em></p>
+</div>
+</body>
+</html>`;
+    }
+    
+    function generateExportQmd(transcript) {
+        return `---
+title: "${transcript.title}"
+date: "${transcript.date || new Date().toISOString().split('T')[0]}"
+format:
+  html:
+    theme: darkly
+    code-fold: false
+    toc: true
+    toc-depth: 3
+author: "MORNINGSTAR Court"
+categories: [deliberation, courtroom]
+---
+
+${transcript.content}
+`;
+    }
+    
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    </script>
+</body>
+</html>

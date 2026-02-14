@@ -1,0 +1,730 @@
+/*
+ * Dracula Theme for MORNINGSTAR Courtroom Portal
+ * Based on https://draculatheme.com/
+ * 
+ * Personality color assignments:
+ *   MORNINGSTAR (Judge) - Purple (#bd93f9)
+ *   ARCHITECT           - Cyan   (#8be9fd)
+ *   ENGINEER            - Green  (#50fa7b)
+ *   DEBUGGER            - Orange (#ffb86c)
+ *   PROPHET             - Pink   (#ff79c6)
+ *   SCRIBE              - Gray   (#6272a4)
+ */
+
+:root {
+    /* Dracula base colors */
+    --bg: #282a36;
+    --bg-light: #44475a;
+    --bg-lighter: #343746;
+    --fg: #f8f8f2;
+    --comment: #6272a4;
+    --selection: #44475a;
+    
+    /* Dracula accent colors */
+    --cyan: #8be9fd;
+    --green: #50fa7b;
+    --orange: #ffb86c;
+    --pink: #ff79c6;
+    --purple: #bd93f9;
+    --red: #ff5555;
+    --yellow: #f1fa8c;
+    
+    /* Personality assignments */
+    --color-morningstar: var(--purple);
+    --color-architect: var(--cyan);
+    --color-engineer: var(--green);
+    --color-debugger: var(--orange);
+    --color-prophet: var(--pink);
+    --color-scribe: var(--comment);
+    
+    /* UI elements */
+    --border: #44475a;
+    --border-accent: var(--purple);
+    --link: var(--cyan);
+    --link-hover: var(--pink);
+    
+    /* Box drawing */
+    --box-border: var(--comment);
+    --box-bg: var(--bg-lighter);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Base Styles
+   ───────────────────────────────────────────────────────────────── */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.7;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Typography
+   ───────────────────────────────────────────────────────────────── */
+
+h1, h2, h3, h4, h5, h6 {
+    color: var(--purple);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2rem;
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.5rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: var(--cyan);
+}
+
+h3 {
+    font-size: 1.25rem;
+    color: var(--green);
+}
+
+h4 {
+    font-size: 1.1rem;
+    color: var(--orange);
+}
+
+p {
+    margin: 1rem 0;
+}
+
+a {
+    color: var(--link);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+}
+
+strong, b {
+    color: var(--yellow);
+    font-weight: 600;
+}
+
+em, i {
+    color: var(--comment);
+    font-style: italic;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Code and Pre-formatted
+   ───────────────────────────────────────────────────────────────── */
+
+code {
+    background: var(--bg-light);
+    color: var(--pink);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-family: inherit;
+}
+
+pre {
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+pre code {
+    background: none;
+    color: var(--fg);
+    padding: 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Courtroom Box Drawing
+   ───────────────────────────────────────────────────────────────── */
+
+.court-box,
+pre:has(> code):not(.hljs) {
+    background: var(--box-bg);
+    border: 1px solid var(--box-border);
+    border-left: 3px solid var(--purple);
+    font-family: 'Fira Code', monospace;
+    white-space: pre;
+    overflow-x: auto;
+}
+
+/* Detect box-drawing characters and style them */
+.court-box-header {
+    color: var(--purple);
+    font-weight: bold;
+}
+
+.court-box-content {
+    color: var(--fg);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Personality Styling
+   ───────────────────────────────────────────────────────────────── */
+
+/* MORNINGSTAR (Judge) */
+.personality-morningstar,
+[data-personality="morningstar"],
+strong:has(+ :contains("MORNINGSTAR")) {
+    color: var(--color-morningstar);
+}
+
+.personality-morningstar::before {
+    content: "⚖️ ";
+}
+
+/* ARCHITECT */
+.personality-architect,
+[data-personality="architect"] {
+    color: var(--color-architect);
+}
+
+.personality-architect::before {
+    content: "🏛️ ";
+}
+
+/* ENGINEER */
+.personality-engineer,
+[data-personality="engineer"] {
+    color: var(--color-engineer);
+}
+
+.personality-engineer::before {
+    content: "⚙️ ";
+}
+
+/* DEBUGGER */
+.personality-debugger,
+[data-personality="debugger"] {
+    color: var(--color-debugger);
+}
+
+.personality-debugger::before {
+    content: "🔍 ";
+}
+
+/* PROPHET */
+.personality-prophet,
+[data-personality="prophet"] {
+    color: var(--color-prophet);
+}
+
+.personality-prophet::before {
+    content: "🔮 ";
+}
+
+/* SCRIBE */
+.personality-scribe,
+[data-personality="scribe"] {
+    color: var(--color-scribe);
+}
+
+.personality-scribe::before {
+    content: "📜 ";
+}
+
+/* Inline personality mentions */
+.p-morningstar { color: var(--color-morningstar); font-weight: bold; }
+.p-architect { color: var(--color-architect); font-weight: bold; }
+.p-engineer { color: var(--color-engineer); font-weight: bold; }
+.p-debugger { color: var(--color-debugger); font-weight: bold; }
+.p-prophet { color: var(--color-prophet); font-weight: bold; }
+.p-scribe { color: var(--color-scribe); font-weight: bold; }
+
+/* ─────────────────────────────────────────────────────────────────
+   Vote Display
+   ───────────────────────────────────────────────────────────────── */
+
+.vote-yes {
+    color: var(--green);
+    font-weight: bold;
+}
+
+.vote-no {
+    color: var(--red);
+    font-weight: bold;
+}
+
+.vote-abstain {
+    color: var(--yellow);
+    font-weight: bold;
+}
+
+.vote-recused {
+    color: var(--comment);
+    font-style: italic;
+}
+
+.vote-tally {
+    background: var(--bg-light);
+    border: 2px solid var(--purple);
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.vote-result {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--yellow);
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--border);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Ruling Display
+   ───────────────────────────────────────────────────────────────── */
+
+.ruling {
+    background: var(--bg-lighter);
+    border: 2px solid var(--purple);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+}
+
+.ruling-header {
+    color: var(--purple);
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.ruling-decision {
+    color: var(--green);
+    font-weight: bold;
+    margin: 0.5rem 0;
+}
+
+.ruling-rationale {
+    color: var(--fg);
+    margin: 0.5rem 0;
+}
+
+.ruling-risk {
+    color: var(--orange);
+    margin: 0.5rem 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Tables
+   ───────────────────────────────────────────────────────────────── */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.95em;
+}
+
+th, td {
+    border: 1px solid var(--border);
+    padding: 0.75rem;
+    text-align: left;
+}
+
+th {
+    background: var(--bg-light);
+    color: var(--purple);
+    font-weight: 600;
+}
+
+tr:hover {
+    background: var(--selection);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Blockquotes
+   ───────────────────────────────────────────────────────────────── */
+
+blockquote {
+    border-left: 4px solid var(--purple);
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background: var(--bg-lighter);
+    color: var(--comment);
+    font-style: italic;
+}
+
+blockquote p {
+    margin: 0.5rem 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Lists
+   ───────────────────────────────────────────────────────────────── */
+
+ul, ol {
+    margin: 1rem 0;
+    padding-left: 2rem;
+}
+
+li {
+    margin: 0.5rem 0;
+}
+
+li::marker {
+    color: var(--purple);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Horizontal Rules
+   ───────────────────────────────────────────────────────────────── */
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Transcript Sections
+   ───────────────────────────────────────────────────────────────── */
+
+.transcript-header {
+    background: var(--bg-light);
+    border: 1px solid var(--purple);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.transcript-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    color: var(--comment);
+    font-size: 0.9em;
+}
+
+.transcript-meta strong {
+    color: var(--cyan);
+}
+
+.transcript-title {
+    color: var(--purple);
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.transcript-begin,
+.transcript-end {
+    text-align: center;
+    color: var(--comment);
+    font-style: italic;
+    margin: 2rem 0;
+    padding: 0.5rem;
+    border-top: 1px dashed var(--border);
+    border-bottom: 1px dashed var(--border);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Navigation and Layout
+   ───────────────────────────────────────────────────────────────── */
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 280px;
+    height: 100vh;
+    background: var(--bg-light);
+    border-right: 1px solid var(--border);
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.main-content {
+    margin-left: 300px;
+    padding: 2rem;
+}
+
+.nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+.nav-item:hover {
+    background: var(--selection);
+}
+
+.nav-item.active {
+    background: var(--selection);
+    border-left: 3px solid var(--purple);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Fullscreen Mode
+   ───────────────────────────────────────────────────────────────── */
+
+.fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--bg);
+    z-index: 9999;
+    overflow-y: auto;
+    padding: 2rem;
+}
+
+.fullscreen-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--purple);
+    color: var(--bg);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    z-index: 10000;
+    transition: background 0.2s;
+}
+
+.fullscreen-toggle:hover {
+    background: var(--pink);
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Participant Legend
+   ───────────────────────────────────────────────────────────────── */
+
+.participant-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-light);
+    border-radius: 6px;
+    margin: 1rem 0;
+}
+
+.participant-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.participant-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+}
+
+.participant-color.morningstar { background: var(--color-morningstar); }
+.participant-color.architect { background: var(--color-architect); }
+.participant-color.engineer { background: var(--color-engineer); }
+.participant-color.debugger { background: var(--color-debugger); }
+.participant-color.prophet { background: var(--color-prophet); }
+.participant-color.scribe { background: var(--color-scribe); }
+
+/* ─────────────────────────────────────────────────────────────────
+   Utility Classes
+   ───────────────────────────────────────────────────────────────── */
+
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.hidden { display: none; }
+
+/* ─────────────────────────────────────────────────────────────────
+   Print Styles
+   ───────────────────────────────────────────────────────────────── */
+
+@media print {
+    body {
+        background: white;
+        color: black;
+        font-size: 12pt;
+    }
+    
+    .sidebar,
+    .fullscreen-toggle,
+    .nav-list {
+        display: none;
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 0;
+    }
+    
+    .container {
+        max-width: 100%;
+        padding: 0;
+    }
+    
+    h1, h2, h3, h4 {
+        color: black;
+        page-break-after: avoid;
+    }
+    
+    pre, .court-box, .ruling, .vote-tally {
+        background: #f5f5f5;
+        border-color: #ccc;
+        page-break-inside: avoid;
+    }
+    
+    .personality-morningstar { color: #6c5ce7; }
+    .personality-architect { color: #0984e3; }
+    .personality-engineer { color: #00b894; }
+    .personality-debugger { color: #e17055; }
+    .personality-prophet { color: #d63384; }
+    .personality-scribe { color: #636e72; }
+    
+    a {
+        color: black;
+        text-decoration: underline;
+    }
+    
+    a[href]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        color: #666;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Responsive Design
+   ───────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    html {
+        font-size: 14px;
+    }
+    
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+    
+    .main-content {
+        margin-left: 0;
+        padding: 1rem;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+    
+    .participant-legend {
+        flex-direction: column;
+    }
+    
+    .transcript-meta {
+        grid-template-columns: 1fr;
+    }
+    
+    pre {
+        font-size: 0.8em;
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Animations
+   ───────────────────────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Export Meta Footer
+   ───────────────────────────────────────────────────────────────── */
+
+.export-meta {
+    color: var(--comment);
+    font-size: 0.85em;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.export-meta p {
+    margin: 0.25rem 0;
+}
+
+/* ─────────────────────────────────────────────────────────────────
+   Loading State
+   ───────────────────────────────────────────────────────────────── */
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    color: var(--comment);
+}
+
+.loading::after {
+    content: "";
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-top-color: var(--purple);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 0.5rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}

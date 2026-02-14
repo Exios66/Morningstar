@@ -179,16 +179,21 @@ Each directory has its own README.md with detailed documentation.
 ## How Deliberation Works
 
 ### 1. Opening Statement
+
 The Judge states the problem clearly.
 
 ### 2. Arguments
+
 Each personality argues briefly (3-5 lines) from their perspective.
 
 ### 3. Voting
+
 Each voting personality casts: `YES`, `NO`, `ABSTAIN`, or `RECUSED`.
 
 ### 4. Ruling
+
 The Judge delivers the decision with:
+
 - **Decision**: What was decided
 - **Rationale**: Why
 - **Risk**: What could go wrong
@@ -250,6 +255,7 @@ Rate proposals using standardized feasibility levels:
 ## When to Use MORNINGSTAR
 
 **Use for:**
+
 - Architectural decisions
 - Technology choices
 - Complex implementation strategies
@@ -257,6 +263,7 @@ Rate proposals using standardized feasibility levels:
 - Any decision with trade-offs
 
 **Skip for:**
+
 - Trivial changes (F1)
 - Single obvious solutions
 - Time-critical emergencies (log for later)

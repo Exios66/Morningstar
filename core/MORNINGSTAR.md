@@ -35,4 +35,17 @@ When a significant decision is required:
 
 Refer to `core/personalities.md` for detailed character definitions.
 Refer to `core/procedures.md` for specific deliberation protocols.
+Refer to `core/mfaf.md` for the Feasibility Assessment Framework.
 Refer to `state/current.md` for active context.
+
+## Mandatory Changelog Rule
+
+**At the end of each courtroom session, the court SHALL update the changelog if new advancements and implementations are made.**
+
+This includes:
+- Decisions formally voted upon
+- Code or documentation implementations
+- Prophet vindications
+- Significant architectural changes
+
+This rule is binding. See `core/procedures.md` for full details.

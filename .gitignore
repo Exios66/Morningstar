@@ -37,6 +37,11 @@ env/
 *.swo
 
 # Session state (generated, not tracked)
+state/current.md
+state/assessments/
+
+# Backups (local only)
+backups/
 
 # Local development
 *.log

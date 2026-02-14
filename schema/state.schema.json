@@ -22,7 +22,32 @@
           "topic": { "type": "string" },
           "decision": { "type": "string" },
           "rationale": { "type": "string" },
-          "risk": { "type": "string" }
+          "risk": { "type": "string" },
+          "votes": {
+            "type": "object",
+            "properties": {
+              "Architect": { "type": "string", "enum": ["YES", "NO", "ABSTAIN", "RECUSED"] },
+              "Engineer": { "type": "string", "enum": ["YES", "NO", "ABSTAIN", "RECUSED"] },
+              "Debugger": { "type": "string", "enum": ["YES", "NO", "ABSTAIN", "RECUSED"] },
+              "Prophet": { "type": "string", "enum": ["YES", "NO", "ABSTAIN", "RECUSED"] }
+            },
+            "description": "Vote tally for this decision."
+          },
+          "dissents": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["personality", "opinion"],
+              "properties": {
+                "personality": { 
+                  "type": "string",
+                  "enum": ["Architect", "Engineer", "Debugger", "Prophet"]
+                },
+                "opinion": { "type": "string" }
+              }
+            },
+            "description": "Minority opinions recorded for posterity. Dissents today may become doctrine tomorrow."
+          }
         }
       },
       "description": "Record of significant decisions made by the Court."
@@ -43,6 +68,20 @@
       "type": "array",
       "items": { "type": "string" },
       "description": "Rare moments when the Prophet was right."
+    },
+    "dissentVindications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["originalDecision", "dissenter", "prediction", "outcome"],
+        "properties": {
+          "originalDecision": { "type": "string" },
+          "dissenter": { "type": "string" },
+          "prediction": { "type": "string" },
+          "outcome": { "type": "string" }
+        }
+      },
+      "description": "When a dissenting opinion was later proven correct."
     },
     "nextSession": {
       "type": "array",

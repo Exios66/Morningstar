@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MFAF Assessment",
+  "description": "Schema for MORNINGSTAR Feasibility Assessment Framework evaluations",
+  "type": "object",
+  "required": ["proposal", "baseRating", "effectiveRating", "effortBand", "recommendation"],
+  "properties": {
+    "proposal": {
+      "type": "string",
+      "description": "Brief description of what is being assessed"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the assessment was performed"
+    },
+    "baseRating": {
+      "type": "string",
+      "enum": ["F0", "F1", "F2", "F3", "F4", "F5"],
+      "description": "Base feasibility rating before risk modifiers"
+    },
+    "riskVectors": {
+      "type": "object",
+      "properties": {
+        "authAuthz": {
+          "type": "boolean",
+          "description": "Touches authentication or authorization"
+        },
+        "externalDependencies": {
+          "type": "boolean",
+          "description": "Involves third-party dependencies"
+        },
+        "databaseMigration": {
+          "type": "boolean",
+          "description": "Requires database schema changes"
+        },
+        "publicApi": {
+          "type": "boolean",
+          "description": "Affects public API surface"
+        },
+        "unclearRequirements": {
+          "type": "boolean",
+          "description": "Requirements are ambiguous or incomplete"
+        },
+        "externalTeam": {
+          "type": "boolean",
+          "description": "Depends on external team or service"
+        },
+        "previouslyFailed": {
+          "type": "boolean",
+          "description": "Has been attempted before and failed"
+        }
+      }
+    },
+    "riskModifier": {
+      "type": "number",
+      "description": "Total risk modifier (sum of checked vectors)"
+    },
+    "effectiveRating": {
+      "type": "string",
+      "enum": ["F0", "F1", "F2", "F3", "F4", "F5"],
+      "description": "Final rating after applying risk modifiers"
+    },
+    "effortBand": {
+      "type": "string",
+      "enum": ["S", "M", "L", "XL"],
+      "description": "Effort magnitude: S=hours, M=days, L=weeks, XL=months"
+    },
+    "failureScenario": {
+      "type": "object",
+      "properties": {
+        "whatCouldGoWrong": {
+          "type": "string",
+          "description": "Description of failure mode"
+        },
+        "impact": {
+          "type": "string",
+          "description": "Blast radius and consequences"
+        },
+        "detection": {
+          "type": "string",
+          "description": "How failure would be detected"
+        },
+        "recovery": {
+          "type": "string",
+          "description": "Rollback or mitigation plan"
+        }
+      },
+      "description": "Required for F3+ assessments"
+    },
+    "recommendation": {
+      "type": "string",
+      "enum": ["PROCEED", "REVIEW", "DELIBERATE", "REJECT", "ARCHIVE_F0"],
+      "description": "Recommended next action"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional context or rationale"
+    },
+    "assessor": {
+      "type": "string",
+      "description": "Who performed the assessment"
+    }
+  }
+}

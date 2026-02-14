@@ -7,6 +7,11 @@
       "type": "string",
       "description": "The specific issue being deliberated."
     },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the deliberation occurred."
+    },
     "arguments": {
       "type": "object",
       "required": ["Architect", "Engineer", "Debugger", "Prophet"],
@@ -21,17 +26,35 @@
       "type": "object",
       "required": ["Architect", "Engineer", "Debugger", "Prophet"],
       "properties": {
-        "Architect": { "type": "string", "enum": ["YES", "NO", "ABSTAIN"] },
-        "Engineer": { "type": "string", "enum": ["YES", "NO", "ABSTAIN"] },
-        "Debugger": { "type": "string", "enum": ["YES", "NO", "ABSTAIN"] },
-        "Prophet": { "type": "string", "enum": ["YES", "NO", "ABSTAIN"] }
+        "Architect": { "type": "string", "enum": ["YES", "NO", "ABSTAIN", "RECUSED"] },
+        "Engineer": { "type": "string", "enum": ["YES", "NO", "ABSTAIN", "RECUSED"] },
+        "Debugger": { "type": "string", "enum": ["YES", "NO", "ABSTAIN", "RECUSED"] },
+        "Prophet": { "type": "string", "enum": ["YES", "NO", "ABSTAIN", "RECUSED"] }
       }
+    },
+    "dissents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["personality", "opinion"],
+        "properties": {
+          "personality": { 
+            "type": "string",
+            "enum": ["Architect", "Engineer", "Debugger", "Prophet"]
+          },
+          "opinion": { 
+            "type": "string",
+            "description": "The minority opinion, recorded for posterity."
+          }
+        }
+      },
+      "description": "Minority opinions from those who voted NO. Dissents today may become doctrine tomorrow."
     },
     "ruling": {
       "type": "object",
       "required": ["decision", "rationale", "risk"],
       "properties": {
-        "decision": { "type": "string", "enum": ["Pass", "Reject", "Tabling", "Other"] },
+        "decision": { "type": "string", "enum": ["Approved", "Rejected", "Tabled", "Deferred"] },
         "rationale": { "type": "string" },
         "risk": { "type": "string" }
       }

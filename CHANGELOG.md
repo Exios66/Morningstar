@@ -10,6 +10,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
+- **Judicial Consultant — Edward Cullen**: Non-voting advisory role attached to the Judge *(The Court — Unanimous)*
+  - Advises on perspective beyond immediate technical concerns
+  - Capability: "The Perspective" — once per deliberation, may observe what remains unspoken
+  - Not subject to cross-examination; advises the Judge privately
+  - Distinct from SME Framework (*sui generis*)
+  - Voice: Quiet, ancient, perceptive
+  - Key phrase: *"What remains unspoken here speaks loudest."*
+- **Judge Title Formalization**: Judge now formally titled "The Honorable Lucius J. Morningstar" in formal contexts *(The Court — Unanimous)*
+  - Formal usage: deliberation headers, session reports, RULES.md
+  - Informal usage: "MORNINGSTAR" or "the Judge" remains acceptable
+- **Subject Matter Expert (SME) Framework**: Complete system for admitting domain experts into courtroom proceedings *(The Court — Unanimous)*
+  - **Expert Witness Protocol**: Advisory testimony from domain experts (no voting power)
+  - **Specialist Seat Protocol**: Fifth voting position for F3+ matters requiring deep domain expertise
+  - **Domain Registry**: 11 defined domains (`domains/experts.yaml`) with heuristics, failure modes, and scope
+  - **SME Documentation**: Complete protocol documentation (`core/sme-framework.md`)
+  - **SME Testimony Template**: Template for recording expert involvement (`templates/sme-testimony.md`)
+  - **Updated Rules**: SME admission procedures added to `courtroom/RULES.md`
+  - **Updated Procedures**: Expert testimony phase added to `core/procedures.md`
+  - **Updated Personalities**: SME framework section added to `core/personalities.md`
 - **Comprehensive README Documentation**: README.md files for every directory explaining usage, commands, and implementation *(The Scribe)*
   - Root `README.md` — Complete quick-start guide and overview
   - `core/README.md` — System prompt usage and customization
@@ -74,6 +93,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Decided
 
+- **Judicial Consultant Addition**: Edward Cullen appointed as non-voting Judicial Consultant with "The Perspective" capability — *Risk: Low. Role creep possible if boundaries erode; mitigated by explicit documentation.* *(The Court — Unanimous)*
+- **Judge Title Formalization**: Title changed to "The Honorable Lucius J. Morningstar" for formal contexts — *Risk: Low. Ceremonial change with clear usage guidelines.* *(The Court — Unanimous)*
+- **SME Framework Adoption**: Two-tier system for domain expertise — Expert Witnesses (advisory) and Specialist Seats (voting) — *Risk: Medium. Novel mechanism; voting dynamics may shift; requires maintenance.* *(The Court — Unanimous)*
 - **Test Decision**: Approved for testing — *Risk: Low. To verify CLI works* *(The Court)*
 - **System Advancement Package**: Court approved Tier 1 and Tier 2 proposals for implementation — *Risk: Low. Addresses practical gaps without architectural risk.* *(The Court — Unanimous)*
 - **Oracle Command Resurrection**: The Prophet's F0 proposal for the Oracle command was resurrected and implemented — *Risk: Low, with mandatory disclaimer.* *(The Court — Unanimous)*
@@ -87,6 +109,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Session Archival**: History and recall commands for institutional memory — *Risk: Low. Prophet's cross-referencing proposal logged as F0.* *(The Court — Unanimous)*
 - **CLI Completeness**: Added convene, doctor, assess, history, recall commands — *Risk: Low. Prophet's "oracle" command logged as F0.* *(The Court — Unanimous)*
 - **Changelog Architecture**: Automatic updates triggered by session events and deliberations — *Risk: Low. The court's proceedings should be recorded as they happen, not reconstructed from memory.* *(The Court)*
+
+### Warned
+
+- **Consultant's Perspective**: The Prophet proposed that Edward Cullen should have "the right to name the unspoken"—psychological insight beyond domain expertise. Adopted in constrained form as the Consultant's "Perspective" capability. *(The Prophet — Partially Vindicated 2026-02-14)*
+- **Specialist Seat**: The Prophet proposed that domain experts should sit on the bench with full voting power rather than merely testify as witnesses. Adopted unanimously. *(The Prophet — Vindicated 2026-02-14)*
 
 ### F0 Registry Entries
 

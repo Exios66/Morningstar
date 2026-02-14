@@ -70,8 +70,9 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ MATTER BEFORE THE COURT                                         │
-│ How shall we prevent recurrence of [incident type]?             │
+│ THE COURT IS NOW IN SESSION                                     │
+│ MATTER: How shall we prevent recurrence of [incident type]?     │
+│ The Honorable Lucius J. Morningstar presiding                   │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -125,7 +126,7 @@
 
 ## Ruling
 
-**MORNINGSTAR:**
+**The Honorable Lucius J. Morningstar:**
 
 ```
 DECISION: [Summary of remediation plan]

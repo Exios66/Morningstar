@@ -83,6 +83,7 @@
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │ PROPHET VINDICATION                                             │
+│ The Honorable Lucius J. Morningstar acknowledging               │
 ├─────────────────────────────────────────────────────────────────┤
 │ The Prophet warned of: [brief summary]                          │
 │ The court ruled: [original decision]                            │

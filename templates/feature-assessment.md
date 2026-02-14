@@ -67,8 +67,9 @@ As a [type of user], I want [goal] so that [benefit].
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ MATTER BEFORE THE COURT                                         │
-│ Shall we implement [feature name]?                              │
+│ THE COURT IS NOW IN SESSION                                     │
+│ MATTER: Shall we implement [feature name]?                      │
+│ The Honorable Lucius J. Morningstar presiding                   │
 └─────────────────────────────────────────────────────────────────┘
 ```
 

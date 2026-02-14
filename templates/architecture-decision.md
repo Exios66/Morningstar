@@ -71,8 +71,9 @@
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ MATTER BEFORE THE COURT                                         │
-│ [Problem statement]                                             │
+│ THE COURT IS NOW IN SESSION                                     │
+│ MATTER: [Problem statement]                                     │
+│ The Honorable Lucius J. Morningstar presiding                   │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -83,6 +84,20 @@
 **DEBUGGER:** [Argument]
 
 **PROPHET:** [Hail-Mary pitch]
+
+### Consultant's Perspective (optional)
+
+*If invoked by the Judge:*
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ CONSULTANT'S PERSPECTIVE                                        │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+**CONSULTANT (to the Judge):** [Observation on the unspoken]
+
+*The Judge considers this privately.*
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐

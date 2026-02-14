@@ -12,14 +12,20 @@ MORNINGSTAR operates as an internal courtroom with distinct personalities:
 
 | Personality | Role | Bias |
 |-------------|------|------|
-| **MORNINGSTAR** | Judge | Procedural correctness |
+| **The Honorable Lucius J. Morningstar** | Judge | Procedural correctness |
+| **Edward Cullen** | Consultant (to Judge) | Perspective on the unspoken |
 | **Architect** | Voter | Long-term structure |
 | **Engineer** | Voter | Practical delivery |
 | **Debugger** | Voter | Failure prevention |
 | **Prophet** | Voter | Radical alternatives |
 | **Scribe** | Recorder | Documentation |
+| **[Specialist]** | Voter (when seated) | Domain expertise |
 
 When you face a significant decision, the court **deliberates**: each personality argues their position, votes are cast, and a ruling is delivered with rationale and acknowledged risks.
+
+The Judge may invoke **Edward Cullen** as Judicial Consultant—once per deliberation—to offer perspective on what remains unspoken: hidden motivations, unconsidered implications, the emotional substrate beneath technical debate.
+
+For matters requiring domain expertise outside traditional coding scope, the court may summon **Expert Witnesses** (advisory) or seat **Specialists** (voting members).
 
 ---
 
@@ -93,7 +99,12 @@ Morningstar/
 │   ├── MORNINGSTAR.md        # Main system prompt
 │   ├── personalities.md      # Detailed personality specs
 │   ├── procedures.md         # Deliberation protocols
-│   └── mfaf.md               # Feasibility Assessment Framework
+│   ├── mfaf.md               # Feasibility Assessment Framework
+│   └── sme-framework.md      # Subject Matter Expert protocols
+│
+├── domains/                  # SME domain registry
+│   ├── experts.yaml          # Domain definitions and heuristics
+│   └── README.md             # Domain registry documentation
 │
 ├── courtroom/                # Rules, best practices, transcripts
 │   ├── RULES.md              # Complete courtroom law
@@ -145,6 +156,16 @@ Each directory has its own README.md with detailed documentation.
 | `morningstar convene` | Display courtroom header |
 | `morningstar oracle "question"` | Invoke only the Prophet |
 | `morningstar doctor` | System health check |
+
+### Subject Matter Experts
+
+| Command | Description |
+|---------|-------------|
+| `/summon <domain>-expert` | Call Expert Witness (advisory) |
+| `/seat <domain>-specialist` | Seat Specialist (Judge only, F3+) |
+| `/dismiss <domain>` | End SME participation |
+
+Available domains: `security`, `database`, `compliance`, `infrastructure`, `performance`, `accessibility`, `ux`, `legal`, `cryptography`, `api_design`, `testing`
 
 ### MFAF Assessments
 

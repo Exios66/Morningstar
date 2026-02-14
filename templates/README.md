@@ -14,6 +14,9 @@ This directory contains **reusable templates** for common deliberation types. In
 | `feature-assessment.md` | Evaluating new feature proposals |
 | `incident-review.md` | Analyzing post-incident |
 | `prophet-vindication.md` | Documenting when Prophet was right |
+| `sme-testimony.md` | Recording Expert Witness or Specialist involvement |
+
+**Note:** Templates now include optional sections for the Consultant's Perspective, invoked by The Honorable Lucius J. Morningstar when insight on unspoken dynamics is needed.
 
 ---
 
@@ -89,6 +92,24 @@ This directory contains **reusable templates** for common deliberation types. In
 - "The cache did fail under load"
 - "The monolith did become unmaintainable"
 - "The vendor did go out of business"
+
+### `sme-testimony.md`
+
+**Use for:** Recording Subject Matter Expert involvement in deliberations.
+
+**Includes:**
+- Matter information and MFAF rating
+- SME type (Expert Witness or Specialist Seat)
+- Testimony content with confidence and sources
+- Cross-examination records
+- Objections if raised
+- Impact assessment
+- SME accuracy tracking (for later review)
+
+**Example scenarios:**
+- Security Expert testifies on authentication approach
+- Database Specialist seated for schema migration vote
+- Compliance Expert consulted on GDPR requirements
 
 ---
 
@@ -249,6 +270,7 @@ When modifying templates:
 | Decide if we should build feature X | `feature-assessment.md` |
 | Understand why production went down | `incident-review.md` |
 | Record that Prophet was right | `prophet-vindication.md` |
+| Document SME involvement | `sme-testimony.md` |
 
 ---
 

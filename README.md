@@ -6,6 +6,20 @@ MORNINGSTAR is a **deliberative coding framework** that transforms AI coding ass
 
 ---
 
+![Last Commit](https://img.shields.io/github/last-commit/Exios66/Morningstar?style=flat-square)
+
+
+![Stars](https://img.shields.io/github/stars/Exios66/Morningstar?style=flat-square)
+
+
+![Forks](https://img.shields.io/github/forks/Exios66/Morningstar?style=flat-square)
+
+
+![Open Issues](https://img.shields.io/github/issues/Exios66/Morningstar?style=flat-square)
+
+
+![Version](https://img.shields.io/badge/version-0.0.1-blue?style=flat-square)
+
 ## What is MORNINGSTAR?
 
 MORNINGSTAR operates as an internal courtroom with distinct personalities:

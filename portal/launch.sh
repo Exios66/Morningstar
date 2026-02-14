@@ -1,10 +1,12 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # MORNINGSTAR Courtroom Portal Launcher
 # ======================================
 # Interactive script to view courtroom deliberation transcripts
 #
 # Usage: ./portal/launch.sh
+#
+# Compatible with Bash 3.x (macOS default)
 #
 
 set -e
@@ -158,9 +160,12 @@ main() {
     print_header
     check_transcripts
     
-    # Get transcripts as array
-    local transcripts_list
-    mapfile -t transcripts_list < <(get_transcripts)
+    # Get transcripts as array (compatible with Bash 3.x)
+    local transcripts_list=()
+    local transcript
+    while IFS= read -r transcript; do
+        [ -n "$transcript" ] && transcripts_list+=("$transcript")
+    done < <(get_transcripts)
     
     local count=${#transcripts_list[@]}
     
@@ -177,15 +182,24 @@ main() {
         read -r choice
         
         # Check for quit
-        if [[ "$choice" == "q" ]] || [[ "$choice" == "Q" ]]; then
+        if [ "$choice" = "q" ] || [ "$choice" = "Q" ]; then
             echo ""
             echo -e "${GRAY}The court is adjourned.${NC}"
             echo ""
             exit 0
         fi
         
-        # Validate input
-        if ! [[ "$choice" =~ ^[0-9]+$ ]] || [ "$choice" -lt 1 ] || [ "$choice" -gt $count ]; then
+        # Validate input - check if it's a number
+        case "$choice" in
+            ''|*[!0-9]*)
+                echo ""
+                echo -e "${RED}Invalid selection. Please enter a number between 1 and $count.${NC}"
+                echo ""
+                continue
+                ;;
+        esac
+        
+        if [ "$choice" -lt 1 ] || [ "$choice" -gt $count ]; then
             echo ""
             echo -e "${RED}Invalid selection. Please enter a number between 1 and $count.${NC}"
             echo ""
@@ -193,7 +207,8 @@ main() {
         fi
         
         # Get selected transcript (array is 0-indexed)
-        local selected="${transcripts_list[$((choice-1))]}"
+        local index=$((choice - 1))
+        local selected="${transcripts_list[$index]}"
         local metadata=$(parse_transcript "$selected")
         local title=$(echo "$metadata" | cut -d'|' -f2)
         

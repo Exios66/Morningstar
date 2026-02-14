@@ -29,7 +29,7 @@ When you face a significant decision, the court **deliberates**: each personalit
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone <https://github.com/Exios66/Morningstar>
 cd Morningstar
 
 # Create virtual environment (recommended)

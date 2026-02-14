@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPECIAL INTEREST HEARING TRANSCRIPT - MORNINGSTAR</title>
+    <style>
+:root {
+    /* Dracula base colors */
+    --bg: #282a36;
+    --bg-light: #44475a;
+    --bg-lighter: #343746;
+    --fg: #f8f8f2;
+    --comment: #6272a4;
+    --selection: #44475a;
+    
+    /* Dracula accent colors */
+    --cyan: #8be9fd;
+    --green: #50fa7b;
+    --orange: #ffb86c;
+    --pink: #ff79c6;
+    --purple: #bd93f9;
+    --red: #ff5555;
+    --yellow: #f1fa8c;
+    
+    /* Personality colors */
+    --color-morningstar: var(--purple);
+    --color-architect: var(--cyan);
+    --color-engineer: var(--green);
+    --color-debugger: var(--orange);
+    --color-prophet: var(--pink);
+    --color-scribe: var(--comment);
+    --color-consultant: #c4a7e7;  /* Soft lavender - Edward Cullen */
+    --color-specialist: #a3be8c;  /* Muted sage - SME Specialist seat */
+    --color-expert: #d08770;      /* Warm coral - Expert Witness */
+    
+    /* UI elements */
+    --border: #44475a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: 'Fira Code', 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+    background: var(--bg);
+    color: var(--fg);
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.7;
+}
+
+h1, h2, h3, h4 {
+    color: var(--purple);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+h1 { font-size: 2rem; border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; }
+h2 { font-size: 1.5rem; color: var(--cyan); margin-top: 2rem; }
+h3 { font-size: 1.25rem; color: var(--green); }
+h4 { font-size: 1.1rem; color: var(--orange); }
+
+a { color: var(--cyan); text-decoration: none; }
+a:hover { color: var(--pink); text-decoration: underline; }
+
+strong, b { color: var(--yellow); font-weight: 600; }
+em, i { color: var(--comment); font-style: italic; }
+
+code {
+    background: var(--bg-light);
+    color: var(--pink);
+    padding: 0.2em 0.4em;
+    border-radius: 4px;
+    font-size: 0.9em;
+}
+
+pre {
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--purple);
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.9em;
+    line-height: 1.5;
+}
+
+pre code { background: none; color: var(--fg); padding: 0; }
+
+blockquote {
+    border-left: 4px solid var(--purple);
+    margin: 1rem 0;
+    padding: 0.5rem 1rem;
+    background: var(--bg-lighter);
+    color: var(--comment);
+    font-style: italic;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 0.95em;
+}
+
+th, td {
+    border: 1px solid var(--border);
+    padding: 0.75rem;
+    text-align: left;
+}
+
+th {
+    background: var(--bg-light);
+    color: var(--purple);
+    font-weight: 600;
+}
+
+tr:hover { background: var(--selection); }
+
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+}
+
+ul, ol { margin: 1rem 0; padding-left: 2rem; }
+li { margin: 0.5rem 0; }
+li::marker { color: var(--purple); }
+
+/* Personality styling */
+.p-morningstar { color: var(--color-morningstar); font-weight: bold; }
+.p-architect { color: var(--color-architect); font-weight: bold; }
+.p-engineer { color: var(--color-engineer); font-weight: bold; }
+.p-debugger { color: var(--color-debugger); font-weight: bold; }
+.p-prophet { color: var(--color-prophet); font-weight: bold; }
+.p-scribe { color: var(--color-scribe); font-weight: bold; }
+.p-consultant { color: var(--color-consultant); font-weight: bold; font-style: italic; }
+.p-specialist { color: var(--color-specialist); font-weight: bold; }
+.p-expert { color: var(--color-expert); font-weight: bold; }
+
+/* Vote styling */
+.vote-yes { color: var(--green); font-weight: bold; }
+.vote-no { color: var(--red); font-weight: bold; }
+.vote-abstain { color: var(--yellow); font-weight: bold; }
+
+/* Court box styling */
+.court-box {
+    background: var(--bg-lighter);
+    border: 2px solid var(--purple);
+    border-radius: 6px;
+    padding: 1rem;
+    margin: 1rem 0;
+    font-family: inherit;
+}
+
+/* Ruling section */
+.ruling {
+    background: var(--bg-lighter);
+    border: 2px solid var(--purple);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 2rem 0;
+}
+
+/* Transcript header */
+.transcript-header {
+    background: var(--bg-light);
+    border: 1px solid var(--purple);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Participant legend */
+.participant-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--bg-light);
+    border-radius: 6px;
+    margin: 1rem 0;
+    font-size: 0.9em;
+}
+
+.participant-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.participant-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.participant-color.morningstar { background: var(--color-morningstar); }
+.participant-color.architect { background: var(--color-architect); }
+.participant-color.engineer { background: var(--color-engineer); }
+.participant-color.debugger { background: var(--color-debugger); }
+.participant-color.prophet { background: var(--color-prophet); }
+.participant-color.scribe { background: var(--color-scribe); }
+.participant-color.consultant { background: var(--color-consultant); }
+.participant-color.specialist { background: var(--color-specialist); }
+.participant-color.expert { background: var(--color-expert); }
+
+.export-meta {
+    color: var(--comment);
+    font-size: 0.85em;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+    margin-top: 3rem;
+    text-align: center;
+}
+
+/* Fullscreen toggle */
+.fullscreen-toggle {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--purple);
+    color: var(--bg);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+    z-index: 10000;
+}
+
+.fullscreen-toggle:hover { background: var(--pink); }
+
+/* Print styles */
+@media print {
+    body { background: white; color: black; font-size: 12pt; }
+    h1, h2, h3, h4 { color: black; }
+    pre, .court-box, .ruling { background: #f5f5f5; border-color: #ccc; }
+    .fullscreen-toggle { display: none; }
+    a { color: black; text-decoration: underline; }
+}
+</style>
+</head>
+<body>
+    
+    <div class="participant-legend">
+        <div class="participant-item">
+            <span class="participant-color morningstar"></span>
+            <span>The Honorable Lucius J. Morningstar (Judge)</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color consultant"></span>
+            <span>CONSULTANT (Edward Cullen)</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color architect"></span>
+            <span>ARCHITECT</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color engineer"></span>
+            <span>ENGINEER</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color debugger"></span>
+            <span>DEBUGGER</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color prophet"></span>
+            <span>PROPHET</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color scribe"></span>
+            <span>SCRIBE</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color specialist"></span>
+            <span>SPECIALIST (SME Voting Seat)</span>
+        </div>
+        <div class="participant-item">
+            <span class="participant-color expert"></span>
+            <span>EXPERT WITNESS (SME Advisory)</span>
+        </div>
+    </div>
+    
+    
+    <h1>SPECIAL INTEREST HEARING TRANSCRIPT</h1>
+
+<h2>Matter: The Events of January 6th, 2021 — A Comprehensive Analysis</h2>
+<h2>Hearing Date: 2026-02-14</h2>
+<h2>Presiding: <span class="p-morningstar">The Honorable Lucius J. Morningstar</span></h2>
+
+<hr>
+
+<h1>DELIBERATION SUMMARY</h1>
+
+<p><strong>Subject:</strong> Multi-dimensional analysis of the January 6th, 2021 Capitol events — political antecedents, institutional failures, crowd dynamics, media ecosystem, and accountability frameworks.</p>
+
+<p><strong>Hearing Type:</strong> Special Interest Hearing — Investigative, No Final Vote</p>
+
+<p><strong>Witnesses Called:</strong></p>
+<li>Dr. Miriam Castellanos — Political Analyst (Election Narrative Ecosystems)</li>
+<li>Colonel (Ret.) James Thornwood — Security <span class="p-expert">Expert</span> (Capitol Police Preparedness)</li>
+<li>Dr. Evelyn Cross — Media Analyst (Information Flow and Amplification)</li>
+<li>Professor Harold Whitmore — Constitutional Scholar (Certification Process)</li>
+<li>Agent Victoria Chen — Intelligence Analyst (Prior Warning Signs)</li>
+<li>Dr. Samuel Reeves — Behavioral Psychologist (Crowd Psychology)</li>
+<li>Katherine Marlowe, Esq. — Legal <span class="p-expert">Expert</span> (Subsequent Prosecutions)</li>
+
+<p><strong>Key Findings:</strong></p>
+<ul>
+<li>Finding 1: The election fraud narrative constituted a coordinated information ecosystem with institutional amplification</li>
+<li>Finding 2: Capitol security failures were systemic, not merely operational</li>
+<li>Finding 3: Intelligence failures reflected institutional risk-aversion, not information absence</li>
+<li>Finding 4: The legal response prioritized breadth over strategic targeting</li>
+<li>Finding 5: Democratic certification processes proved more resilient than anticipated</li>
+<li>Finding 6: Accountability remains structurally incomplete at organizational levels</li>
+</ul>
+
+<hr>
+
+<h1>FULL TRANSCRIPT</h1>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ SPECIAL INTEREST HEARING CONVENED                               │
+│ MATTER: The Events of January 6th, 2021                         │
+│ PURPOSE: Comprehensive analysis of political, security,         │
+│          institutional, and accountability dimensions           │
+│ <span class="p-morningstar">The Honorable Lucius J. Morningstar</span> presiding                   │
+│ HEARING TYPE: Investigative — No Final Vote                     │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+
+<p><em>The gavel falls. The sound echoes longer than physics would permit.</em></p>
+
+<p>Order. This court convenes a Special Interest Hearing into the events of January 6th, 2021—a date that requires no introduction but will receive considerable examination nonetheless.</p>
+
+<p>The purpose of these proceedings is not partisan satisfaction. It is not retroactive prosecution. It is the establishment of fact through rigorous testimony, cross-examination, and analysis. We seek to understand what happened, why it happened, and what institutional lessons remain unlearned.</p>
+
+<p><em>The temperature in the courtroom drops exactly two degrees.</em></p>
+
+<p>This hearing shall proceed in seven phases, each addressing a distinct dimension of the events. The court has summoned expert witnesses in relevant domains. The personalities of this court shall conduct cross-examination according to established protocol.</p>
+
+<p>Let the record show: this is history examined, not relitigated.</p>
+
+<hr>
+
+<h2>PHASE I: THE POLITICAL LANDSCAPE AND NARRATIVE ECOSYSTEM</h2>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ WITNESS TESTIMONY                                               │
+│ Witness: Dr. Miriam Castellanos [CONSTRUCTED WITNESS]           │
+│ Domain: Political Analysis — Election Narrative Ecosystems      │
+│ Sources: Academic research, public statements, documented       │
+│          media analysis from 2020-2024                          │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p>The court calls Dr. Miriam Castellanos. Dr. Castellanos, you have studied the propagation of election fraud narratives extensively. Please provide your testimony regarding the political landscape preceding January 6th.</p>
+
+<p><strong>DR. MIRIAM CASTELLANOS:</strong></p>
+
+<p><em>Approaches the witness stand. Adjusts glasses. Opens a thick binder.</em></p>
+
+<p>Thank you, Your Honor.</p>
+
+<p>The election fraud narrative did not emerge on November 3rd, 2020. It was pre-positioned. As early as spring 2020, then-President Trump began questioning mail-in ballot integrity, stating on April 8th: &quot;Mail-in voting is horrible. It's corrupt.&quot; [VERIFIED — Public statement]</p>
+
+<p>The narrative ecosystem operated on three tiers:</p>
+
+<p><strong>Tier One — Elite Signaling:</strong> Presidential statements, legal filings (62 lawsuits filed post-election), and official communications established legitimacy for doubt. The phrase &quot;Stop the Steal&quot; was trademarked by Roger Stone in 2016 and reactivated in 2020. [VERIFIED — USPTO records]</p>
+
+<p><strong>Tier Two — Media Amplification:</strong> Certain networks provided sustained coverage treating fraud allegations as credible open questions rather than claims requiring evidence. Between November 3rd and January 6th, one major network aired over 700 segments mentioning election fraud. [ATTRIBUTED — Media Matters analysis]</p>
+
+<p><strong>Tier Three — Social Contagion:</strong> Platforms like Parler, Gab, and Facebook groups created epistemic communities where fraud was axiomatic. The &quot;Stop the Steal&quot; Facebook group gained 320,000 members in 22 hours before removal. [VERIFIED — Facebook public statement]</p>
+
+<p>What we witnessed was not organic grassroots skepticism. It was a coordinated narrative infrastructure that activated pre-existing distrust in institutions.</p>
+
+<p><strong>Confidence Level:</strong> High (direct documentation available)</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Dr. Miriam Castellanos                                 │
+│ Examiner: <span class="p-architect">ARCHITECT</span>                                             │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-architect">ARCHITECT</span> → DR. CASTELLANOS:</strong></p>
+<p>You describe a &quot;coordinated narrative infrastructure.&quot; Coordination implies central planning. What evidence exists of deliberate coordination versus parallel opportunism?</p>
+
+<p><strong>DR. CASTELLANOS:</strong></p>
+<p>The distinction matters. Let me be precise. We have documented evidence of:</p>
+<ul>
+<li>Pre-planned messaging (Roger Stone's &quot;Stop the Steal&quot; revival)</li>
+<li>Parallel legal strategies across multiple states with shared legal teams</li>
+<li>Consistent talking points appearing within hours across outlets</li>
+</ul>
+
+<p>What we lack is a documented master plan. I would characterize this as &quot;coordinated emergence&quot;—multiple actors pursuing aligned goals through established networks without requiring explicit conspiracy. The infrastructure existed; activation was decentralized.</p>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+<p><em>Nods slowly.</em></p>
+<p>So the architecture was pre-built, even if the specific activation was opportunistic. The system was designed to be triggered.</p>
+
+<p><strong>DR. CASTELLANOS:</strong></p>
+<p>Precisely.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Dr. Miriam Castellanos                                 │
+│ Examiner: <span class="p-debugger">DEBUGGER</span>                                              │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-debugger">DEBUGGER</span> → DR. CASTELLANOS:</strong></p>
+<p>You mention 62 lawsuits. What was the success rate of these legal challenges?</p>
+
+<p><strong>DR. CASTELLANOS:</strong></p>
+<p>Of the 62 cases, one achieved a minor procedural victory in Pennsylvania regarding observer distances. Zero cases produced evidence of fraud sufficient to change outcomes. Courts—many with Trump-appointed judges—consistently found the claims without merit. [VERIFIED — Court records]</p>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+<p>So the legal system functioned as a firewall, but the narrative continued regardless of legal outcomes?</p>
+
+<p><strong>DR. CASTELLANOS:</strong></p>
+<p>Yes. And this is crucial: the lawsuits served a dual purpose. Their legal merit was secondary. Their narrative value was primary. Each filing became a headline: &quot;Trump Campaign Files Lawsuit Alleging Fraud.&quot; The dismissals received less coverage and were reframed as establishment suppression.</p>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+<p><em>Makes note.</em></p>
+<p>The failure mode was the feature.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Dr. Miriam Castellanos                                 │
+│ Examiner: <span class="p-engineer">ENGINEER</span>                                              │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-engineer">ENGINEER</span> → DR. CASTELLANOS:</strong></p>
+<p>Let's be practical. What percentage of Americans believed the election was stolen by January 6th?</p>
+
+<p><strong>DR. CASTELLANOS:</strong></p>
+<p>Polling from that period: approximately 70-75% of Republican voters believed the election involved significant fraud. [VERIFIED — Multiple polls including Quinnipiac, Monmouth] Among the general population, roughly 35-40% expressed doubt about election integrity.</p>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+<p>So we're talking about tens of millions of people operating within this narrative framework. At that scale, how do you distinguish believers from opportunists from those simply expressing partisan loyalty?</p>
+
+<p><strong>DR. CASTELLANOS:</strong></p>
+<p>You cannot cleanly separate them. That's what makes information ecosystems powerful—they create genuine belief in some, provide cover for others, and generate social pressure for performative agreement. The January 6th crowd contained all three.</p>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+<p><em>Sighs.</em></p>
+<p>Shipping code to production with 70 million users already running the old version. Classic migration nightmare.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Dr. Miriam Castellanos                                 │
+│ Examiner: <span class="p-prophet">PROPHET</span>                                               │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+<p><em>Stands abruptly. Knocks over chair.</em></p>
+
+<p>Dr. Castellanos. You've described the what. Let me ask about the vacuum.</p>
+
+<p>If this narrative infrastructure didn't exist—if election fraud claims had no fertile ground—why was the ground fertile? What institutional failures created the trust deficit that made 70 million people receptive?</p>
+
+<p><strong>DR. CASTELLANOS:</strong></p>
+<p><em>Pauses.</em></p>
+<p>That... is the harder question.</p>
+
+<p>The infrastructure exploited pre-existing conditions: declining trust in institutions across four decades, media fragmentation creating epistemic bubbles, economic displacement generating grievance, and a political system increasingly experienced as unresponsive.</p>
+
+<p>The fraud narrative didn't create distrust. It weaponized it.</p>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+<p><em>Eyes gleaming.</em></p>
+<p>So January 6th wasn't an aberration. It was an inevitability deferred. The question isn't why it happened then—it's why it didn't happen sooner.</p>
+
+<p><strong>DR. CASTELLANOS:</strong></p>
+<p>I... cannot disagree with that framing.</p>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p>The <span class="p-prophet">Prophet</span>'s question is recorded. The witness may step down.</p>
+
+<hr>
+
+<h2>PHASE II: SECURITY AND PREPAREDNESS FAILURES</h2>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ WITNESS TESTIMONY                                               │
+│ Witness: Colonel (Ret.) James Thornwood [CONSTRUCTED WITNESS]   │
+│ Domain: Security Analysis — Capitol Police Preparedness         │
+│ Sources: Congressional testimony, Inspector General reports,    │
+│          GAO findings, Senate investigation 2021                │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p>The court calls Colonel James Thornwood, retired, formerly of military police command. Colonel, you have analyzed the security posture of the United States Capitol on January 6th. Provide your assessment.</p>
+
+<p><strong>COLONEL JAMES THORNWOOD:</strong></p>
+
+<p><em>Strides to the stand. Ramrod posture. Speaks clipped.</em></p>
+
+<p>Your Honor. The security failure on January 6th was not a failure of individual officers. It was a systemic failure of command, intelligence integration, and interagency coordination.</p>
+
+<p>Let me be direct.</p>
+
+<p><strong>Fact One:</strong> The Capitol Police had approximately 1,200 officers on duty that day. Standard for a Joint Session of Congress. Inadequate for an event with 10,000+ demonstrators where intelligence indicated potential for violence. [VERIFIED — Senate Report]</p>
+
+<p><strong>Fact Two:</strong> The Department of Defense denied or delayed National Guard deployment requests. USCP Chief Sund requested Guard support on January 4th. The request was not approved until 5:08 PM on January 6th—over three hours after the breach. [VERIFIED — DOD timeline, Congressional testimony]</p>
+
+<p><strong>Fact Three:</strong> No hard perimeter was established. Bike rack barriers—collapsible, movable—constituted the primary physical security. This was a permitted rally configuration, not a high-threat posture. [VERIFIED — Visual documentation]</p>
+
+<p><strong>Fact Four:</strong> The Civil Disturbance Unit (CDU) was not pre-deployed. When violence began, officers in standard uniform faced an armed mob. [VERIFIED — Officer testimony]</p>
+
+<p>This was not an intelligence failure in the traditional sense. Intelligence existed. It was not actioned.</p>
+
+<p><strong>Confidence Level:</strong> High</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Colonel James Thornwood                                │
+│ Examiner: <span class="p-debugger">DEBUGGER</span>                                              │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-debugger">DEBUGGER</span> → COLONEL THORNWOOD:</strong></p>
+<p>You say intelligence existed. Specify. What did the relevant agencies know, and when?</p>
+
+<p><strong>COLONEL THORNWOOD:</strong></p>
+<p><em>Opens folder.</em></p>
+
+<p>December 21st, 2020: FBI Norfolk field office identifies online discussions of &quot;ichallenge,&quot; calls to bring weapons to D.C. [VERIFIED — FBI internal memo]</p>
+
+<p>December 29th: DHS distributes situational awareness report noting travel by known extremist groups. [VERIFIED — Senate Report]</p>
+
+<p>January 3rd: NYPD intelligence shares social media posts discussing violence, including &quot;Congress needs to hear glass breaking.&quot; [VERIFIED — Congressional testimony]</p>
+
+<p>January 5th: FBI Norfolk issues explicit warning of potential violence, including maps of the Capitol tunnel system. [VERIFIED — FBI document release]</p>
+
+<p>This was not a black swan. This was documented, disseminated, and disregarded.</p>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+<p><em>Leans forward.</em></p>
+<p>The input was valid. The system ignored it. Was this a filtering failure or a prioritization failure?</p>
+
+<p><strong>COLONEL THORNWOOD:</strong></p>
+<p>Both. The Capitol Police Intelligence Division received raw intelligence but did not upgrade the threat assessment. The FBI report from Norfolk was shared via email and never reached Capitol Police leadership. Information existed in silos; synthesis failed.</p>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+<p>So the bug was in the integration layer. Classic.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Colonel James Thornwood                                │
+│ Examiner: <span class="p-architect">ARCHITECT</span>                                             │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-architect">ARCHITECT</span> → COLONEL THORNWOOD:</strong></p>
+<p>Colonel, the Capitol Police Board consists of three members: the House Sergeant at Arms, Senate Sergeant at Arms, and <span class="p-architect">Architect</span> of the Capitol. All three must approve National Guard deployment. Is this structure appropriate for crisis response?</p>
+
+<p><strong>COLONEL THORNWOOD:</strong></p>
+<p>It is not. The structure was designed for deliberation, not urgency. On January 6th, Chief Sund called for Guard assistance at 1:09 PM. The Board did not convene effectively. Individual members could not reach each other. Authorization came at 3:04 PM—nearly two hours later—with actual deployment at 5:40 PM.</p>
+
+<p>In military terms: the command structure had no provision for exigent authority. No single individual could escalate.</p>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+<p>So the architecture failed. The system required consensus for emergency action, which is definitionally unavailable during emergencies.</p>
+
+<p><strong>COLONEL THORNWOOD:</strong></p>
+<p>Correct. This has since been partially remedied by the 2022 reforms, but the fundamental tension remains. Democratic oversight versus operational agility.</p>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+<p><em>Coldly.</em></p>
+<p>An architecture that cannot handle its primary failure mode is not architecture. It is decoration.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Colonel James Thornwood                                │
+│ Examiner: <span class="p-prophet">PROPHET</span>                                               │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+<p><em>Rises slowly. Voice drops.</em></p>
+
+<p>Colonel. You've described systemic failure. Let me name the elephant.</p>
+
+<p>Was the inadequate response a failure... or was it permitted?</p>
+
+<p><strong>COLONEL THORNWOOD:</strong></p>
+<p><em>Long pause.</em></p>
+<p>That question has two possible answers.</p>
+
+<p>The institutional answer: The failures were bureaucratic—risk aversion, poor communication, inadequate planning. No evidence exists of deliberate stand-down orders.</p>
+
+<p>The pattern answer: The same agencies that deployed overwhelming force against Black Lives Matter protests months earlier deployed minimal force against a predominantly white crowd with documented violent intent. This asymmetry is documented. [VERIFIED — Comparative analysis, ACLU reports]</p>
+
+<p>Whether this reflects conscious decision or systemic bias, I cannot determine from available evidence.</p>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+<p>But the asymmetry exists.</p>
+
+<p><strong>COLONEL THORNWOOD:</strong></p>
+<p>The asymmetry exists. The explanation for it remains contested.</p>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p><em>The room grows very quiet.</em></p>
+
+<p>The testimony is recorded. The asymmetry is noted. The witness may step down.</p>
+
+<hr>
+
+<h2>PHASE III: THE RALLY, THE MARCH, THE BREACH</h2>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ DOCUMENTARY EVIDENCE PRESENTED                                  │
+│ The court presents a timeline reconstruction                    │
+│ Sources: Video evidence, GPS data, Congressional testimony,     │
+│          DOJ prosecution documents                              │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p>Before hearing from our behavioral expert, the court shall establish the factual timeline. The <span class="p-scribe">Scribe</span> has prepared a reconstruction.</p>
+
+<hr>
+
+<h3>VERIFIED TIMELINE — JANUARY 6TH, 2021</h3>
+
+<table>
+<tr><th>Time (EST)</th><th>Event</th></tr>
+<tr><td>6:00 AM</td><td>Crowds begin gathering at the Ellipse</td></tr>
+<tr><td>9:00 AM</td><td>First groups arrive at Capitol perimeter</td></tr>
+<tr><td>11:00 AM</td><td>&quot;Save America&quot; rally begins at the Ellipse</td></tr>
+<tr><td>11:50 AM</td><td>Pipe bombs discovered at RNC and DNC headquarters</td></tr>
+<tr><td>12:00 PM</td><td>President Trump begins speaking</td></tr>
+<tr><td>12:15 PM</td><td>First breach of outer Capitol perimeter (Peace Circle)</td></tr>
+<tr><td>12:53 PM</td><td>Trump: &quot;We're going to walk down to the Capitol&quot;</td></tr>
+<tr><td>1:03 PM</td><td>Trump speech concludes</td></tr>
+<tr><td>1:10 PM</td><td>Rioters overwhelm police at First Street barrier</td></tr>
+<tr><td>1:26 PM</td><td>USCP orders evacuation of Library of Congress</td></tr>
+<tr><td>1:30 PM</td><td>Evacuation of Cannon House Office Building</td></tr>
+<tr><td>1:49 PM</td><td>USCP declares riot; emergency declared</td></tr>
+<tr><td>2:11 PM</td><td>First rioters breach Capitol building (Senate wing)</td></tr>
+<tr><td>2:13 PM</td><td>Vice President Pence evacuated from Senate chamber</td></tr>
+<tr><td>2:15 PM</td><td>House chamber evacuated; members shelter in place</td></tr>
+<tr><td>2:24 PM</td><td>Trump tweets criticism of Pence</td></tr>
+<tr><td>2:38 PM</td><td>Trump tweets &quot;stay peaceful&quot; (first call for calm)</td></tr>
+<tr><td>2:44 PM</td><td>Ashli Babbitt shot breaching Speaker's Lobby</td></tr>
+<tr><td>3:13 PM</td><td>DOD approves DC National Guard deployment</td></tr>
+<tr><td>4:17 PM</td><td>Trump releases video message asking rioters to go home</td></tr>
+<tr><td>5:34 PM</td><td>Capitol secured</td></tr>
+<tr><td>6:00 PM</td><td>Curfew takes effect</td></tr>
+<tr><td>8:06 PM</td><td>Congress reconvenes</td></tr>
+<tr><td>3:32 AM (Jan 7)</td><td>Electoral count certified</td></tr>
+</table>
+
+<p><strong>Source Confidence:</strong> High — Multiple corroborating sources including video, GPS, official records</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ WITNESS TESTIMONY                                               │
+│ Witness: Dr. Samuel Reeves [CONSTRUCTED WITNESS]                │
+│ Domain: Behavioral Psychology — Crowd Dynamics                  │
+│ Sources: Academic literature, post-event interviews,            │
+│          prosecution documents, behavioral analysis             │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p>The court calls Dr. Samuel Reeves, behavioral psychologist specializing in crowd dynamics. Dr. Reeves, explain what occurred within the crowd on January 6th.</p>
+
+<p><strong>DR. SAMUEL REEVES:</strong></p>
+
+<p><em>Approaches stand. Speaks measured.</em></p>
+
+<p>Your Honor. January 6th was a textbook case of emergent collective behavior—specifically, what we call &quot;deindividuation cascades&quot; combined with &quot;elite cue responsiveness.&quot;</p>
+
+<p>Let me explain what happened psychologically.</p>
+
+<p><strong>First — The Pre-Activation Phase:</strong> Participants arrived in a state of moral certainty. They believed—genuinely believed—they were preventing a crime. This is crucial. They were not arriving to commit violence; they were arriving to stop what they perceived as violence against democracy. The narrative infrastructure Dr. Castellanos described had accomplished psychological pre-framing.</p>
+
+<p><strong>Second — Elite Permission:</strong> President Trump's speech contained specific linguistic triggers. &quot;Fight like hell.&quot; &quot;We're going to walk down to the Capitol.&quot; &quot;Show strength.&quot; These function as permission structures. Research on authority-sanctioned aggression (Milgram, 1963; Zimbardo, 1971) demonstrates that individuals will cross moral boundaries when authority figures provide justification and implicit approval. [VERIFIED — Academic literature]</p>
+
+<p><strong>Third — Deindividuation:</strong> Large crowds create anonymity. Anonymity reduces accountability perception. When the first barriers fell—around 12:15 PM—each subsequent transgression became easier. The psychological cost of norm violation decreases as violation becomes normalized within the immediate social environment.</p>
+
+<p><strong>Fourth — Point of No Return:</strong> Once inside the Capitol, many participants experienced what we call &quot;escalation commitment.&quot; They had already crossed legal and moral lines. Further transgression carried marginally less psychological cost than retreat.</p>
+
+<p><strong>Confidence Level:</strong> High for theoretical framework; Moderate for individual-level application</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Dr. Samuel Reeves                                      │
+│ Examiner: <span class="p-engineer">ENGINEER</span>                                              │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-engineer">ENGINEER</span> → DR. REEVES:</strong></p>
+<p>Let's get practical. The DOJ has charged over 1,200 individuals. How do you distinguish between true believers, opportunists, and those who got swept up?</p>
+
+<p><strong>DR. REEVES:</strong></p>
+<p>The prosecution documents actually help here. We can identify several typologies:</p>
+
+<p><strong>Type 1 — Organized Militants:</strong> Oath Keepers, Proud Boys—pre-planned, equipped, coordinated. Approximately 10-15% of those charged. [VERIFIED — DOJ statistics]</p>
+
+<p><strong>Type 2 — True Believers:</strong> Traveled specifically for January 6th, expressed sincere fraud beliefs, acted with moral certainty. Perhaps 50-60%.</p>
+
+<p><strong>Type 3 — Opportunistic Participants:</strong> Present initially as observers, participated when opportunity arose. 20-30%.</p>
+
+<p><strong>Type 4 — Social Followers:</strong> Swept into crowd behavior, expressed regret rapidly. 10-15%.</p>
+
+<p>The legal system treats these identically in many cases. Psychology does not.</p>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+<p>So roughly 10-15% were executing a plan, and the rest were... variables in the system.</p>
+
+<p><strong>DR. REEVES:</strong></p>
+<p>Correct. The plan required the crowd. The crowd didn't require the plan—but the plan catalyzed the crowd.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Dr. Samuel Reeves                                      │
+│ Examiner: <span class="p-architect">ARCHITECT</span>                                             │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-architect">ARCHITECT</span> → DR. REEVES:</strong></p>
+<p>You describe &quot;elite permission.&quot; How much causal weight do you assign to Trump's speech versus pre-existing intent?</p>
+
+<p><strong>DR. REEVES:</strong></p>
+<p>This is the critical question—and the one the January 6th Committee grappled with.</p>
+
+<p>The research is clear: authority cues dramatically increase transgressive behavior. But they typically amplify pre-existing disposition rather than creating it from nothing.</p>
+
+<p>My assessment: Trump's speech was necessary but not sufficient. Without the pre-existing narrative framework, the crowd would have remained a protest. Without the speech's specific language, the protest would likely not have become an assault.</p>
+
+<p>The causation is interactive, not sequential.</p>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+<p>So you're describing a system where each component is individually insufficient but collectively necessary. Remove any element, and the outcome changes.</p>
+
+<p><strong>DR. REEVES:</strong></p>
+<p>Precisely. Which is why single-cause explanations fail. And why accountability is structurally complicated.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Dr. Samuel Reeves                                      │
+│ Examiner: <span class="p-prophet">PROPHET</span>                                               │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+<p><em>Voice quiet. Dangerous.</em></p>
+
+<p>Dr. Reeves. The people who entered that building—many of them—believed they were saving the country. They believed they were the heroes of the story.</p>
+
+<p>When the country told them they were villains, what happened to that belief?</p>
+
+<p><strong>DR. REEVES:</strong></p>
+<p><em>Long exhale.</em></p>
+
+<p>This is the tragedy of moral certainty.</p>
+
+<p>For some, arrest and prosecution created genuine reconsideration. We've seen defendants express authentic remorse, describe the experience as awakening from a fugue state.</p>
+
+<p>For others—and this is documented extensively—the prosecutions reinforced the narrative. They became political prisoners in their own understanding. The belief system metabolized the consequence as confirmation.</p>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+<p>So we created martyrs.</p>
+
+<p><strong>DR. REEVES:</strong></p>
+<p>For a subset, yes. The question is whether legal accountability for individuals can address collective delusion. The psychological research suggests... limits.</p>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p><em>The gavel rests untouched.</em></p>
+
+<p>The witness may step down. The court will take a brief recess.</p>
+
+<p><em>The lights dim. The temperature drops further.</em></p>
+
+<hr>
+
+<h2>PHASE IV: MEDIA COVERAGE AND INFORMATION FLOW</h2>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ WITNESS TESTIMONY                                               │
+│ Witness: Dr. Evelyn Cross [CONSTRUCTED WITNESS]                 │
+│ Domain: Media Analysis — Information Amplification              │
+│ Sources: Content analysis, platform data, broadcast records     │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p>Court resumes. The court calls Dr. Evelyn Cross, media analyst. Dr. Cross, address the role of media ecosystems in both the lead-up and aftermath.</p>
+
+<p><strong>DR. EVELYN CROSS:</strong></p>
+
+<p><em>Takes stand. Tablet in hand. Data-forward demeanor.</em></p>
+
+<p>Your Honor. The media landscape of January 6th exhibited three distinct phases with different characteristics.</p>
+
+<p><strong>Phase One — Pre-Event (November-January):</strong></p>
+
+<p>The information ecosystem split along predictable partisan lines, but the asymmetry is significant.</p>
+
+<ul>
+<li>Network A (mainstream): Covered fraud claims as political strategy; fact-checked consistently</li>
+<li>Network B (conservative mainstream): Covered fraud claims as credible controversy; fact-checking inconsistent</li>
+<li>Network C (right-wing): Covered fraud as established fact; no meaningful fact-checking</li>
+<li>Social platforms: Algorithms amplified engagement, which favored outrage and conspiracy content</li>
+</ul>
+
+<p>The result: approximately 40% of Americans consumed media that treated fraud as plausible or proven. [ATTRIBUTED — Pew Research, Media consumption studies]</p>
+
+<p><strong>Phase Two — Event Day:</strong></p>
+
+<p>Real-time coverage varied dramatically:</p>
+
+<ul>
+<li>Mainstream networks: Live coverage, immediate characterization as &quot;unprecedented,&quot; &quot;assault&quot;</li>
+<li>Conservative networks: Initial hesitation, gradual shift to criticism as violence became undeniable</li>
+<li>Social platforms: Videos circulated faster than any editorial control could manage</li>
+</ul>
+
+<p>The 187-minute gap—between when Trump concluded his speech and when he released his &quot;go home&quot; video—received intensive coverage and became a focal point for accountability narratives.</p>
+
+<p><strong>Phase Three — Post-Event:</strong></p>
+
+<p>The same footage was interpreted through incompatible frameworks:</p>
+<ul>
+<li>&quot;Insurrection&quot; vs. &quot;legitimate political discourse&quot;</li>
+<li>&quot;Domestic terrorism&quot; vs. &quot;unguided tour&quot;</li>
+<li>&quot;Attempted coup&quot; vs. &quot;FBI entrapment&quot;</li>
+</ul>
+
+<p>The event itself became a Rorschach test. Shared facts produced divergent conclusions.</p>
+
+<p><strong>Confidence Level:</strong> High for documented patterns; Moderate for causal claims</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Dr. Evelyn Cross                                       │
+│ Examiner: <span class="p-debugger">DEBUGGER</span>                                              │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-debugger">DEBUGGER</span> → DR. CROSS:</strong></p>
+<p>You mention platform algorithms favored outrage content. Quantify this. What was the amplification differential for election fraud content versus debunking content?</p>
+
+<p><strong>DR. CROSS:</strong></p>
+<p>Internal Facebook documents released through whistleblowers provide some data:</p>
+
+<ul>
+<li>Misinformation content received 6x more engagement than corrections [VERIFIED — Frances Haugen disclosures]</li>
+<li>The &quot;Stop the Steal&quot; group grew at 1,700 members per minute before removal [VERIFIED — Facebook data]</li>
+<li>YouTube's recommendation algorithm promoted election fraud content to users who watched mainstream political content [ATTRIBUTED — Mozilla research]</li>
+</ul>
+
+<p>The platforms' business model—engagement maximization—was structurally incompatible with accuracy prioritization.</p>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+<p>So the algorithm was functioning as designed. Engagement was the metric; truth was not a variable.</p>
+
+<p><strong>DR. CROSS:</strong></p>
+<p>Correct. The bug was in the specification, not the implementation.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Dr. Evelyn Cross                                       │
+│ Examiner: <span class="p-architect">ARCHITECT</span>                                             │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-architect">ARCHITECT</span> → DR. CROSS:</strong></p>
+<p>What structural reforms to media architecture could prevent similar information failures?</p>
+
+<p><strong>DR. CROSS:</strong></p>
+<p>This question assumes prevention is possible within current structures. I'm skeptical.</p>
+
+<p>The fundamental tension is: democratic societies require free expression; free expression permits falsehood; falsehood at scale erodes democratic function.</p>
+
+<p>Proposed interventions have included:</p>
+<ul>
+<li>Algorithmic transparency requirements (limited effectiveness demonstrated)</li>
+<li>Platform liability reforms (Section 230 modifications—contested)</li>
+<li>Media literacy education (long-term, unproven at scale)</li>
+<li>Decentralization of platforms (may worsen balkanization)</li>
+</ul>
+
+<p>No structural intervention addresses the underlying demand for confirming information. Supply-side solutions fail when demand is infinite.</p>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+<p>You're describing an architectural problem without an architectural solution.</p>
+
+<p><strong>DR. CROSS:</strong></p>
+<p>I'm describing an architectural problem that may require non-architectural interventions. Social trust cannot be legislated or coded.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ <span class="p-consultant">CONSULTANT</span>'S PERSPECTIVE                                        │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><em>The <span class="p-architect">Architect</span> glances at the <span class="p-engineer">Engineer</span>. The <span class="p-engineer">Engineer</span> studies the floor. The <span class="p-debugger">Debugger</span>'s eyes dart to the empty space beside the <span class="p-morningstar">Judge</span>'s bench, then quickly away. No one speaks.</em></p>
+
+<p><strong><span class="p-consultant">EDWARD CULLEN</span> (to the <span class="p-morningstar">Judge</span>, from somewhere the others cannot perceive):</strong></p>
+
+<p>The witnesses discuss systems. Platforms. Algorithms.</p>
+
+<p>But no one has named the hunger.</p>
+
+<p>People consumed false information because true information did not address their fear. The fear was real. The address was false. That substitution—comfort for truth—is older than any algorithm.</p>
+
+<p>The question is not how the information spread. It is why the truth was not enough.</p>
+
+<p><em>The <span class="p-morningstar">Judge</span> considers this privately. The court waits in silence they do not acknowledge.</em></p>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p><em>After a long pause.</em></p>
+<p>The witness may step down. The court notes... unspoken dimensions.</p>
+
+<hr>
+
+<h2>PHASE V: CONSTITUTIONAL AND CERTIFICATION ANALYSIS</h2>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ WITNESS TESTIMONY                                               │
+│ Witness: Professor Harold Whitmore [CONSTRUCTED WITNESS]        │
+│ Domain: Constitutional Law — Electoral Certification            │
+│ Sources: Constitutional text, historical precedent,             │
+│          Electoral Count Act analysis                           │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p>The court calls Professor Harold Whitmore, constitutional scholar. Professor, illuminate the legal framework that January 6th tested.</p>
+
+<p><strong>PROFESSOR HAROLD WHITMORE:</strong></p>
+
+<p><em>Rises slowly. Academic gravitas evident.</em></p>
+
+<p>Your Honor. The events of January 6th stress-tested a constitutional process that had operated unexamined for 130 years: the certification of electoral votes under the Electoral Count Act of 1887.</p>
+
+<p>The Constitution provides minimal guidance. Article II and the Twelfth Amendment establish that electors meet in their states, that certificates are transmitted to Congress, and that the President of the Senate—the Vice President—shall &quot;open all the certificates.&quot; The counting procedure is delegated to statute.</p>
+
+<p>The Electoral Count Act, passed after the disputed 1876 election, created the January 6th joint session and established procedures for objections. But the Act was ambiguously drafted and had never faced serious challenge.</p>
+
+<p><strong>The Vice Presidential Question:</strong></p>
+
+<p>The most dangerous constitutional moment was the pressure campaign on Vice President Pence. The theory advanced by John Eastman and others held that the Vice President possessed unilateral authority to reject electoral slates or return them to states.</p>
+
+<p>This theory was constitutionally unprecedented and textually unsupported. The Vice President's role is ministerial: to open certificates and announce results. No historical practice, no judicial interpretation, and no plain reading of the text supports unilateral rejection authority.</p>
+
+<p>Vice President Pence's refusal to exceed his constitutional role—communicated in his January 6th letter—was arguably the single most consequential act of constitutional fidelity that day. [VERIFIED — Pence letter, public record]</p>
+
+<p><strong>Confidence Level:</strong> High</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Professor Harold Whitmore                              │
+│ Examiner: <span class="p-architect">ARCHITECT</span>                                             │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-architect">ARCHITECT</span> → PROFESSOR WHITMORE:</strong></p>
+<p>The Electoral Count Reform Act of 2022 addressed some vulnerabilities. What gaps remain?</p>
+
+<p><strong>PROFESSOR WHITMORE:</strong></p>
+<p>The 2022 Act was salutary but insufficient.</p>
+
+<p><strong>Addressed:</strong></p>
+<ul>
+<li>Clarified Vice President's role as ministerial (codifying what was always true)</li>
+<li>Raised objection threshold from one member of each chamber to one-fifth</li>
+<li>Tightened timelines for state certification</li>
+</ul>
+
+<p><strong>Unaddressed:</strong></p>
+<ul>
+<li>State legislature independent theory (potentially legitimizing slate substitution)</li>
+<li>Gubernatorial certification authority (single-point vulnerability)</li>
+<li>Judicial review timelines (insufficient for compressed election contests)</li>
+<li>Electoral College structure itself (winner-take-all distortions persist)</li>
+</ul>
+
+<p>The fundamental vulnerability remains: the system depends on good-faith actors occupying critical positions. Legal structures can constrain bad actors but cannot substitute for norms of democratic commitment.</p>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+<p>So the architecture was patched but not hardened. The 2024 election demonstrated the patch's effectiveness, but a more determined attack might find different vulnerabilities.</p>
+
+<p><strong>PROFESSOR WHITMORE:</strong></p>
+<p>Constitutional democracy is not a machine. It is a set of practices sustained by shared commitment. January 6th revealed the dependence on that commitment. The commitment survived. Whether it will survive future tests is not a legal question.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Professor Harold Whitmore                              │
+│ Examiner: <span class="p-prophet">PROPHET</span>                                               │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+<p><em>Standing very still.</em></p>
+
+<p>Professor. Mike Pence is not a radical. He is not a reformer. He is a company man, an institutionalist, a creature of the Republican establishment.</p>
+
+<p>And yet that man—that man specifically—held the line when more charismatic, more populist, more &quot;authentic&quot; figures did not.</p>
+
+<p>What does that tell us about where democratic resilience actually lives?</p>
+
+<p><strong>PROFESSOR WHITMORE:</strong></p>
+<p><em>Long consideration.</em></p>
+
+<p>It tells us something counterintuitive.</p>
+
+<p>We often celebrate democratic heroes as visionaries who break with convention. But on January 6th, democracy was preserved by someone who refused to break with convention. The mundane virtue of procedural fidelity—of doing one's job as defined, not as demanded—proved more valuable than charisma.</p>
+
+<p>The system held because someone boring held the line.</p>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+<p><em>Almost smiling.</em></p>
+<p>So the most radical act was radical compliance with existing rules.</p>
+
+<p><strong>PROFESSOR WHITMORE:</strong></p>
+<p>In an environment of norm erosion, yes. Normalcy became revolutionary.</p>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p>The paradox is noted. The witness may step down.</p>
+
+<hr>
+
+<h2>PHASE VI: INTELLIGENCE FAILURES AND WARNING SIGNS</h2>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ WITNESS TESTIMONY                                               │
+│ Witness: Agent Victoria Chen [CONSTRUCTED WITNESS]              │
+│ Domain: Intelligence Analysis — Threat Assessment               │
+│ Sources: Congressional testimony, IG reports, FBI documents     │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p>The court calls Agent Victoria Chen. Agent Chen, address the intelligence community's performance in the January 6th period.</p>
+
+<p><strong>AGENT VICTORIA CHEN:</strong></p>
+
+<p><em>Approaches stand. Economy of movement. Direct gaze.</em></p>
+
+<p>Your Honor. The intelligence failure of January 6th was not a collection failure. It was an assessment and dissemination failure.</p>
+
+<p>Let me be specific about what the community knew:</p>
+
+<p><strong>Known (Documented):</strong></p>
+<ul>
+<li>Multiple domestic extremist groups planned to attend January 6th</li>
+<li>Online chatter included explicit violence discussion (&quot;1776,&quot; &quot;trial by combat&quot;)</li>
+<li>Proud Boys and Oath Keepers were coordinating logistics</li>
+<li>Travel from known extremist networks was tracked</li>
+<li>Specific threats against the Capitol were identified</li>
+</ul>
+
+<p><strong>Why Assessment Failed:</strong></p>
+
+<p>The community faced three structural problems:</p>
+
+<p><strong>First — Domestic Intelligence Constraints:</strong> Post-Church Committee reforms—necessary and appropriate—limited domestic surveillance. This created legitimate hesitation about First Amendment-protected activity. When does political speech become actionable intelligence? The line is genuinely unclear.</p>
+
+<p><strong>Second — Warning Fatigue:</strong> The intelligence community receives thousands of threat indicators daily. Most are noise. The January 6th signals were elevated but not uniquely elevated compared to other periods. Risk calibration failed.</p>
+
+<p><strong>Third — Political Context:</strong> The intelligence community was operating in an environment where the sitting President was amplifying the narratives driving the threat. Producing intelligence that implicated presidential rhetoric carried institutional risk. This is not an excuse—it is a diagnosis.</p>
+
+<p><strong>Confidence Level:</strong> High</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Agent Victoria Chen                                    │
+│ Examiner: <span class="p-debugger">DEBUGGER</span>                                              │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-debugger">DEBUGGER</span> → AGENT CHEN:</strong></p>
+<p>You mention the FBI Norfolk memo on January 5th. Walk me through exactly what happened to that document.</p>
+
+<p><strong>AGENT VICTORIA CHEN:</strong></p>
+<p><em>Opens file.</em></p>
+
+<p>The Norfolk Field Office produced a situational information report at 7:37 PM on January 5th. It documented specific threats including:</p>
+
+<ul>
+<li>&quot;Be ready to fight. Congress needs to hear glass breaking.&quot;</li>
+<li>&quot;Go there ready for war.&quot;</li>
+<li>Maps of the Capitol tunnel system</li>
+</ul>
+
+<p>The report was uploaded to the FBI's eGuardian system. It was shared via email to FBI Headquarters and the Joint Terrorism Task Force.</p>
+
+<p>It was NOT shared with Capitol Police leadership.</p>
+
+<p>The dissemination pathway was: Norfolk → FBI HQ → nowhere actionable.</p>
+
+<p>By the time the information reached Capitol Police, the events were already underway. [VERIFIED — Inspector General report]</p>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+<p>So the system received valid input, processed it through the correct channels, and failed to output to the relevant consumer. That's a routing error.</p>
+
+<p><strong>AGENT VICTORIA CHEN:</strong></p>
+<p>That is precisely correct. The information existed. The pathways existed. The connection did not.</p>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+<p>Was this a technical failure or a human failure?</p>
+
+<p><strong>AGENT VICTORIA CHEN:</strong></p>
+<p>Both. The systems were not integrated. The humans did not compensate for the systems' gaps. Either fix would have sufficed; neither occurred.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Agent Victoria Chen                                    │
+│ Examiner: <span class="p-engineer">ENGINEER</span>                                              │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-engineer">ENGINEER</span> → AGENT CHEN:</strong></p>
+<p>Post-January 6th, what changes were implemented?</p>
+
+<p><strong>AGENT VICTORIA CHEN:</strong></p>
+<p>Several significant reforms:</p>
+
+<ul>
+<li>Enhanced information sharing protocols between FBI and Capitol Police</li>
+<li>Establishment of dedicated liaison positions</li>
+<li>Integration of social media monitoring into threat assessment</li>
+<li>Updated domestic terrorism strategic framework (June 2021)</li>
+<li>Increased resources for domestic violent extremism</li>
+</ul>
+
+<p><strong>What has NOT changed:</strong></p>
+<ul>
+<li>Fundamental tension between surveillance and civil liberties</li>
+<li>Risk-averse institutional culture around political sensitivity</li>
+<li>Congressional oversight fragmentation (dozens of committees with partial jurisdiction)</li>
+<li>Resource allocation remains heavily foreign-focused</li>
+</ul>
+
+<p>The system is better positioned to detect a repeat of January 6th. It is not well-positioned to detect the next variant.</p>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+<p>So we patched the known vulnerability but haven't hardened against unknown attack vectors.</p>
+
+<p><strong>AGENT VICTORIA CHEN:</strong></p>
+<p>Correct. Security theater is easier than security.</p>
+
+<hr>
+
+<h2>PHASE VII: LEGAL RESPONSE AND ACCOUNTABILITY</h2>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ WITNESS TESTIMONY                                               │
+│ Witness: Katherine Marlowe, Esq. [CONSTRUCTED WITNESS]          │
+│ Domain: Legal Analysis — Prosecutorial Response                 │
+│ Sources: DOJ records, court documents, sentencing data          │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p>The court calls Katherine Marlowe, Esquire. Ms. Marlowe, address the legal response to January 6th.</p>
+
+<p><strong>KATHERINE MARLOWE, ESQ.:</strong></p>
+
+<p><em>Rises. Litigation-honed precision.</em></p>
+
+<p>Your Honor. The Department of Justice's response to January 6th constitutes the largest prosecution in American history by volume.</p>
+
+<p><strong>By the Numbers (as of early 2026):</strong></p>
+<ul>
+<li>Approximately 1,400 individuals charged</li>
+<li>900+ convicted</li>
+<li>600+ sentenced to incarceration</li>
+<li>Sentences range from probation to 22 years (Oath Keepers leader Stewart Rhodes)</li>
+<li>Seditious conspiracy charges successfully prosecuted against Oath Keepers and Proud Boys leadership</li>
+</ul>
+
+<p><strong>Prosecutorial Strategy:</strong></p>
+
+<p>The DOJ pursued a breadth-first approach: maximum coverage, graduated charging based on conduct severity. This produced:</p>
+
+<p><strong>Tier 1 — Misdemeanors:</strong> Unlawful entry, disorderly conduct. Typical outcome: probation, fines. Approximately 40% of cases.</p>
+
+<p><strong>Tier 2 — Felonies (Non-Violent):</strong> Obstruction of official proceeding, civil disorder. Typical outcome: 1-3 years. Approximately 45% of cases.</p>
+
+<p><strong>Tier 3 — Violent Felonies:</strong> Assault on officers, destruction of property. Typical outcome: 3-7 years. Approximately 12% of cases.</p>
+
+<p><strong>Tier 4 — Leadership/Conspiracy:</strong> Seditious conspiracy, conspiracy to obstruct. Reserved for organizational leadership. Longest sentences.</p>
+
+<p><strong>Confidence Level:</strong> High — Public records</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Katherine Marlowe, Esq.                                │
+│ Examiner: <span class="p-architect">ARCHITECT</span>                                             │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-architect">ARCHITECT</span> → MS. MARLOWE:</strong></p>
+<p>The prosecutions focused on participants. Address the accountability gap for those who created the conditions—the elite actors.</p>
+
+<p><strong>KATHERINE MARLOWE, ESQ.:</strong></p>
+<p>This is the prosecutorial lacuna that defines the January 6th legal response.</p>
+
+<p><strong>Charged:</strong></p>
+<ul>
+<li>Foot soldiers, even those with minimal participation</li>
+<li>Mid-level organizers</li>
+<li>Militia leadership</li>
+</ul>
+
+<p><strong>Not Charged (as of this hearing):</strong></p>
+<ul>
+<li>Political figures who promoted the fraud narrative</li>
+<li>Media figures who amplified demonstrably false claims</li>
+<li>Financial backers of the rally infrastructure</li>
+<li>Legal architects of the Eastman theory</li>
+</ul>
+
+<p>The reasons are structural:</p>
+
+<li><strong>First Amendment:</strong> Political speech, even false political speech, receives maximum protection. Proving incitement requires demonstrating imminent lawless action was intended and likely—a high bar.</li>
+
+<li><strong>Prosecutorial Discretion:</strong> DOJ historically avoids cases that could appear politically motivated. Prosecuting a former president is unprecedented and institutionally fraught.</li>
+
+<li><strong>Evidentiary Challenges:</strong> Proving knowledge and intent for elite actors requires documentation they had reason not to create.</li>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+<p>So the law punished execution but not architecture.</p>
+
+<p><strong>KATHERINE MARLOWE, ESQ.:</strong></p>
+<p>Correct. The people who walked through doors were held accountable. The people who opened the doors, figuratively speaking, largely were not.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ CROSS-EXAMINATION                                               │
+│ Witness: Katherine Marlowe, Esq.                                │
+│ Examiner: <span class="p-prophet">PROPHET</span>                                               │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+<p><em>Voice carries unusual weight.</em></p>
+
+<p>Ms. Marlowe. More than a thousand prosecutions. Years of incarceration. Families destroyed. Careers ended.</p>
+
+<p>For the participants.</p>
+
+<p>The man who stood at the podium and said &quot;fight like hell&quot;—he ran for president again. He won.</p>
+
+<p>What does this disparity communicate about American justice?</p>
+
+<p><strong>KATHERINE MARLOWE, ESQ.:</strong></p>
+<p><em>Long pause. Chooses words carefully.</em></p>
+
+<p>It communicates that our legal system is better designed to address individual transgression than systemic provocation.</p>
+
+<p>It communicates that power retains privilege even—especially—when exercising that power destructively.</p>
+
+<p>It communicates that accountability is not distributed according to moral responsibility but according to legal vulnerability. Those with resources, access, and institutional protection experience different consequences than those without.</p>
+
+<p>I am a lawyer. I believe in the law. But I cannot pretend the law is the same as justice.</p>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+<p>And what does that communicate to the next person considering whether to cross a line?</p>
+
+<p><strong>KATHERINE MARLOWE, ESQ.:</strong></p>
+<p>That they should ensure they cross it from a position of sufficient power.</p>
+
+<p><em>Silence in the courtroom.</em></p>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p>The witness has spoken plainly. The court... appreciates plainness.</p>
+
+<hr>
+
+<h2>SYNTHESIS AND FINDINGS</h2>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ THE COURT'S SYNTHESIS                                           │
+│ The personalities present their analyses                        │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong><span class="p-morningstar">MORNINGSTAR</span> (<span class="p-morningstar">Judge</span>):</strong></p>
+<p>We have heard testimony across seven domains. The personalities of this court shall now synthesize findings.</p>
+
+<hr>
+
+<p><strong><span class="p-architect">ARCHITECT</span>:</strong></p>
+
+<p><em>Rises. Cold precision.</em></p>
+
+<p>Your Honor. The architecture of American democracy was stress-tested on January 6th and found... adequate. Barely.</p>
+
+<p>The system held because individual actors—Pence, certain judges, state election officials—fulfilled their prescribed roles despite extraordinary pressure. But architectural resilience that depends on individual virtue is not resilience. It is luck.</p>
+
+<p>The structures revealed vulnerabilities:</p>
+<ul>
+<li>Electoral certification procedures were ambiguous</li>
+<li>Capitol security command was fragmented</li>
+<li>Intelligence dissemination was siloed</li>
+<li>Media ecosystems were optimized for engagement, not accuracy</li>
+<li>Legal accountability was inverted—punishing soldiers, protecting generals</li>
+</ul>
+
+<p>Some vulnerabilities have been addressed. Many have not. The next stress test may find different points of failure.</p>
+
+<p><strong>My assessment:</strong> The structure survived but did not prove durable. It proved fortunate.</p>
+
+<hr>
+
+<p><strong><span class="p-engineer">ENGINEER</span>:</strong></p>
+
+<p><em>Practical. Weighted.</em></p>
+
+<p>Your Honor. I assess outcomes, not principles.</p>
+
+<p><strong>What worked:</strong></p>
+<ul>
+<li>The election was certified</li>
+<li>The transfer of power occurred</li>
+<li>Prosecutions demonstrated that illegal conduct has consequences</li>
+<li>Some reforms were implemented</li>
+</ul>
+
+<p><strong>What failed:</strong></p>
+<ul>
+<li>Thousands believed they were saving democracy while attacking it</li>
+<li>Security preparations were catastrophically inadequate</li>
+<li>The information ecosystem remains toxic</li>
+<li>Elite accountability remains nominal</li>
+</ul>
+
+<p>The question for an engineer is: can we ship this system to the next election with acceptable risk?</p>
+
+<p><strong>My assessment:</strong> We did. Twice now (2022, 2024). But we are operating with known vulnerabilities and hoping they don't get exploited. That is not engineering. That is gambling.</p>
+
+<hr>
+
+<p><strong><span class="p-debugger">DEBUGGER</span>:</strong></p>
+
+<p><em>Stands abruptly. Eyes scanning.</em></p>
+
+<p>Your Honor. I see edge cases. Let me enumerate:</p>
+
+<ul>
+<li>What if Pence had capitulated?</li>
+<li>What if the mob had reached legislators?</li>
+<li>What if the pipe bombs had detonated?</li>
+<li>What if the National Guard had been delayed further?</li>
+<li>What if state officials in Georgia, Arizona, or Michigan had certified fraudulent slates?</li>
+</ul>
+
+<p>The system held. But it held by margins that should terrify anyone who examines them closely.</p>
+
+<p><strong>The critical path analysis:</strong> At least five decision points existed where different individual choices would have produced constitutional crisis or worse. We experienced the favorable outcome from a decision tree with many catastrophic branches.</p>
+
+<p><strong>My assessment:</strong> We should not derive confidence from a near-miss. Near-misses are warnings, not vindications.</p>
+
+<hr>
+
+<p><strong><span class="p-prophet">PROPHET</span>:</strong></p>
+
+<p><em>The room grows still. The <span class="p-prophet">Prophet</span> speaks quietly.</em></p>
+
+<p>Your Honor. My colleagues have addressed what happened. Let me address what it means.</p>
+
+<p>January 6th was not an aberration. It was a symptom.</p>
+
+<p>Tens of millions of Americans believe their democracy is fraudulent. Tens of millions of different Americans believe their fellow citizens attempted a coup. Both groups consume different information, occupy different realities, and share the same territory.</p>
+
+<p>The event itself will fade. The structural conditions will not.</p>
+
+<p>The trust deficit that made fraud narratives credible remains unaddressed.</p>
+<p>The media architecture that amplified those narratives remains profitable.</p>
+<p>The political incentives that reward norm violation remain operative.</p>
+<p>The inequality that generates grievance remains unmitigated.</p>
+
+<p>We are discussing symptoms while the disease progresses.</p>
+
+<p><strong>My assessment:</strong> January 6th, 2021, will not be remembered as an isolated incident. It will be remembered as either a warning heeded or a prelude ignored. The choice is not yet made.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ HEARING FINDINGS                                                │
+│ Matter: January 6th, 2021 Analysis                              │
+│ Hearing Date: 2026-02-14                                        │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><strong>FINDING 1: The election fraud narrative constituted a coordinated information ecosystem</strong></p>
+<ul>
+<li>Evidence: Documented pre-positioning (Stop the Steal 2016), coordinated legal strategy, media amplification patterns</li>
+<li>Confidence: HIGH</li>
+<li>Implication: The narrative infrastructure was deliberately constructed, not organically emergent</li>
+</ul>
+
+<p><strong>FINDING 2: Capitol security failures were systemic, not operational</strong></p>
+<ul>
+<li>Evidence: Intelligence existed and was not actioned; command structure prevented rapid response; resource allocation was inadequate</li>
+<li>Confidence: HIGH</li>
+<li>Implication: Individual officer performance was not the failure point; institutional design was</li>
+</ul>
+
+<p><strong>FINDING 3: Intelligence failures reflected institutional risk-aversion</strong></p>
+<ul>
+<li>Evidence: FBI Norfolk memo non-dissemination; documented threats not elevated; political sensitivity affecting assessment</li>
+<li>Confidence: HIGH</li>
+<li>Implication: The intelligence community possessed sufficient information; synthesis and action failed</li>
+</ul>
+
+<p><strong>FINDING 4: The legal response prioritized breadth over strategic accountability</strong></p>
+<ul>
+<li>Evidence: 1,400+ charged, elite actors largely unprosecuted; structural barriers to elite accountability documented</li>
+<li>Confidence: HIGH</li>
+<li>Implication: Legal system addresses individual transgression better than systemic provocation</li>
+</ul>
+
+<p><strong>FINDING 5: Constitutional structures proved resilient through individual virtue</strong></p>
+<ul>
+<li>Evidence: Pence's refusal, judicial dismissals, state official resistance</li>
+<li>Confidence: HIGH</li>
+<li>Implication: Resilience was demonstrated but depends on continued good-faith actors</li>
+</ul>
+
+<p><strong>FINDING 6: Structural conditions enabling January 6th remain substantially unaddressed</strong></p>
+<ul>
+<li>Evidence: Trust deficits persist; media architecture unchanged; political incentives continue rewarding norm violation</li>
+<li>Confidence: MODERATE</li>
+<li>Implication: Recurrence risk remains elevated</li>
+</ul>
+
+<hr>
+
+<p><strong>UNRESOLVED QUESTIONS:</strong></p>
+
+<li>What institutional reforms would meaningfully reduce recurrence risk?</li>
+<li>How can democratic societies address information ecosystem failures without compromising free expression?</li>
+<li>Is elite accountability structurally achievable within current legal frameworks?</li>
+<li>What level of social trust is minimally necessary for democratic function?</li>
+<li>Did the events of January 6th permanently alter American political possibilities?</li>
+
+<hr>
+
+<p><strong>OBSERVATIONS:</strong></p>
+
+<p>The court observes that January 6th, 2021, resists simple categorization.</p>
+
+<p>It was simultaneously:</p>
+<ul>
+<li>A security failure and a security success (the building was retaken)</li>
+<li>A democratic crisis and a democratic affirmation (certification occurred)</li>
+<li>A legal reckoning and a legal failure (participants prosecuted, architects protected)</li>
+<li>An unprecedented event and a predictable culmination</li>
+</ul>
+
+<p>The witnesses testified to systems—political, informational, psychological, constitutional, legal. Each system exhibited both failure and resilience. The aggregate effect was an outcome at the margin of what democracy can survive.</p>
+
+<p>Whether that margin expands or contracts is not determined by analysis. It is determined by action.</p>
+
+<hr>
+
+<pre>
+┌─────────────────────────────────────────────────────────────────┐
+│ HEARING ADJOURNED                                               │
+│ Transcript filed: 20260214_180000_special_interest_january_6th  │
+│                   _analysis.md                                  │
+│ Findings: 6 established                                         │
+│ Unresolved: 5 questions remain                                  │
+└─────────────────────────────────────────────────────────────────┘
+</pre>
+
+<p><em>This hearing was investigative in nature. No vote was taken. The record stands as documented.</em></p>
+
+<hr>
+
+<h1>EVIDENCE GRID</h1>
+
+<table>
+<tr><th>Evidence Category</th><th>Source Type</th><th>Confidence</th><th>Key Documents</th></tr>
+<tr><td>Election Fraud Narrative</td><td>Academic analysis, polling data</td><td>HIGH</td><td>Pew Research, media studies</td></tr>
+<tr><td>Security Timeline</td><td>Congressional testimony, video</td><td>HIGH</td><td>Senate Jan 6th Report</td></tr>
+<tr><td>Intelligence Warnings</td><td>FBI documents, IG reports</td><td>HIGH</td><td>Norfolk memo, IG findings</td></tr>
+<tr><td>Constitutional Framework</td><td>Legal text, precedent</td><td>HIGH</td><td>ECA, Electoral Count Reform Act 2022</td></tr>
+<tr><td>Crowd Psychology</td><td>Academic literature, interviews</td><td>MODERATE-HIGH</td><td>Milgram, Zimbardo, prosecution docs</td></tr>
+<tr><td>Media Ecosystem</td><td>Platform data, content analysis</td><td>HIGH</td><td>Facebook disclosures, Haugen testimony</td></tr>
+<tr><td>Prosecution Data</td><td>DOJ records, court documents</td><td>HIGH</td><td>Public court records</td></tr>
+<tr><td>Elite Accountability</td><td>Legal analysis</td><td>MODERATE</td><td>First Amendment case law</td></tr>
+</table>
+
+<hr>
+
+<h1>FINAL VERDICT</h1>
+
+<p>This hearing produced findings, not a verdict. The court notes:</p>
+
+<p><strong>The democracy survived. The test was passed.</strong></p>
+
+<p><strong>The margins were thin. The conditions persist.</strong></p>
+
+<p><strong>The question before the nation is not what happened on January 6th, 2021.</strong></p>
+
+<p><strong>The question is what happens on the next day the system is tested.</strong></p>
+
+<p>The court has no ruling to offer on that question. Only observation.</p>
+
+<p><em>The gavel falls. The sound echoes.</em></p>
+
+<hr>
+
+<h1>ACTION PLAN</h1>
+
+<p>The court does not prescribe action in investigative hearings. However, the testimony suggests areas meriting continued attention:</p>
+
+<li><strong>Electoral Architecture:</strong> Continued implementation and monitoring of Electoral Count Reform Act provisions</li>
+
+<li><strong>Intelligence Integration:</strong> Assessment of whether post-January 6th reforms have meaningfully addressed dissemination failures</li>
+
+<li><strong>Media Ecosystem:</strong> Ongoing analysis of algorithmic amplification effects on democratic discourse</li>
+
+<li><strong>Accountability Frameworks:</strong> Examination of legal mechanisms for addressing elite provocation of mass action</li>
+
+<li><strong>Social Trust:</strong> Research into institutional legitimacy and methods for rebuilding cross-partisan trust</li>
+
+<li><strong>Security Posture:</strong> Review of Capitol security command structure and emergency authority provisions</li>
+
+<hr>
+
+<p><em>Transcript prepared by the <span class="p-scribe">Scribe</span>. Filed to the permanent record.</em></p>
+
+<p><em>The court stands adjourned.</em></p>
+
+<hr>
+
+<h2>DOCUMENT METADATA</h2>
+
+<table>
+<tr><th>Field</th><th>Value</th></tr>
+<tr><td>Hearing Type</td><td>Special Interest Hearing</td></tr>
+<tr><td>Date</td><td>2026-02-14</td></tr>
+<tr><td>Duration</td><td>Full session</td></tr>
+<tr><td>Witnesses</td><td>7</td></tr>
+<tr><td>Findings</td><td>6</td></tr>
+<tr><td>Unresolved Questions</td><td>5</td></tr>
+<tr><td>Presiding</td><td><span class="p-morningstar">The Honorable Lucius J. Morningstar</span></td></tr>
+<tr><td>Status</td><td>ADJOURNED</td></tr>
+</table>
+
+    
+    <div class="export-meta">
+        <p>Exported from MORNINGSTAR on 2026-02-14 10:16:27</p>
+        <p><em>"The court's rulings are its legacy."</em></p>
+    </div>
+    
+    <button class="fullscreen-toggle" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+    
+    <script>
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else {
+            document.exitFullscreen();
+        }
+    }
+    </script>
+</body>
+</html>

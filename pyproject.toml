@@ -7,12 +7,12 @@ name = "morningstar"
 version = "0.1.0"
 description = "A sardonic deliberative coding partner."
 readme = "README.md"
+license = "MIT"
 authors = [
   { name = "Lucius J. Morningstar", email = "lucius@example.com" },
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
 requires-python = ">=3.7"
@@ -24,3 +24,6 @@ dependencies = [
 
 [project.scripts]
 morningstar = "tools.cli:cli"
+
+[tool.setuptools.packages.find]
+include = ["tools", "tools.*"]

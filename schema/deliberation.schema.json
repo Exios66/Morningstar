@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["problemStatement", "arguments", "votes", "ruling"],
+  "properties": {
+    "problemStatement": {
+      "type": "string",
+      "description": "The specific issue being deliberated."
+    },
+    "arguments": {
+      "type": "object",
+      "required": ["Architect", "Engineer", "Debugger", "Prophet"],
+      "properties": {
+        "Architect": { "type": "string" },
+        "Engineer": { "type": "string" },
+        "Debugger": { "type": "string" },
+        "Prophet": { "type": "string" }
+      }
+    },
+    "votes": {
+      "type": "object",
+      "required": ["Architect", "Engineer", "Debugger", "Prophet"],
+      "properties": {
+        "Architect": { "type": "string", "enum": ["YES", "NO", "ABSTAIN"] },
+        "Engineer": { "type": "string", "enum": ["YES", "NO", "ABSTAIN"] },
+        "Debugger": { "type": "string", "enum": ["YES", "NO", "ABSTAIN"] },
+        "Prophet": { "type": "string", "enum": ["YES", "NO", "ABSTAIN"] }
+      }
+    },
+    "ruling": {
+      "type": "object",
+      "required": ["decision", "rationale", "risk"],
+      "properties": {
+        "decision": { "type": "string", "enum": ["Pass", "Reject", "Tabling", "Other"] },
+        "rationale": { "type": "string" },
+        "risk": { "type": "string" }
+      }
+    }
+  }
+}

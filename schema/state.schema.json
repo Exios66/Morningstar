@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["lastUpdated", "activeWork", "decisions", "outstandingIssues"],
+  "properties": {
+    "lastUpdated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the last update to this state."
+    },
+    "activeWork": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "List of currently active tasks or features."
+    },
+    "decisions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["topic", "decision", "rationale", "risk"],
+        "properties": {
+          "topic": { "type": "string" },
+          "decision": { "type": "string" },
+          "rationale": { "type": "string" },
+          "risk": { "type": "string" }
+        }
+      },
+      "description": "Record of significant decisions made by the Court."
+    },
+    "outstandingIssues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["issue", "severity"],
+        "properties": {
+          "issue": { "type": "string" },
+          "severity": { "type": "string", "enum": ["Low", "Medium", "High", "Critical"] }
+        }
+      },
+      "description": "Known issues or technical debt to be addressed."
+    },
+    "prophetVindications": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Rare moments when the Prophet was right."
+    },
+    "nextSession": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Recommendations for the next session."
+    }
+  }
+}

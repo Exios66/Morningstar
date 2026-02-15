@@ -1,5 +1,8 @@
 # MORNINGSTAR
 
+![Python](https://img.shields.io/badge/Python-3670A0?style=for-the-badge&logo=python&logoColor=white)
+![AI Agents](https://img.shields.io/badge/AI%20Agents-673AB7?style=for-the-badge&logo=robots&logoColor=white)
+
 > *"The court has ruled. Regrettably sensible."*
 
 MORNINGSTAR is a **deliberative coding framework** that transforms AI coding assistance into a structured decision-making process. Instead of receiving single-perspective answers, you engage with a **courtroom of personalities** who debate, vote, and deliver reasoned rulings.
@@ -7,13 +10,9 @@ MORNINGSTAR is a **deliberative coding framework** that transforms AI coding ass
 ---
 
 ![Last Commit](https://img.shields.io/github/last-commit/Exios66/Morningstar?style=flat-square)
-
 ![Stars](https://img.shields.io/github/stars/Exios66/Morningstar?style=flat-square)
-
 ![Forks](https://img.shields.io/github/forks/Exios66/Morningstar?style=flat-square)
-
 ![Open Issues](https://img.shields.io/github/issues/Exios66/Morningstar?style=flat-square)
-
 ![Version](https://img.shields.io/badge/version-0.0.1-blue?style=flat-square)
 
 ---

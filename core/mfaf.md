@@ -23,6 +23,7 @@ The MFAF provides a structured methodology for evaluating the feasibility of pro
 The proposal is currently impossible, but reveals a missing capability. When something rates F0, we don't reject it—we ask: *"What would have to be true for this to be F1?"*
 
 F0 proposals are archived in the F0 Registry with:
+
 - Original proposal
 - Specified infrastructure gap
 - Resurrection triggers (what would change the rating)
@@ -156,12 +157,14 @@ How would we recover?
 This boundary generates the most arguments. Guidelines:
 
 **F2 if:**
+
 - Changes are contained within one subsystem
 - Patterns are established and well-understood
 - Rollback is straightforward
 - No architectural precedent is set
 
 **F3 if:**
+
 - Changes span subsystems
 - New patterns are introduced
 - Rollback is complex or uncertain

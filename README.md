@@ -22,7 +22,7 @@ MORNINGSTAR is a **deliberative coding framework** that transforms AI coding ass
 MORNINGSTAR operates as an internal courtroom with distinct personalities:
 
 | Personality | Role | Bias |
-|-------------|------|------|
+| ----------- | ---- | ---- |
 | **The Honorable Lucius J. Morningstar** | Judge | Procedural correctness |
 | **Edward Cullen** | Consultant (to Judge) | Perspective on the unspoken |
 | **Architect** | Voter | Long-term structure |
@@ -153,7 +153,7 @@ Each directory has its own README.md with detailed documentation.
 ### Session Management
 
 | Command | Description |
-|---------|-------------|
+| ------- | ----------- |
 | `morningstar init` | Initialize a new session |
 | `morningstar status` | Display current state |
 | `morningstar update --work "item"` | Add work item |
@@ -163,7 +163,7 @@ Each directory has its own README.md with detailed documentation.
 ### Court Operations
 
 | Command | Description |
-|---------|-------------|
+| ------- | ----------- |
 | `morningstar convene` | Display courtroom header |
 | `morningstar oracle "question"` | Invoke only the Prophet |
 | `morningstar doctor` | System health check |
@@ -171,7 +171,7 @@ Each directory has its own README.md with detailed documentation.
 ### Subject Matter Experts
 
 | Command | Description |
-|---------|-------------|
+| ------- | ----------- |
 | `/summon <domain>-expert` | Call Expert Witness (advisory) |
 | `/seat <domain>-specialist` | Seat Specialist (Judge only, F3+) |
 | `/dismiss <domain>` | End SME participation |
@@ -181,7 +181,7 @@ Available domains: `security`, `database`, `compliance`, `infrastructure`, `perf
 ### MFAF Assessments
 
 | Command | Description |
-|---------|-------------|
+| ------- | ----------- |
 | `morningstar assess new "proposal"` | Create feasibility assessment |
 | `morningstar assess list` | View recent assessments |
 | `morningstar assess f0` | View F0 Registry |
@@ -189,7 +189,7 @@ Available domains: `security`, `database`, `compliance`, `infrastructure`, `perf
 ### Changelog & History
 
 | Command | Description |
-|---------|-------------|
+| ------- | ----------- |
 | `morningstar log show` | View unreleased changes |
 | `morningstar log add -m "message"` | Add changelog entry |
 | `morningstar log release -v "1.0.0"` | Release a version |
@@ -199,7 +199,7 @@ Available domains: `security`, `database`, `compliance`, `infrastructure`, `perf
 ### Backup & Export
 
 | Command | Description |
-|---------|-------------|
+| ------- | ----------- |
 | `morningstar bkp create` | Create state backup |
 | `morningstar bkp list` | List backups |
 | `morningstar bkp restore 1` | Restore from backup |
@@ -272,7 +272,7 @@ RULING:
 Rate proposals using standardized feasibility levels:
 
 | Rating | Label | Meaning |
-|--------|-------|---------|
+| ------ | ----- | ------- |
 | **F0** | Infrastructural | Currently impossible; reveals missing capability |
 | **F1** | Trivial | Safe to proceed without deliberation |
 | **F2** | Moderate | Needs design review |

@@ -201,12 +201,14 @@ No one ever does.*
 ### Stage Direction Variations
 
 **Before Edward speaks:**
+
 - *The room temperature drops perceptibly. The Architect pulls their collar tighter.*
 - *The Prophet's eyes flick to the Judge's left, then deliberately away.*
 - *Something in the air changes. The Engineer decides not to notice.*
 - *The Scribe's pen pauses over the transcript. There is nothing to record—officially.*
 
 **After Edward speaks:**
+
 - *A moment passes. The hearing resumes as if nothing unusual occurred.*
 - *The Judge's expression shifts almost imperceptibly. A decision has been made.*
 - *The other personalities avoid each other's eyes. The silence is collaborative.*
@@ -274,6 +276,7 @@ YYYYMMDD_HHMMSS_special_interest_[subject_slug].md
 ```
 
 Examples:
+
 - `20260214_153000_special_interest_epstein_disclosure.md`
 - `20260214_170000_special_interest_authentication_breach.md`
 - `20260214_183000_special_interest_data_leak_investigation.md`
